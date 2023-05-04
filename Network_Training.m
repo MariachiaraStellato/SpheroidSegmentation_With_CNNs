@@ -21,5 +21,25 @@ function net = Network_Training(ImagesDir, MasksDir)
 
     numTrainingImages = numel(dsTrain.UnderlyingDatastores{1,1}.Files);
 
+    if NetworkType == 3 || NetworkType == 4
+    NetworkType = NetworkType - 2; 
+    network = {'resnet18', 'resnet50'};
+    network = string(network);
+    
+    net1 = resnet18();
+    net1 = resnet50();
+    clear net1
+    
+    lgraph = deeplabv3plusLayers(imageSize, numClasses, network(NetworkType)); 
+    
+    tbl = countEachLabel(dsTrain.UnderlyingDatastores{1,2});
+    imageFreq = tbl.PixelCount ./ tbl.ImagePixelCount;
+    imageFreq(isnan(imageFreq)) = min(imageFreq) * 0.00001;
+    classWeights = median(imageFreq) ./ imageFreq;
+    
+    pxLayer = pixelClassificationLayer('Name','labels','Classes',tbl.Name,'ClassWeights',classWeights);
+    lgraph = replaceLayer(lgraph,"classification",pxLayer);
+    %Change layer to adapt the net to my data
+    end  
 
 end
