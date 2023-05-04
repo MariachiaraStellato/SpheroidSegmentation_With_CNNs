@@ -41,5 +41,8 @@ function net = Network_Training(ImagesDir, MasksDir)
     lgraph = replaceLayer(lgraph,"classification",pxLayer);
     %Change layer to adapt the net to my data
     end  
+    if NetworkType == 5
+        lgraph = ResNet101_Seg(imageSize);
+    end
 
 end
