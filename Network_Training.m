@@ -86,4 +86,20 @@ if exist('netprep', 'var')
     end
 end
 
+%% train
+if constant == 1
+fig = uifigure;
+fig.Position = [500 500 400 75];
+d = uiprogressdlg(fig, 'Title','Training (it can take hours)...','Indeterminate','on');
+end
+
+[net, ~] = trainNetwork(dsTrain,lgraph,options);
+if exist('d','var')
+close(d)
+close(fig)
+end
+rmdir(TempImDirName,'s');
+rmdir(TempMaskDirName,'s');
+
+
 end
