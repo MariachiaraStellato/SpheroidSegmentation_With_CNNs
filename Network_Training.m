@@ -1,4 +1,4 @@
-function net = Network_Training(ImagesDir, MasksDir)
+function net = Network_Training(ImagesDir, MasksDir, NetworkType)
 
  
 
@@ -6,7 +6,7 @@ function net = Network_Training(ImagesDir, MasksDir)
     b = 500; 
     TempImDirName = FUNC.process_images(ImagesDir,[a b], 1);
     TempMaskDirName = FUNC.resize_images(MasksDir,[a,b]);
-    [dsTrain, dsVal, dsTest] = FUNC.Dataset_processing(TempImDirName,TempMaskDirName);
+    [dsTrain, dsVal, ~] = FUNC.Dataset_processing(TempImDirName,TempMaskDirName);
     classes = [
     "Sferoids"
     "Background"
@@ -23,12 +23,8 @@ function net = Network_Training(ImagesDir, MasksDir)
 
     if NetworkType == 3 || NetworkType == 4
     NetworkType = NetworkType - 2; 
-    network = {'resnet18', 'resnet50'};
+    network = ['resnet18', 'resnet50'];
     network = string(network);
-    
-    net1 = resnet18();
-    net1 = resnet50();
-    clear net1
     
     lgraph = deeplabv3plusLayers(imageSize, numClasses, network(NetworkType)); 
     
@@ -46,7 +42,7 @@ function net = Network_Training(ImagesDir, MasksDir)
     end
 
     if NetworkType == 1 || NetworkType == 2
-    network = {'vgg16', 'vgg19'};
+    network = ['vgg16', 'vgg19'];
     network = string(network);
     lgraph = segnetLayers(imageSize,numClasses,network(NetworkType));
         
@@ -54,12 +50,12 @@ function net = Network_Training(ImagesDir, MasksDir)
 
     batchsize = round(numTrainingImages/10);
     if isdeployed
-    op = 'none';
-    constant = 1; 
-else
-    op = 'training-progress';
-    constant = 0; 
-end
+        op = 'none';
+        constant = 1; 
+    else
+        op = 'training-progress';
+        constant = 0; 
+    end
 options = trainingOptions('sgdm', ...
     'LearnRateSchedule','piecewise',...
     'LearnRateDropPeriod',2,...
