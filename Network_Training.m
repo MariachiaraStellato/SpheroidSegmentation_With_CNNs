@@ -45,4 +45,11 @@ function net = Network_Training(ImagesDir, MasksDir)
         lgraph = ResNet101_Seg(imageSize);
     end
 
+    if NetworkType == 1 || NetworkType == 2
+    network = {'vgg16', 'vgg19'};
+    network = string(network);
+    lgraph = segnetLayers(imageSize,numClasses,network(NetworkType));
+        
+    end
+
 end
