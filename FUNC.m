@@ -35,7 +35,6 @@ classdef FUNC
         
         numberOfImages = length(image.Files);
         TempImDirName = [ImagesFolderName, filesep, 'TempIm'];
-        TempImDir = mkdir(TempImDirName);
         
         for k = 1 : numberOfImages
           % Get the input filename.  It already has the folder prepended so we don't need to worry about that.
@@ -100,7 +99,6 @@ image = imageDatastore(ImagesFolderName, ...
 
 numberOfImages = length(image.Files);
 TempImDirName = [ImagesFolderName, filesep, 'TempMask'];
-TempImDir = mkdir(TempImDirName);
 
 for k = 1 : numberOfImages
   % Get the input filename.  It already has the folder prepended so we don't need to worry about that.
@@ -182,10 +180,6 @@ if exist('datcre', 'var')
 end
 % Labels
 
-I = readimage(image,1);
-originalImSize = size(I);
-%figure, imshow(I)
-
 classes = [
     "Sferoids"
     "Background"
@@ -193,21 +187,6 @@ classes = [
 
 labelIDs = {255; 
             0}; %graylevel to refer to the labels 
-
-pxds = pixelLabelDatastore(maskFolderName,classes,labelIDs,'IncludeSubfolders',true); 
-%create a datastore where every image pixel is associateed to the right
-%label 
-
-
-cmap = [
-    0 0 0  %background
-    1 1 1  %Sferoids
-];
-%clour map 
-
-
-tbl = countEachLabel(pxds);
-%count number of times the label appear in the dataset 
 
 
 labcre = msgbox('Label created');
@@ -234,9 +213,6 @@ pxdsTest = pixelLabelDatastore(maskTest.Files, classes, labelIDs);
 dsVal = combine(imdsValidation,pxdsValidation);
 dsTrain = combine(imdsTrain, pxdsTrain);
 dsTest = combine(imdsTest,pxdsTest);
-
-numTrainingImages = numel(imdsTrain.Files);
-numTestingImages = numel(imdsTest.Files);
 
 datdiv = msgbox('Datastore divided');
 if exist('datdiv', 'var')
