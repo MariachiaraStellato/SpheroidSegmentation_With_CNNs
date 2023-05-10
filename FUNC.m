@@ -28,7 +28,9 @@ classdef FUNC
         % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
         % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
         % General Public License for more details.
-        
+        if not(isfolder(ImagesFolderName))
+            error('The folder name was not correctly defined')
+        end
         image = imageDatastore(ImagesFolderName, ...
             'IncludeSubfolders',true, ...
             'LabelSource','foldernames');
@@ -92,7 +94,9 @@ function TempImDirName = resize_images(ImagesFolderName, WantedSize)
 % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
 % General Public License for more details.
-
+if not(isfolder(ImagesFolderName))
+    error('The folder name was not correctly defined')
+end
 image = imageDatastore(ImagesFolderName, ...
     'IncludeSubfolders',true, ...
     'LabelSource','foldernames');
@@ -161,7 +165,13 @@ function [dsTrain, dsVal, dsTest] = Dataset_processing(ImagesDir,MasksDir)
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
 % General Public License for more details.
 
-% import images 
+% import images
+if not(isfolder(ImagesDir))
+    error('The folder name was not correctly defined')
+end
+if not(isfolder(MasksDir))
+    error('The folder name was not correctly defined')
+end
 imagesFolderName = ImagesDir;
 maskFolderName = MasksDir;
 masks = imageDatastore(maskFolderName, ...
@@ -170,7 +180,14 @@ masks = imageDatastore(maskFolderName, ...
 image = imageDatastore(imagesFolderName, ...
     'IncludeSubfolders',true, ...
     'LabelSource','foldernames'); 
-
+num1 = numel(image.Files);
+num2 = numel(masks.Files);
+if num1~=num2
+    error('The image folder and the mask folder must contain the same number of images');
+end
+if num1<10
+    error('The folder must contain at least 10 images to perform the training.');
+end
 datcre = msgbox('Datastore created');
 if exist('datcre', 'var')
      if ishandle(datcre)
