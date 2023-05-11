@@ -32,6 +32,9 @@ classdef FUNC
             figure('Name',[name,' (press ENTER to go ahead).'],'NumberTitle','off'), imshow(finalIm, [], 'Border', 'Tight');
         end
 %-------------------------------------------------------------------------------------------------
+        function IGetFileName()
+        end
+%-------------------------------------------------------------------------------------------------
         function TempImDirName = process_images(ImagesFolderName, WantedSize, c)
         % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
         % INPUT: 
