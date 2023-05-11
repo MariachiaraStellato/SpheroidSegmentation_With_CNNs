@@ -83,4 +83,5 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
         catch
         end
     end
+   end
 end
