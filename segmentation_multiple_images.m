@@ -40,7 +40,15 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
                     pause(2*eps);
                     close(hFinalFigure);
                     pause(2*eps);
-                catch 
+                catch err
+                    if exist('BarWaitWindows', 'var')
+                        if ishandle(BarWaitWindows)
+                            pause(2*eps);
+                            delete(BarWaitWindows);
+                            pause(2*eps);
+                        end
+                    end
+                    errordlg(err.message) 
                 end
 
                 
@@ -83,5 +91,5 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
         catch
         end
     end
-   end
+    end
 end
