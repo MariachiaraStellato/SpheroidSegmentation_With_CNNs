@@ -6,7 +6,23 @@ classdef FUNC
                           batchNormalizationLayer("Name","bn_conv1")
                           reluLayer("Name","conv1_relu")];
         end
+        
 % ------------------------------------------------------------------------------------------------
+        function ISaveImages(FilesNames,Folder,im)
+            file = char(FilesNames);
+            PositionsPoints = strfind(file, '.');
+            PositionLastPoint = PositionsPoints(end);
+            InImageType = file(PositionLastPoint:end);
+            PositionsSlash = strfind(file, filesep);
+            PositionLastSlash = PositionsSlash(end);
+            InImageName = file(PositionLastSlash:end);
+            NameAndOrigImageType = InImageName;
+            NameWoOrigImageType = NameAndOrigImageType(1:end-(length(InImageType)-1));
+            NameWithFinalImageType = [NameWoOrigImageType 'tiff'];
+            imgName = [Folder, NameWithFinalImageType]; 
+            imwrite(im,imgName); 
+        end
+%-------------------------------------------------------------------------------------------------
         function TempImDirName = process_images(ImagesFolderName, WantedSize, c)
         % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
         % INPUT: 
@@ -52,18 +68,7 @@ classdef FUNC
             %resize the image 
             I = imresize(I,WantedSize);
             %save images in the new folder
-            file = char(inputFileName);
-            PositionsPoints = strfind(file, '.');
-            PositionLastPoint = PositionsPoints(end);
-            InImageType = file(PositionLastPoint:end);
-            PositionsSlash = strfind(file, filesep);
-            PositionLastSlash = PositionsSlash(end);
-            InImageName = file(PositionLastSlash:end);
-            NameAndOrigImageType = InImageName;
-            NameWoOrigImageType = NameAndOrigImageType(1:end-(length(InImageType)-1));
-            NameWithFinalImageType = [NameWoOrigImageType 'tiff'];
-            imgName = [TempImDirName, NameWithFinalImageType];
-            imwrite(I,imgName);
+            FUNC.ISaveImages(inputFileName,TempImDirName,I);
         end
         done = msgbox('Images correctly processed!');
         if exist('done', 'var')
@@ -297,20 +302,6 @@ I = imbinarize(I);
 I = I*255;
 end
 %-------------------------------------------------------------------------------------------------
-function ISaveImages(FilesNames,Folder,im)
-    file = char(FilesNames);
-    PositionsPoints = strfind(file, '.');
-    PositionLastPoint = PositionsPoints(end);
-    InImageType = file(PositionLastPoint:end);
-    PositionsSlash = strfind(file, filesep);
-    PositionLastSlash = PositionsSlash(end);
-    InImageName = file(PositionLastSlash:end);
-    NameAndOrigImageType = InImageName;
-    NameWoOrigImageType = NameAndOrigImageType(1:end-(length(InImageType)-1));
-    NameWithFinalImageType = [NameWoOrigImageType 'tiff'];
-    imgName = [Folder, NameWithFinalImageType]; 
-    imwrite(im,imgName); 
 
-end
     end
 end
