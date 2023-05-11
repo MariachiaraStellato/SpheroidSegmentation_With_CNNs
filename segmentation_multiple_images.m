@@ -30,7 +30,7 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
             im = FUNC.seg_and_fill(I,net);   
             I = imresize(I,[a b]);
             im = imresize(im,[a,b]);
-            
+            FUNC.ISaveImages(FilesNames(i),im);
 
         end
 
