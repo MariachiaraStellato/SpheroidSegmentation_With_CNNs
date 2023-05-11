@@ -32,7 +32,15 @@ classdef FUNC
             figure('Name',[name,' (press ENTER to go ahead).'],'NumberTitle','off'), imshow(finalIm, [], 'Border', 'Tight');
         end
 %-------------------------------------------------------------------------------------------------
-        function IGetFileName()
+        function file_name = IGetFileName(ImFolder,specificImageName)
+            dir_struct = dir(ImFolder);
+            N = length(dir_struct);
+            dir_struct = dir_struct(N);
+            name = dir_struct.name;
+            PositionsPoints = strfind(name, '.');
+            PositionLastPoint = PositionsPoints(end);
+            InImageType = name(PositionLastPoint:end);
+            file_name = [ImFolder,filesep,specificImageName,InImageType];
         end
 %-------------------------------------------------------------------------------------------------
         function TempImDirName = process_images(ImagesFolderName, WantedSize, c)
