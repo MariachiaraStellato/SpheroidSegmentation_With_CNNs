@@ -33,12 +33,7 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
             FUNC.ISaveImages(FilesNames(i),SegFolder,im);
             if flag_showmask == 1
                 try
-                    imOut = uint8(im);
-                    imIn = uint8(I);
-                    Bar = max(imIn(:)).*uint8([ones(a, 5) zeros(a, 5) ones(a, 5)]);
-                    finalIm = [imIn Bar imOut];
-                    name = char(FilesNames(i));
-                    figure('Name',[name,' (press ENTER to go ahead).'],'NumberTitle','off'), imshow(finalIm, [], 'Border', 'Tight');
+                    FUNC.IPlotImagesAndMasks(im,I,FilesNames(i))
                     hFinalFigure = gcf;
                     pause(2*eps);
                     waitforbuttonpress
