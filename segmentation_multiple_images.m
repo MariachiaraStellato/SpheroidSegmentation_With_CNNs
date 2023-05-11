@@ -27,6 +27,11 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
                 errordlg('The images must have white background and dark spheroid to be correctly segmented');
                 break; 
             end
+            im = FUNC.seg_and_fill(I,net);   
+            I = imresize(I,[a b]);
+            im = imresize(im,[a,b]);
+            
+
         end
 
     else
