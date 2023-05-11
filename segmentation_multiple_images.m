@@ -72,6 +72,15 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
     I = imresize(I,[a b]);
     im = imresize(im,[a,b]);
     imgName = [SegFolder, filesep , specificImageName, '.tiff'];
-
-
+    imwrite(I,imgName); 
+    if flag_showmask == 1
+        try 
+            FUNC.IPlotImagesAndMasks(I,im,file_name)
+            hFinalFigure = gcf;
+            waitforbuttonpress;
+            close(hFinalFigure);
+            
+        catch
+        end
+    end
 end
