@@ -297,7 +297,7 @@ I = imbinarize(I);
 I = I*255;
 end
 %-------------------------------------------------------------------------------------------------
-function ISaveImages(FilesNames,im)
+function ISaveImages(FilesNames,Folder,im)
     file = char(FilesNames);
     PositionsPoints = strfind(file, '.');
     PositionLastPoint = PositionsPoints(end);
@@ -308,7 +308,7 @@ function ISaveImages(FilesNames,im)
     NameAndOrigImageType = InImageName;
     NameWoOrigImageType = NameAndOrigImageType(1:end-(length(InImageType)-1));
     NameWithFinalImageType = [NameWoOrigImageType 'tiff'];
-    imgName = [SegFolder, NameWithFinalImageType]; 
+    imgName = [Folder, NameWithFinalImageType]; 
     imwrite(im,imgName); 
 
 end
