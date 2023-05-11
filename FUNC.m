@@ -293,7 +293,8 @@ end
 end
 
 I = imfill(Bi,4,'holes'); 
-
+I = imbinarize(I);
+I = I*255;
 end
 
     end
