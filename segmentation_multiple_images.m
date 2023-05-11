@@ -49,15 +49,8 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
         end
 
     else
-    dir_struct = dir(ImFolder);
-    N = length(dir_struct);
-    
-    dir_struct = dir_struct(N);
-    name = dir_struct.name;
-    PositionsPoints = strfind(name, '.');
-    PositionLastPoint = PositionsPoints(end);
-    InImageType = name(PositionLastPoint:end);
-    file_name = [ImFolder,filesep,specificImageName,InImageType];
+
+    file_name = FUNC.IGetFileName(ImFolder,specificImageName);
 
     end
 
