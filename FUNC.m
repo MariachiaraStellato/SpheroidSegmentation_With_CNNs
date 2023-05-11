@@ -120,18 +120,7 @@ for k = 1 : numberOfImages
     %resize the image 
   I = imresize(I,WantedSize);
  %salvare l'immagine nel nuovo folder 
-  file = char(inputFileName);
-  PositionsPoints = strfind(file, '.');
-  PositionLastPoint = PositionsPoints(end);
-  InImageType = file(PositionLastPoint:end);
-  PositionsSlash = strfind(file, filesep);
-  PositionLastSlash = PositionsSlash(end);
-  InImageName = file(PositionLastSlash:end);
-  NameAndOrigImageType = InImageName;
-  NameWoOrigImageType = NameAndOrigImageType(1:end-(length(InImageType)-1));
-  NameWithFinalImageType = [NameWoOrigImageType 'tiff'];
-  imgName = [TempImDirName, NameWithFinalImageType];
-  imwrite(I,imgName);
+ FUNC.ISaveImages(inputFileName,TempImDirName,I);
 end
 done = msgbox('Masks correctly processed!');
 if exist('done', 'var')
