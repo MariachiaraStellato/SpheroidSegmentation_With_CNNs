@@ -240,7 +240,61 @@ if exist('datdiv', 'var')
 end
 end
 %-------------------------------------------------------------------------------------------------
+function I = seg_and_fill(im, net)
+% AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
+%
+%this function segments and than check and fills any holes in the 
+%segmentation for the single image given as an input by using the
+%network given as an input.
+%im:        image we want to segment
+%net:       DAGNetwork file tipe containing the trained network to use for
+%           the segmentation
 
+% MiAi (Microscopy & Artificial Intelligence) Toolbox
+% Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
+% University of Bologna, Italy. All rights reserved.
+%
+% This program is free software; you can redistribute it and/or modify it 
+% under the terms of the GNU General Public License version 3 (or higher) 
+% as published by the Free Software Foundation. This program is 
+% distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+% General Public License for more details.
+
+cmap = [
+    0 0 0  %background
+    1 1 1  %Sferoids
+];
+segmented = semanticseg(im, net);
+B = labeloverlay(im,segmented,'Colormap',cmap,'Transparency',0);
+Bi = rgb2gray(B);
+Bi = imcomplement(Bi);
+[Bi, n] = bwlabel(Bi);
+se = strel('disk',12);
+Bi = imclose(Bi,se);
+if n>1
+obj = zeros(1,n-1);
+for i=1:n-1
+    [a,~] = find(Bi == i);
+    obj(i) = size(a,1);
+end
+[~,idx] = max(obj);
+dim = size(Bi);
+for i=1:dim(1)
+    for j=1:dim(2)
+        if Bi(i,j) == idx
+            Bi(i,j) = 1;
+        else
+            Bi(i,j) = 0;
+        end
+
+    end
+end
+end
+
+I = imfill(Bi,4,'holes'); 
+
+end
 
     end
 end
