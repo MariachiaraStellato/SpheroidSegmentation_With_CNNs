@@ -23,6 +23,15 @@ classdef FUNC
             imwrite(im,imgName); 
         end
 %-------------------------------------------------------------------------------------------------
+        function IPlotImagesAndMasks(im,I,FileName)
+            imOut = uint8(im);
+            imIn = uint8(I);
+            Bar = max(imIn(:)).*uint8([ones(a, 5) zeros(a, 5) ones(a, 5)]);
+            finalIm = [imIn Bar imOut];
+            name = char(FileName);
+            figure('Name',[name,' (press ENTER to go ahead).'],'NumberTitle','off'), imshow(finalIm, [], 'Border', 'Tight');
+        end
+%-------------------------------------------------------------------------------------------------
         function TempImDirName = process_images(ImagesFolderName, WantedSize, c)
         % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
         % INPUT: 
