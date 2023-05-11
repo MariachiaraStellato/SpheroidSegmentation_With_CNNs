@@ -6,7 +6,9 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
         'IncludeSubfolders',true, ...
         'LabelSource','foldernames');
         FilesNames = image.Files;
-
+        if isempty(FilesNames)
+        error('In the selected ImageFolder there are not images.');
+        else
         num = numel(FilesNames);
         for i=1:num
             BarWaitWindows = msgbox(['Please wait... ' ,'Folder analysed: ', ImFolder, ', Completed: ', num2str(round(100*(i/num))), '%.']);
@@ -55,7 +57,7 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
             end
 
         end
-
+        end
     else
 
     file_name = FUNC.IGetFileName(ImFolder,specificImageName);
