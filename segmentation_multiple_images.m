@@ -22,7 +22,11 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
             if size(I,3) == 3
                 I = rgb2gray(I);
             end
-
+            test = [I(1,1), I(500,500), I(1,500), I(500,1)];
+            if test(1) < 200 && test(2) < 200 && test(3) < 200 && test(4) < 200 
+                errordlg('The images must have white background and dark spheroid to be correctly segmented');
+                break; 
+            end
         end
 
     else
