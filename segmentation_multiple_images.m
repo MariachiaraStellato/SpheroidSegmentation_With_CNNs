@@ -51,6 +51,9 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
     else
 
     file_name = FUNC.IGetFileName(ImFolder,specificImageName);
+    im = imread(file_name);
+    [a,b,c] = size(im);
+    im = imresize(im,[500,500]);
 
     end
 
