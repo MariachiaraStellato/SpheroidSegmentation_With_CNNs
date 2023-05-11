@@ -133,7 +133,20 @@ classdef tests<matlab.unittest.TestCase
             testCase.verifyFail('No error was thrown when an invalid masks directory was given');
         end
 
+        %tests for the ISaveImages function-------------------------------
 
+        function TestISaveImagesCorrectly(testCase)
+            im = imread('exampleImage.png');
+            Folder = 'testFolder';
+            if ~exist(Folder, 'dir')
+                mkdir(Folder);
+            end
+            FilesNames = 'testFolder/testImage.png';
+            ISaveImages(FilesNames, Folder, im);
+            savedImage = imread('testFolder/testImage.tiff');
+            rmdir(Folder,'s');
+            testCase.verifyEqual(im, savedImage, 'The saved image is not equal to the original image.');
+        end
 
 
 
