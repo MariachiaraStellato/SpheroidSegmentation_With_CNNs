@@ -297,8 +297,19 @@ I = imbinarize(I);
 I = I*255;
 end
 %-------------------------------------------------------------------------------------------------
-function ImSaveImages()
-    
+function ISaveImages(FilesNames,im)
+    file = char(FilesNames);
+    PositionsPoints = strfind(file, '.');
+    PositionLastPoint = PositionsPoints(end);
+    InImageType = file(PositionLastPoint:end);
+    PositionsSlash = strfind(file, filesep);
+    PositionLastSlash = PositionsSlash(end);
+    InImageName = file(PositionLastSlash:end);
+    NameAndOrigImageType = InImageName;
+    NameWoOrigImageType = NameAndOrigImageType(1:end-(length(InImageType)-1));
+    NameWithFinalImageType = [NameWoOrigImageType 'tiff'];
+    imgName = [SegFolder, NameWithFinalImageType]; 
+    imwrite(im,imgName); 
 
 end
     end
