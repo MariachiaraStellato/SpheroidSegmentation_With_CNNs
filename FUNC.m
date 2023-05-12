@@ -1,6 +1,10 @@
 classdef FUNC
     methods(Static)
-
+% ------------------------------------------------------------------------------------------------
+        function name = iConvLayerName(Firstidx, prefix, encoderIdx, suffix)
+            name = sprintf('res%d%s_branch%d%s',Firstidx, prefix, encoderIdx, suffix);
+        end
+% ------------------------------------------------------------------------------------------------
         function Layers = ConvBatchRelu(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName)
                 Layers = [convolution2dLayer(FilterSize,FilterNumber,"Name",ConvName,"BiasLearnRateFactor",0,"Padding",Padding,"Stride",stride)
                           batchNormalizationLayer("Name",BatchName)
