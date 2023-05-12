@@ -1,10 +1,10 @@
 classdef FUNC
     methods(Static)
 
-        function Layers = ConvBatchRelu()
-                Layers = [convolution2dLayer([7 7],64,"Name","conv1","BiasLearnRateFactor",0,"Padding",[3 3 3 3],"Stride",[2 2])
-                          batchNormalizationLayer("Name","bn_conv1")
-                          reluLayer("Name","conv1_relu")];
+        function Layers = ConvBatchRelu(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName)
+                Layers = [convolution2dLayer(FilterSize,FilterNumber,"Name",ConvName,"BiasLearnRateFactor",0,"Padding",Padding,"Stride",stride)
+                          batchNormalizationLayer("Name",BatchName)
+                          reluLayer("Name",ReluName)];
         end
         
 % ------------------------------------------------------------------------------------------------
