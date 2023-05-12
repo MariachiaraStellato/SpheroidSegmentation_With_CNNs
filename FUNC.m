@@ -9,8 +9,12 @@ classdef FUNC
             name = sprintf('bn%d%s_branch%d%s',Firstidx, prefix, encoderIdx, suffix);
         end
 % ------------------------------------------------------------------------------------------------
-        function name = iReluLayerName(Firstidx, prefix, encoderIdx, suffix)
-            name = sprintf('res%d%s_branch%d%s_relu',Firstidx, prefix, encoderIdx, suffix);
+        function name = iReluLayerName(PreviousLayerName)
+            name = sprintf('%s_relu',PreviousLayerName);
+        end
+% ------------------------------------------------------------------------------------------------
+        function name = iAdditionLayerName(Firstidx, prefix)
+            name = sprintf('res%d%s',Firstidx, prefix);
         end
 % ------------------------------------------------------------------------------------------------
         function Layers = ConvBatchRelu(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName)
