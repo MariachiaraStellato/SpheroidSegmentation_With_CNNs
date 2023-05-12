@@ -17,10 +17,19 @@ classdef FUNC
             name = sprintf('res%d%s',Firstidx, prefix);
         end
 % ------------------------------------------------------------------------------------------------
-        function Layers = ConvBatchRelu(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName)
+        function Layers = ConvBatch(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName)
                 Layers = [convolution2dLayer(FilterSize,FilterNumber,"Name",ConvName,"BiasLearnRateFactor",0,"Padding",Padding,"Stride",stride)
                           batchNormalizationLayer("Name",BatchName)
-                          reluLayer("Name",ReluName)];
+                          ];
+        end
+        
+% ------------------------------------------------------------------------------------------------
+
+        function Layers = ConvBatchRelu(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName)
+                TempLayers1 = FUNC.ConvBatch(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName);
+                TempLayer2 = reluLayer("Name",ReluName);
+                Layers = [TempLayers1
+                          TempLayer2];
         end
         
 % ------------------------------------------------------------------------------------------------
