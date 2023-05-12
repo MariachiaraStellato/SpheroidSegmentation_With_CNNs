@@ -31,7 +31,11 @@ classdef FUNC
                 Layers = [TempLayers1
                           TempLayer2];
         end
-        
+%-------------------------------------------------------------------------------------------------
+        function Layers = AdditionRelu(AdditionName, ReluName)
+                 Layers = [additionLayer(2,"Name",AdditionName)
+                              reluLayer("Name",ReluName)];
+        end
 % ------------------------------------------------------------------------------------------------
         function ISaveImages(FilesNames,Folder,im)
             file = char(FilesNames);
