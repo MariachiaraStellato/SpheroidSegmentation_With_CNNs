@@ -54,9 +54,9 @@ classdef FUNC
         end
 
 %-------------------------------------------------------------------------------------------------
-        function Layers = AdditionRelu(AdditionName, ReluName)
+        function Layers = AdditionRelu(AdditionName)
                  Layers = [additionLayer(2,"Name",AdditionName)
-                              reluLayer("Name",ReluName)];
+                              reluLayer("Name",strcat(AdditionName,"_relu"))];
         end
 % ------------------------------------------------------------------------------------------------
         function ISaveImages(FilesNames,Folder,im)
