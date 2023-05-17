@@ -17,8 +17,8 @@ classdef FUNC
             name = sprintf('res%d%s',Firstidx, prefix);
         end
 % ------------------------------------------------------------------------------------------------
-        function Layers = ConvBatch(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName)
-                Layers = [convolution2dLayer(FilterSize,FilterNumber,"Name",ConvName,"BiasLearnRateFactor",0,"Padding",Padding,"Stride",stride)
+        function Layers = ConvBatch(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w)
+                Layers = [convolution2dLayer(FilterSize,FilterNumber,"Name",ConvName,"BiasLearnRateFactor",0,"Padding",Padding,"Stride",stride,"WeightLearnRateFactor",w)
                           batchNormalizationLayer("Name",BatchName)
                           ];
         end
