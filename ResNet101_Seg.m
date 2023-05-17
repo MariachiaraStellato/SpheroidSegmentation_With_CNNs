@@ -4,27 +4,17 @@ function lgraph = ResNet101_Seg(ImageSize)
 tempLayers = imageInputLayer(ImageSize,"Name","data");
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    convolution2dLayer([7 7],64,"Name","conv1","BiasLearnRateFactor",0,"Padding",[3 3 3 3],"Stride",[2 2])
-    batchNormalizationLayer("Name","bn_conv1")
-    reluLayer("Name","conv1_relu")
-    maxPooling2dLayer([3 3],"Name","pool1","Padding",[0 1 0 1],"Stride",[2 2])];
+
+tempLayers = [FUNC.ConvBatchRelu([7 7],64,[3 3 3 3],[2 2],"conv1","bn_conv1","conv1_relu",1)
+              maxPooling2dLayer([3 3],"Name","pool1","Padding",[0 1 0 1],"Stride",[2 2])];
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    convolution2dLayer([1 1],256,"Name","res2a_branch1","BiasLearnRateFactor",0)
-    batchNormalizationLayer("Name","bn2a_branch1")];
+tempLayers = FUNC.ConvBatch([1 1],256,0,[1 1],"res2a_branch1","bn2a_branch1",1);
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    convolution2dLayer([1 1],64,"Name","res2a_branch2a","BiasLearnRateFactor",0)
-    batchNormalizationLayer("Name","bn2a_branch2a")
-    reluLayer("Name","res2a_branch2a_relu")
-    convolution2dLayer([3 3],64,"Name","res2a_branch2b","BiasLearnRateFactor",0,"Padding",[1 1 1 1])
-    batchNormalizationLayer("Name","bn2a_branch2b")
-    reluLayer("Name","res2a_branch2b_relu")
-    convolution2dLayer([1 1],256,"Name","res2a_branch2c","BiasLearnRateFactor",0)
-    batchNormalizationLayer("Name","bn2a_branch2c")];
+tempLayers = [FUNC.ConvBatchRelu([1 1],64,0,[1 1],"res2a_branch2a","bn2a_branch2a","res2a_branch2a_relu",1)
+              FUNC.ConvBatchRelu([3 3],64,[1 1 1 1],[1 1],"res2a_branch2b","bn2a_branch2b","res2a_branch2b_relu",1)
+              FUNC.ConvBatch([1 1],256,0,[1 1],"res2a_branch2c","bn2a_branch2c",1)];
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = [
@@ -32,15 +22,9 @@ tempLayers = [
     reluLayer("Name","res2a_relu")];
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    convolution2dLayer([1 1],64,"Name","res2b_branch2a","BiasLearnRateFactor",0)
-    batchNormalizationLayer("Name","bn2b_branch2a")
-    reluLayer("Name","res2b_branch2a_relu")
-    convolution2dLayer([3 3],64,"Name","res2b_branch2b","BiasLearnRateFactor",0,"Padding",[1 1 1 1])
-    batchNormalizationLayer("Name","bn2b_branch2b")
-    reluLayer("Name","res2b_branch2b_relu")
-    convolution2dLayer([1 1],256,"Name","res2b_branch2c","BiasLearnRateFactor",0)
-    batchNormalizationLayer("Name","bn2b_branch2c")];
+tempLayers = [FUNC.ConvBatchRelu([1 1],64,0,[1 1],"res2b_branch2a","bn2b_branch2a","res2b_branch2a_relu",1)
+              FUNC.ConvBatchRelu([3 3],64,[1 1 1 1],[1 1],"res2b_branch2b","bn2b_branch2b","res2b_branch2b_relu",1)
+              FUNC.ConvBatch([1 1],256,0,[1 1],"res2b_branch2c","bn2b_branch2c",1)];
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = [
@@ -48,15 +32,10 @@ tempLayers = [
     reluLayer("Name","res2b_relu")];
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    convolution2dLayer([1 1],64,"Name","res2c_branch2a","BiasLearnRateFactor",0)
-    batchNormalizationLayer("Name","bn2c_branch2a")
-    reluLayer("Name","res2c_branch2a_relu")
-    convolution2dLayer([3 3],64,"Name","res2c_branch2b","BiasLearnRateFactor",0,"Padding",[1 1 1 1])
-    batchNormalizationLayer("Name","bn2c_branch2b")
-    reluLayer("Name","res2c_branch2b_relu")
-    convolution2dLayer([1 1],256,"Name","res2c_branch2c","BiasLearnRateFactor",0)
-    batchNormalizationLayer("Name","bn2c_branch2c")];
+
+tempLayers = [FUNC.ConvBatchRelu([1 1],64,0,[1 1],"res2c_branch2a","bn2c_branch2a","res2c_branch2a_relu",1)
+              FUNC.ConvBatchRelu([3 3],64,[1 1 1 1],[1 1],"res2c_branch2b","bn2c_branch2b","res2c_branch2b_relu",1)
+              FUNC.ConvBatch([1 1],256,0,[1 1],"res2c_branch2c","bn2c_branch2c",1)];
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = [
@@ -64,20 +43,12 @@ tempLayers = [
     reluLayer("Name","res2c_relu")];
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    convolution2dLayer([1 1],128,"Name","res3a_branch2a","BiasLearnRateFactor",0,"Stride",[2 2])
-    batchNormalizationLayer("Name","bn3a_branch2a")
-    reluLayer("Name","res3a_branch2a_relu")
-    convolution2dLayer([3 3],128,"Name","res3a_branch2b","BiasLearnRateFactor",0,"Padding",[1 1 1 1])
-    batchNormalizationLayer("Name","bn3a_branch2b")
-    reluLayer("Name","res3a_branch2b_relu")
-    convolution2dLayer([1 1],512,"Name","res3a_branch2c","BiasLearnRateFactor",0)
-    batchNormalizationLayer("Name","bn3a_branch2c")];
+tempLayers = [FUNC.ConvBatchRelu([1 1],128,0,[2 2],"res3a_branch2a","bn3a_branch2a","res3a_branch2a_relu",1)
+              FUNC.ConvBatchRelu([3 3],128,[1 1 1 1],[1 1],"res3a_branch2b","bn3a_branch2b","res3a_branch2b_relu",1)
+              FUNC.ConvBatch([1 1],512,0,[1 1],"res3a_branch2c","bn3a_branch2c",1)];
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    convolution2dLayer([1 1],512,"Name","res3a_branch1","BiasLearnRateFactor",0,"Stride",[2 2])
-    batchNormalizationLayer("Name","bn3a_branch1")];
+tempLayers = FUNC.ConvBatch([1 1],512,0,[2 2],"res3a_branch1","bn3a_branch1",1);
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = [
@@ -85,21 +56,12 @@ tempLayers = [
     reluLayer("Name","res3a_relu")];
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    convolution2dLayer([1 1],128,"Name","res3b1_branch2a","BiasLearnRateFactor",0)
-    batchNormalizationLayer("Name","bn3b1_branch2a")
-    reluLayer("Name","res3b1_branch2a_relu")
-    convolution2dLayer([3 3],128,"Name","res3b1_branch2b","BiasLearnRateFactor",0,"Padding",[1 1 1 1])
-    batchNormalizationLayer("Name","bn3b1_branch2b")
-    reluLayer("Name","res3b1_branch2b_relu")
-    convolution2dLayer([1 1],512,"Name","res3b1_branch2c","BiasLearnRateFactor",0)
-    batchNormalizationLayer("Name","bn3b1_branch2c")];
+tempLayers = [FUNC.ConvBatchRelu([1 1],128,0,[1 1],"res3b1_branch2a","bn3b1_branch2a","res3b1_branch2a_relu",1)
+              FUNC.ConvBatchRelu([3 3],128,[1 1 1 1],[1 1],"res3b1_branch2b","bn3b1_branch2b","res3b1_branch2b_relu",1)
+              FUNC.ConvBatch([1 1],512,0,[1 1],"res3b1_branch2c","bn3b1_branch2c",1)];
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    convolution2dLayer([1 1],256,"Name","dec_c2","BiasLearnRateFactor",0,"WeightLearnRateFactor",10)
-    batchNormalizationLayer("Name","dec_bn2")
-    reluLayer("Name","dec_relu2")];
+tempLayers = FUNC.ConvBatchRelu([1 1],256,[1 1 1 1],[1 1],"dec_c2","dec_bn2","dec_relu2",10);
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = [
@@ -107,15 +69,9 @@ tempLayers = [
     reluLayer("Name","res3b1_relu")];
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    convolution2dLayer([1 1],128,"Name","res3b2_branch2a","BiasLearnRateFactor",0)
-    batchNormalizationLayer("Name","bn3b2_branch2a")
-    reluLayer("Name","res3b2_branch2a_relu")
-    convolution2dLayer([3 3],128,"Name","res3b2_branch2b","BiasLearnRateFactor",0,"Padding",[1 1 1 1])
-    batchNormalizationLayer("Name","bn3b2_branch2b")
-    reluLayer("Name","res3b2_branch2b_relu")
-    convolution2dLayer([1 1],512,"Name","res3b2_branch2c","BiasLearnRateFactor",0)
-    batchNormalizationLayer("Name","bn3b2_branch2c")];
+tempLayers = [FUNC.ConvBatchRelu([1 1],128,0,[1 1],"res3b2_branch2a","bn3b2_branch2a","res3b2_branch2a_relu",1)
+              FUNC.ConvBatchRelu([3 3],128,[1 1 1 1],[1 1],"res3b2_branch2b","bn3b2_branch2b","res3b2_branch2b_relu",1)
+              FUNC.ConvBatch([1 1],512,0,[1 1],"res3b2_branch2c","bn3b2_branch2c",1)];
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = [
@@ -123,15 +79,9 @@ tempLayers = [
     reluLayer("Name","res3b2_relu")];
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    convolution2dLayer([1 1],128,"Name","res3b3_branch2a","BiasLearnRateFactor",0)
-    batchNormalizationLayer("Name","bn3b3_branch2a")
-    reluLayer("Name","res3b3_branch2a_relu")
-    convolution2dLayer([3 3],128,"Name","res3b3_branch2b","BiasLearnRateFactor",0,"Padding",[1 1 1 1])
-    batchNormalizationLayer("Name","bn3b3_branch2b")
-    reluLayer("Name","res3b3_branch2b_relu")
-    convolution2dLayer([1 1],512,"Name","res3b3_branch2c","BiasLearnRateFactor",0)
-    batchNormalizationLayer("Name","bn3b3_branch2c")];
+tempLayers = [FUNC.ConvBatchRelu([1 1],128,0,[1 1],"res3b3_branch2a","bn3b3_branch2a","res3b3_branch2a_relu",1)
+              FUNC.ConvBatchRelu([3 3],128,[1 1 1 1],[1 1],"res3b3_branch2b","bn3b3_branch2b","res3b3_branch2b_relu",1)
+              FUNC.ConvBatch([1 1],512,0,[1 1],"res3b3_branch2c","bn3b3_branch2c",1)];
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = [
@@ -139,16 +89,11 @@ tempLayers = [
     reluLayer("Name","res3b3_relu")];
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    convolution2dLayer([1 1],256,"Name","res4a_branch2a","BiasLearnRateFactor",0,"Stride",[2 2])
-    batchNormalizationLayer("Name","bn4a_branch2a")
-    reluLayer("Name","res4a_branch2a_relu")
-    convolution2dLayer([3 3],256,"Name","res4a_branch2b","BiasLearnRateFactor",0,"Padding",[1 1 1 1])
-    batchNormalizationLayer("Name","bn4a_branch2b")
-    reluLayer("Name","res4a_branch2b_relu")
-    convolution2dLayer([1 1],1024,"Name","res4a_branch2c","BiasLearnRateFactor",0)
-    batchNormalizationLayer("Name","bn4a_branch2c")];
+tempLayers = [FUNC.ConvBatchRelu([1 1],256,0,[2 2],"res4a_branch2a","bn4a_branch2a","res4a_branch2a_relu",1)
+              FUNC.ConvBatchRelu([3 3],256,[1 1 1 1],[1 1],"res4a_branch2b","bn4a_branch2b","res4a_branch2b_relu",1)
+              FUNC.ConvBatch([1 1],1024,0,[1 1],"res4a_branch2c","bn4a_branch2c",1)];
 lgraph = addLayers(lgraph,tempLayers);
+
 
 tempLayers = [
     convolution2dLayer([1 1],1024,"Name","res4a_branch1","BiasLearnRateFactor",0,"Stride",[2 2])
