@@ -30,37 +30,18 @@ lgraph = addLayers(lgraph,tempLayers);
 tempLayers = FUNC.AdditionRelu("res3a");
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [FUNC.ConvBatchRelu([1 1],128,0,[1 1],"res3b1_branch2a","bn3b1_branch2a","res3b1_branch2a_relu",1)
-              FUNC.ConvBatchRelu([3 3],128,[1 1 1 1],[1 1],"res3b1_branch2b","bn3b1_branch2b","res3b1_branch2b_relu",1)
-              FUNC.ConvBatch([1 1],512,0,[1 1],"res3b1_branch2c","bn3b1_branch2c",1)];
-lgraph = addLayers(lgraph,tempLayers);
+%Third branch
+
+for i=1:3
+    let = ["b1","b2","b3"];
+    BatchName = strcat("3",let(i),"_branch");
+    tempLayers = [ FUNC.ICreateBatch([1 1],128,BatchName,1)
+                  FUNC.AdditionRelu(strcat("res3",let(i)))];
+    lgraph = addLayers(lgraph,tempLayers);
+
+end
 
 tempLayers = FUNC.ConvBatchRelu([1 1],256,[1 1 1 1],[1 1],"dec_c2","dec_bn2","dec_relu2",10);
-lgraph = addLayers(lgraph,tempLayers);
-
-tempLayers = [
-    additionLayer(2,"Name","res3b1")
-    reluLayer("Name","res3b1_relu")];
-lgraph = addLayers(lgraph,tempLayers);
-
-tempLayers = [FUNC.ConvBatchRelu([1 1],128,0,[1 1],"res3b2_branch2a","bn3b2_branch2a","res3b2_branch2a_relu",1)
-              FUNC.ConvBatchRelu([3 3],128,[1 1 1 1],[1 1],"res3b2_branch2b","bn3b2_branch2b","res3b2_branch2b_relu",1)
-              FUNC.ConvBatch([1 1],512,0,[1 1],"res3b2_branch2c","bn3b2_branch2c",1)];
-lgraph = addLayers(lgraph,tempLayers);
-
-tempLayers = [
-    additionLayer(2,"Name","res3b2")
-    reluLayer("Name","res3b2_relu")];
-lgraph = addLayers(lgraph,tempLayers);
-
-tempLayers = [FUNC.ConvBatchRelu([1 1],128,0,[1 1],"res3b3_branch2a","bn3b3_branch2a","res3b3_branch2a_relu",1)
-              FUNC.ConvBatchRelu([3 3],128,[1 1 1 1],[1 1],"res3b3_branch2b","bn3b3_branch2b","res3b3_branch2b_relu",1)
-              FUNC.ConvBatch([1 1],512,0,[1 1],"res3b3_branch2c","bn3b3_branch2c",1)];
-lgraph = addLayers(lgraph,tempLayers);
-
-tempLayers = [
-    additionLayer(2,"Name","res3b3")
-    reluLayer("Name","res3b3_relu")];
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = [FUNC.ConvBatchRelu([1 1],256,0,[2 2],"res4a_branch2a","bn4a_branch2a","res4a_branch2a_relu",1)
