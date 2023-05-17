@@ -76,18 +76,18 @@ tempLayers = FUNC.ConvBatch([1 1],2048,0,[2 2],"res5a_branch1","bn5a_branch1",1)
 lgraph = addLayers(lgraph,tempLayers);
 
 %Deconvolution Layers
+for i=1:4
+    if i == 1
+        filterSize = [1 1];
+        DilatationFactor = [1 1];
+    else
+        filterSize = [3 3];
+        DilatationFactor = [(i-1)*6,(i-1)*6];
+    end
+    tempLayers = FUNC.ConvBatchReluWDil(filterSize,256,"same",[1 1],strcat("aspp_Conv_",string(i)),strcat("aspp_BatchNorm_",string(i)),strcat("aspp_Relu_",string(i)),10,DilatationFactor);
+    lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = FUNC.ConvBatchReluWDil([3 3],256,"same",[1 1],"aspp_Conv_2","aspp_BatchNorm_2","aspp_Relu_2",10,[6 6]);
-lgraph = addLayers(lgraph,tempLayers);
-
-tempLayers = FUNC.ConvBatchReluWDil([1 1],256,"same",[1 1],"aspp_Conv_1","aspp_BatchNorm_1","aspp_Relu_1",10,[1 1]);
-lgraph = addLayers(lgraph,tempLayers);
-
-tempLayers = FUNC.ConvBatchReluWDil([3 3],256,"same",[1 1],"aspp_Conv_4","aspp_BatchNorm_4","aspp_Relu_1",10,[18 18]);
-lgraph = addLayers(lgraph,tempLayers);
-
-tempLayers = FUNC.ConvBatchReluWDil([3 3],256,"same",[1 1],"aspp_Conv_3","aspp_BatchNorm_3","aspp_Relu_3",10,[12 12]);
-lgraph = addLayers(lgraph,tempLayers);
+end
 
 tempLayers = [
     depthConcatenationLayer(4,"Name","catAspp")
