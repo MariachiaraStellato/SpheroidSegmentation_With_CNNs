@@ -62,38 +62,20 @@ for i=1:22
     lgraph = addLayers(lgraph,tempLayers);
 end
 
-tempLayers = [FUNC.ConvBatchRelu([1 1],512,0,[1 1],"res5a_branch2a","bn5a_branch2a","res5a_branch2a_relu",1)
-              FUNC.ConvBatchRelu([3 3],512,[1 1 1 1],[1 1],"res5a_branch2b","bn5a_branch2b","res5a_branch2b_relu",1)
-              FUNC.ConvBatch([1 1],2048,0,[1 1],"res5a_branch2c","bn5a_branch2c",1)];
-lgraph = addLayers(lgraph,tempLayers);
+%Fifth branch
+
+for i=1:3
+    let = ["a","b","c"];
+    BatchName = strcat("5",let(i),"_branch");
+    tempLayers = [ FUNC.ICreateBatch([1 1],512,BatchName,1)
+                  FUNC.AdditionRelu(strcat("res5",let(i)))];
+    lgraph = addLayers(lgraph,tempLayers);
+end
 
 tempLayers = FUNC.ConvBatch([1 1],2048,0,[2 2],"res5a_branch1","bn5a_branch1",1);
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    additionLayer(2,"Name","res5a")
-    reluLayer("Name","res5a_relu")];
-lgraph = addLayers(lgraph,tempLayers);
-
-tempLayers = [FUNC.ConvBatchRelu([1 1],512,0,[1 1],"res5b_branch2a","bn5b_branch2a","res5b_branch2a_relu",1)
-              FUNC.ConvBatchRelu([3 3],512,[1 1 1 1],[1 1],"res5b_branch2b","bn5b_branch2b","res5b_branch2b_relu",1)
-              FUNC.ConvBatch([1 1],2048,0,[1 1],"res5b_branch2c","bn5b_branch2c",1)];
-lgraph = addLayers(lgraph,tempLayers);
-
-tempLayers = [
-    additionLayer(2,"Name","res5b")
-    reluLayer("Name","res5b_relu")];
-lgraph = addLayers(lgraph,tempLayers);
-
-tempLayers = [FUNC.ConvBatchRelu([1 1],512,0,[1 1],"res5c_branch2a","bn5c_branch2a","res5c_branch2a_relu",1)
-              FUNC.ConvBatchRelu([3 3],512,[1 1 1 1],[1 1],"res5c_branch2b","bn5c_branch2b","res5c_branch2b_relu",1)
-              FUNC.ConvBatch([1 1],2048,0,[1 1],"res5c_branch2c","bn5c_branch2c",1)];
-lgraph = addLayers(lgraph,tempLayers);
-
-tempLayers = [
-    additionLayer(2,"Name","res5c")
-    reluLayer("Name","res5c_relu")];
-lgraph = addLayers(lgraph,tempLayers);
+%Deconvolution Layers
 
 tempLayers = FUNC.ConvBatchReluWDil([3 3],256,"same",[1 1],"aspp_Conv_2","aspp_BatchNorm_2","aspp_Relu_2",10,[6 6]);
 lgraph = addLayers(lgraph,tempLayers);
