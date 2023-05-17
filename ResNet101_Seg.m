@@ -90,10 +90,7 @@ for i=1:4
 end
 
 tempLayers = [
-    depthConcatenationLayer(4,"Name","catAspp")
-    convolution2dLayer([1 1],256,"Name","dec_c1","BiasLearnRateFactor",0,"WeightLearnRateFactor",10)
-    batchNormalizationLayer("Name","dec_bn1")
-    reluLayer("Name","dec_relu1")
+    FUNC.DepthConvBatchRelu(4,[1 1],256,0,[1 1],"dec_c1","dec_bn1","dec_relu1","catAspp",10)
     transposedConv2dLayer([8 8],256,"Name","dec_upsample1","BiasLearnRateFactor",0,"Cropping",[2 2 2 2],"Stride",[4 4],"WeightLearnRateFactor",0)];
 lgraph = addLayers(lgraph,tempLayers);
 
@@ -101,13 +98,8 @@ tempLayers = crop2dLayer("centercrop","Name","dec_crop1");
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = [
-    depthConcatenationLayer(2,"Name","dec_cat1")
-    convolution2dLayer([3 3],256,"Name","dec_c3","BiasLearnRateFactor",0,"Padding","same","WeightLearnRateFactor",10)
-    batchNormalizationLayer("Name","dec_bn3")
-    reluLayer("Name","dec_relu3")
-    convolution2dLayer([3 3],256,"Name","dec_c4","BiasLearnRateFactor",0,"Padding","same","WeightLearnRateFactor",10)
-    batchNormalizationLayer("Name","dec_bn4")
-    reluLayer("Name","dec_relu4")
+    FUNC.DepthConvBatchRelu(2,[3 3],256,"same",[1 1],"dec_c3","dec_bn3","dec_relu3","dec_cat1",10)
+    FUNC.ConvBatchRelu([3 3],256,"same",[1 1],"dec_c4","dec_bn4","dec_relu4",10);
     convolution2dLayer([1 1],2,"Name","scorer","BiasLearnRateFactor",0,"WeightLearnRateFactor",10)
     transposedConv2dLayer([8 8],2,"Name","dec_upsample2_1","BiasLearnRateFactor",0,"Cropping",[2 2 2 2],"Stride",[4 4],"WeightLearnRateFactor",0)
     transposedConv2dLayer([8 8],2,"Name","dec_upsample2_2","BiasLearnRateFactor",0,"Cropping",[2 2 2 2],"Stride",[2 2],"WeightLearnRateFactor",0)];
