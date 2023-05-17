@@ -31,6 +31,20 @@ classdef FUNC
                 Layers = [TempLayers1
                           TempLayer2];
         end
+
+%-------------------------------------------------------------------------------------------------
+        function Layers = ConvBatchWdil(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w,dil)
+                Layers = [convolution2dLayer(FilterSize,FilterNumber,"Name",ConvName,"BiasLearnRateFactor",0,"Padding",Padding,"Stride",stride,"WeightLearnRateFactor",w,"DilationFactor",dil)
+                          batchNormalizationLayer("Name",BatchName)
+                          ];
+        end
+%-------------------------------------------------------------------------------------------------
+        function Layers = ConvBatchReluWDil(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,w,dil)
+                TempLayers1 = FUNC.ConvBatchWdill(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w,dill);
+                TempLayer2 = reluLayer("Name",ReluName);
+                Layers = [TempLayers1
+                          TempLayer2];
+        end
 %-------------------------------------------------------------------------------------------------
         function Layers = AdditionRelu(AdditionName, ReluName)
                  Layers = [additionLayer(2,"Name",AdditionName)
