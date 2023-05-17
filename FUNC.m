@@ -48,9 +48,9 @@ classdef FUNC
 %-------------------------------------------------------------------------------------------------
         function tempLayers = ICreateBatch(FilterNumber,BatchName,w)
 
-                tempLayers = [FUNC.ConvBatchRelu([1 1],FilterNumber,0,[1 1],strcat("res",BatchName,"a"),strcat("bn",BatchName,"a"),strcat("res",BatchName,"a_relu"),w)
-                              FUNC.ConvBatchRelu([3 3],FilterNumber,[1 1 1 1],[1 1],strcat("res",BatchName,"b"),strcat("bn",BatchName,"b"),strcat("res",BatchName,"b_relu"),w)
-                              FUNC.ConvBatch([1 1],4*FilterNumber,0,[1 1],strcat("res",BatchName,"c"),strcat("bn",BatchName,"c"),w)];
+                tempLayers = [FUNC.ConvBatchRelu([1 1],FilterNumber,0,[1 1],strcat("res",BatchName,"2a"),strcat("bn",BatchName,"2a"),strcat("res",BatchName,"2a_relu"),w)
+                              FUNC.ConvBatchRelu([3 3],FilterNumber,[1 1 1 1],[1 1],strcat("res",BatchName,"2b"),strcat("bn",BatchName,"2b"),strcat("res",BatchName,"2b_relu"),w)
+                              FUNC.ConvBatch([1 1],4*FilterNumber,0,[1 1],strcat("res",BatchName,"2c"),strcat("bn",BatchName,"2c"),w)];
         end
 
 %-------------------------------------------------------------------------------------------------
