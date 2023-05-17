@@ -46,6 +46,14 @@ classdef FUNC
                           TempLayer2];
         end
 %-------------------------------------------------------------------------------------------------
+        function tempLayers = ICreateBatch(FilterNumber,BatchName,w)
+
+                tempLayers = [FUNC.ConvBatchRelu([1 1],FilterNumber,0,[1 1],strcat("res",BatchName,"a"),strcat("bn",BatchName,"a"),strcat("res",BatchName,"a_relu"),w)
+                              FUNC.ConvBatchRelu([3 3],FilterNumber,[1 1 1 1],[1 1],strcat("res",BatchName,"b"),strcat("bn",BatchName,"b"),strcat("res",BatchName,"b_relu"),w)
+                              FUNC.ConvBatch([1 1],4*FilterNumber,0,[1 1],strcat("res",BatchName,"c"),strcat("bn",BatchName,"c"),w)];
+        end
+
+%-------------------------------------------------------------------------------------------------
         function Layers = AdditionRelu(AdditionName, ReluName)
                  Layers = [additionLayer(2,"Name",AdditionName)
                               reluLayer("Name",ReluName)];
