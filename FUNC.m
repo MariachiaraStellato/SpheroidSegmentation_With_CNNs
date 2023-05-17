@@ -31,7 +31,13 @@ classdef FUNC
                 Layers = [TempLayers1
                           TempLayer2];
         end
+% ------------------------------------------------------------------------------------------------
+        function Layers = DepthConvBatchRelu(NumInput, FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,DepthName,w)
 
+                Layers = [depthConcatenationLayer(NumInput,"Name",DepthName)
+                          FUNC.ConvBatchRelu(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,w)
+                          reluLayer("Name",ReluName)];
+        end
 %-------------------------------------------------------------------------------------------------
         function Layers = ConvBatchWdil(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w,dil)
                 Layers = [convolution2dLayer(FilterSize,FilterNumber,"Name",ConvName,"BiasLearnRateFactor",0,"Padding",Padding,"Stride",stride,"WeightLearnRateFactor",w,"DilationFactor",dil)
