@@ -25,8 +25,8 @@ classdef FUNC
         
 % ------------------------------------------------------------------------------------------------
 
-        function Layers = ConvBatchRelu(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName)
-                TempLayers1 = FUNC.ConvBatch(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName);
+        function Layers = ConvBatchRelu(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,w)
+                TempLayers1 = FUNC.ConvBatch(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w);
                 TempLayer2 = reluLayer("Name",ReluName);
                 Layers = [TempLayers1
                           TempLayer2];
