@@ -358,28 +358,16 @@ tempLayers = [
     reluLayer("Name","res5c_relu")];
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    convolution2dLayer([3 3],256,"Name","aspp_Conv_2","BiasLearnRateFactor",0,"DilationFactor",[6 6],"Padding","same","WeightLearnRateFactor",10)
-    batchNormalizationLayer("Name","aspp_BatchNorm_2")
-    reluLayer("Name","aspp_Relu_2")];
+tempLayers = FUNC.ConvBatchReluWDil([3 3],256,"same",[1 1],"aspp_Conv_2","aspp_BatchNorm_2","aspp_Relu_2",10,[6 6]);
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    convolution2dLayer([1 1],256,"Name","aspp_Conv_1","BiasLearnRateFactor",0,"Padding","same","WeightLearnRateFactor",10)
-    batchNormalizationLayer("Name","aspp_BatchNorm_1")
-    reluLayer("Name","aspp_Relu_1")];
+tempLayers = FUNC.ConvBatchReluWDil([1 1],256,"same",[1 1],"aspp_Conv_1","aspp_BatchNorm_1","aspp_Relu_1",10,[1 1]);
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    convolution2dLayer([3 3],256,"Name","aspp_Conv_4","BiasLearnRateFactor",0,"DilationFactor",[18 18],"Padding","same","WeightLearnRateFactor",10)
-    batchNormalizationLayer("Name","aspp_BatchNorm_4")
-    reluLayer("Name","aspp_Relu_4")];
+tempLayers = FUNC.ConvBatchReluWDil([3 3],256,"same",[1 1],"aspp_Conv_4","aspp_BatchNorm_4","aspp_Relu_1",10,[18 18]);
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    convolution2dLayer([3 3],256,"Name","aspp_Conv_3","BiasLearnRateFactor",0,"DilationFactor",[12 12],"Padding","same","WeightLearnRateFactor",10)
-    batchNormalizationLayer("Name","aspp_BatchNorm_3")
-    reluLayer("Name","aspp_Relu_3")];
+tempLayers = FUNC.ConvBatchReluWDil([3 3],256,"same",[1 1],"aspp_Conv_3","aspp_BatchNorm_3","aspp_Relu_3",10,[12 12]);
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = [
