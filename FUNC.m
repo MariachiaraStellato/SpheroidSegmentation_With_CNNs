@@ -40,7 +40,7 @@ classdef FUNC
         end
 %-------------------------------------------------------------------------------------------------
         function Layers = ConvBatchReluWDil(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,w,dil)
-                TempLayers1 = FUNC.ConvBatchWdill(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w,dill);
+                TempLayers1 = FUNC.ConvBatchWdill(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w,dil);
                 TempLayer2 = reluLayer("Name",ReluName);
                 Layers = [TempLayers1
                           TempLayer2];
