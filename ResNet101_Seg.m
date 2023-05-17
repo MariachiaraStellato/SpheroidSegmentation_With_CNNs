@@ -12,48 +12,22 @@ lgraph = addLayers(lgraph,tempLayers);
 tempLayers = FUNC.ConvBatch([1 1],256,0,[1 1],"res2a_branch1","bn2a_branch1",1);
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [FUNC.ConvBatchRelu([1 1],64,0,[1 1],"res2a_branch2a","bn2a_branch2a","res2a_branch2a_relu",1)
-              FUNC.ConvBatchRelu([3 3],64,[1 1 1 1],[1 1],"res2a_branch2b","bn2a_branch2b","res2a_branch2b_relu",1)
-              FUNC.ConvBatch([1 1],256,0,[1 1],"res2a_branch2c","bn2a_branch2c",1)];
-lgraph = addLayers(lgraph,tempLayers);
+%Second branch
+for i=1:3
+    let = ["a","b","c"];
+    BatchName = strcat("2",let(i),"_branch");
+    tempLayers = [ FUNC.ICreateBatch([1 1],64,BatchName,1)
+                  FUNC.AdditionRelu(strcat("res2",let(i)))];
+    lgraph = addLayers(lgraph,tempLayers);
+end
 
-tempLayers = [
-    additionLayer(2,"Name","res2a")
-    reluLayer("Name","res2a_relu")];
-lgraph = addLayers(lgraph,tempLayers);
-
-tempLayers = [FUNC.ConvBatchRelu([1 1],64,0,[1 1],"res2b_branch2a","bn2b_branch2a","res2b_branch2a_relu",1)
-              FUNC.ConvBatchRelu([3 3],64,[1 1 1 1],[1 1],"res2b_branch2b","bn2b_branch2b","res2b_branch2b_relu",1)
-              FUNC.ConvBatch([1 1],256,0,[1 1],"res2b_branch2c","bn2b_branch2c",1)];
-lgraph = addLayers(lgraph,tempLayers);
-
-tempLayers = [
-    additionLayer(2,"Name","res2b")
-    reluLayer("Name","res2b_relu")];
-lgraph = addLayers(lgraph,tempLayers);
-
-
-tempLayers = [FUNC.ConvBatchRelu([1 1],64,0,[1 1],"res2c_branch2a","bn2c_branch2a","res2c_branch2a_relu",1)
-              FUNC.ConvBatchRelu([3 3],64,[1 1 1 1],[1 1],"res2c_branch2b","bn2c_branch2b","res2c_branch2b_relu",1)
-              FUNC.ConvBatch([1 1],256,0,[1 1],"res2c_branch2c","bn2c_branch2c",1)];
-lgraph = addLayers(lgraph,tempLayers);
-
-tempLayers = [
-    additionLayer(2,"Name","res2c")
-    reluLayer("Name","res2c_relu")];
-lgraph = addLayers(lgraph,tempLayers);
-
-tempLayers = [FUNC.ConvBatchRelu([1 1],128,0,[2 2],"res3a_branch2a","bn3a_branch2a","res3a_branch2a_relu",1)
-              FUNC.ConvBatchRelu([3 3],128,[1 1 1 1],[1 1],"res3a_branch2b","bn3a_branch2b","res3a_branch2b_relu",1)
-              FUNC.ConvBatch([1 1],512,0,[1 1],"res3a_branch2c","bn3a_branch2c",1)];
+tempLayers = FUNC.ICreateBatch([2 2],128,"3a_branch",1);
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = FUNC.ConvBatch([1 1],512,0,[2 2],"res3a_branch1","bn3a_branch1",1);
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = [
-    additionLayer(2,"Name","res3a")
-    reluLayer("Name","res3a_relu")];
+tempLayers = FUNC.AdditionRelu("res3a");
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = [FUNC.ConvBatchRelu([1 1],128,0,[1 1],"res3b1_branch2a","bn3b1_branch2a","res3b1_branch2a_relu",1)
