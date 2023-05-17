@@ -1,22 +1,6 @@
 classdef FUNC
     methods(Static)
 % ------------------------------------------------------------------------------------------------
-        function name = iConvLayerName(Firstidx, prefix, encoderIdx, suffix)
-            name = sprintf('res%d%s_branch%d%s',Firstidx, prefix, encoderIdx, suffix);
-        end
-% ------------------------------------------------------------------------------------------------
-        function name = iBatchLayerName(Firstidx, prefix, encoderIdx, suffix)
-            name = sprintf('bn%d%s_branch%d%s',Firstidx, prefix, encoderIdx, suffix);
-        end
-% ------------------------------------------------------------------------------------------------
-        function name = iReluLayerName(PreviousLayerName)
-            name = sprintf('%s_relu',PreviousLayerName);
-        end
-% ------------------------------------------------------------------------------------------------
-        function name = iAdditionLayerName(Firstidx, prefix)
-            name = sprintf('res%d%s',Firstidx, prefix);
-        end
-% ------------------------------------------------------------------------------------------------
         function Layers = ConvBatch(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w)
                 Layers = [convolution2dLayer(FilterSize,FilterNumber,"Name",ConvName,"BiasLearnRateFactor",0,"Padding",Padding,"Stride",stride,"WeightLearnRateFactor",w)
                           batchNormalizationLayer("Name",BatchName)
