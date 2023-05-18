@@ -147,7 +147,73 @@ classdef tests<matlab.unittest.TestCase
             rmdir(Folder,'s');
             testCase.verifyEqual(im, savedImage, 'The saved image is not equal to the original image.');
         end
-
+        
+        function testLayersSize(testCase)
+            % Test that the number of layers returned is correct
+            FilterSize = [3 3];
+            FilterNumber = 64;
+            Padding = 'same';
+            Stride = [1 1];
+            ConvName = 'conv1';
+            BatchName = 'batchnorm1';
+            w = 1;
+            
+            Layers = ConvBatch(FilterSize, FilterNumber, Padding, Stride, ConvName, BatchName, w);
+            
+            expectedNumLayers = 2;
+            actualNumLayers = numel(Layers);
+            testCase.verifyEqual(actualNumLayers, expectedNumLayers, 'The number of layers returned is incorrect.');
+        end
+        
+        function testConvolutionLayer(testCase)
+            % Test the properties of the convolution layer
+            FilterSize = [3 3];
+            FilterNumber = 64;
+            Padding = 'same';
+            Stride = [1 1];
+            ConvName = 'conv1';
+            BatchName = 'batchnorm1';
+            w = 1;
+            
+            Layers = ConvBatch(FilterSize, FilterNumber, Padding, Stride, ConvName, BatchName, w);
+            
+            expectedConvLayerName = 'conv1';
+            actualConvLayerName = Layers(1).Name;
+            testCase.verifyEqual(actualConvLayerName, expectedConvLayerName, 'The convolution layer has the wrong name.');
+            
+            expectedConvLayerBiasLearnRateFactor = 0;
+            actualConvLayerBiasLearnRateFactor = Layers(1).BiasLearnRateFactor;
+            testCase.verifyEqual(actualConvLayerBiasLearnRateFactor, expectedConvLayerBiasLearnRateFactor, 'The convolution layer has the wrong bias learn rate factor.');
+            
+            expectedConvLayerPadding = 'same';
+            actualConvLayerPadding = Layers(1).Padding;
+            testCase.verifyEqual(actualConvLayerPadding, expectedConvLayerPadding, 'The convolution layer has the wrong padding.');
+            
+            expectedConvLayerStride = [1 1];
+            actualConvLayerStride = Layers(1).Stride;
+            testCase.verifyEqual(actualConvLayerStride, expectedConvLayerStride, 'The convolution layer has the wrong stride.');
+            
+            expectedConvLayerWeightLearnRateFactor = 1;
+            actualConvLayerWeightLearnRateFactor = Layers(1).WeightLearnRateFactor;
+            testCase.verifyEqual(actualConvLayerWeightLearnRateFactor, expectedConvLayerWeightLearnRateFactor, 'The convolution layer has the wrong weight learn rate factor.');
+        end
+        
+        function testBatchNormalizationLayer(testCase)
+            % Test the properties of the batch normalization layer
+            FilterSize = [3 3];
+            FilterNumber = 64;
+            Padding = 'same';
+            Stride = [1 1];
+            ConvName = 'conv1';
+            BatchName = 'batchnorm1';
+            w = 1;
+            
+            Layers = ConvBatch(FilterSize, FilterNumber, Padding, Stride, ConvName, BatchName, w);
+            
+            expectedBatchNormLayerName = 'batchnorm1';
+            actualBatchNormLayerName = Layers(2).Name;
+            testCase.verifyEqual(actualBatchNormLayerName, expectedBatchNormLayerName, 'The batch normalization layer has the wrong name.');
+        end
 
 
     end
