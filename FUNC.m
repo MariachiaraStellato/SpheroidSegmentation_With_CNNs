@@ -279,6 +279,28 @@ classdef FUNC
         end
 %-------------------------------------------------------------------------------------------------
         function file_name = IGetFileName(ImFolder,specificImageName)
+            % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
+            % FUNCTION DESCRITPION: 
+            %   This function will get the string that identifies the
+            %   computer path containing the image specified by the
+            %   specificImageName variable contained in the ImFolder
+            %
+            % INPUTS:
+            %   ImFolder:           string containing the folder in which the
+            %                       the image is stored
+            %   specificImageName:  string containing the specific name of 
+            %                       the image you want the name of             
+            
+            % MiAi (Microscopy & Artificial Intelligence) Toolbox
+            % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
+            % University of Bologna, Italy. All rights reserved.
+            %
+            % This program is free software; you can redistribute it and/or modify it 
+            % under the terms of the GNU General Public License version 3 (or higher) 
+            % as published by the Free Software Foundation. This program is 
+            % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
+            % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+            % General Public License for more details.
             dir_struct = dir(ImFolder);
             N = length(dir_struct);
             dir_struct = dir_struct(N);
