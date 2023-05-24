@@ -61,7 +61,8 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
     %number of images used for the training
     numTrainingImages = numel(dsTrain.UnderlyingDatastores{1,1}.Files);
     
-    %network selection
+%-----------------------network selection----------------------------------
+    % ResNet18 and ResNet50 initialization
     if NetworkType == 3 || NetworkType == 4
     NetworkType = NetworkType - 2; 
     network = ['resnet18', 'resnet50'];
@@ -78,17 +79,19 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
     lgraph = replaceLayer(lgraph,"classification",pxLayer);
     end  
 
+    % ResNet101 initialization
     if NetworkType == 5
         lgraph = ResNet101_Seg(imageSize);
     end
-
+    
+    % VGG16 and VGG19 initialization
     if NetworkType == 1 || NetworkType == 2
     network = ['vgg16', 'vgg19'];
     network = string(network);
     lgraph = segnetLayers(imageSize,numClasses,network(NetworkType));    
     end
 
-    %set training options
+%------------------------set training options------------------------------
     batchsize = round(numTrainingImages/10);
     if isdeployed
         op = 'none';
@@ -123,7 +126,7 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
         end
     end
 
-%% training
+%---------------------------training---------------------------------------
 
 %this window appear only if the function is used in a deployed app
 if constant == 1
