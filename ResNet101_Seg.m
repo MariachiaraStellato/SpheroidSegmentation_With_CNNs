@@ -24,11 +24,12 @@ function lgraph = ResNet101_Seg(ImageSize,NumClasses)
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
 % General Public License for more details.
 
+%initialize an empty layergraph
 lgraph = layerGraph();
 tempLayers = imageInputLayer(ImageSize,"Name","data");
 lgraph = addLayers(lgraph,tempLayers);
 
-
+%create the downsizing part of the nerwork
 tempLayers = [FUNC.ConvBatchRelu([7 7],64,[3 3 3 3],[2 2],"conv1","bn_conv1","conv1_relu",1)
               maxPooling2dLayer([3 3],"Name","pool1","Padding",[0 1 0 1],"Stride",[2 2])];
 lgraph = addLayers(lgraph,tempLayers);
@@ -99,7 +100,7 @@ end
 tempLayers = FUNC.ConvBatch([1 1],2048,0,[2 2],"res5a_branch1","bn5a_branch1",1);
 lgraph = addLayers(lgraph,tempLayers);
 
-%Deconvolution Layers
+%initialization of the deconvolution part of the network 
 for i=1:4
     if i == 1
         filterSize = [1 1];
@@ -137,6 +138,8 @@ lgraph = addLayers(lgraph,tempLayers);
 
 % clean up helper variable
 clear tempLayers;
+
+% connect the layers in teh right order
 lgraph = connectLayers(lgraph,"data","conv1");
 lgraph = connectLayers(lgraph,"data","dec_crop2/ref");
 lgraph = connectLayers(lgraph,"pool1","res2a_branch1");
