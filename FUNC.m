@@ -312,26 +312,29 @@ classdef FUNC
         end
 %-------------------------------------------------------------------------------------------------
         function TempImDirName = process_images(ImagesFolderName, WantedSize, c)
-        % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
-        % INPUT: 
-        %       imagesFolderName:  folder path of the images to process (string)
-        %       WantedSize: size we want the new images to be ([lenght eight])
-        %       c: if 1 output images will be 3 color channel, else
-        %       grayscales
-        % OUTPUT:
-        %        TempImDirName: new folder path where the resized and modified images
-        %        are stored 
- 
-        % MiAi (Microscopy & Artificial Intelligence) Toolbox
-        % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
-        % University of Bologna, Italy. All rights reserved.
-        %
-        % This program is free software; you can redistribute it and/or modify it 
-        % under the terms of the GNU General Public License version 3 (or higher) 
-        % as published by the Free Software Foundation. This program is 
-        % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
-        % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
-        % General Public License for more details.
+            % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
+            % INPUT: 
+            %       imagesFolderName:   string containing the folder path of
+            %                           the images to processed
+            %       WantedSize:         [a b] numerical array containing
+            %                           the size we want the images to be resized to
+            %       c:                  integer number.
+            %                           c == 1      output images with 3 color channels. 
+            %                           else        output image with 1 colour channel. 
+            % OUTPUT:
+            %        TempImDirName: string containing the created folder path where the 
+            %                       resized and modified images are stored 
+     
+            % MiAi (Microscopy & Artificial Intelligence) Toolbox
+            % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
+            % University of Bologna, Italy. All rights reserved.
+            %
+            % This program is free software; you can redistribute it and/or modify it 
+            % under the terms of the GNU General Public License version 3 (or higher) 
+            % as published by the Free Software Foundation. This program is 
+            % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
+            % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+            % General Public License for more details.
         if not(isfolder(ImagesFolderName))
             error('The folder name was not correctly defined')
         end
