@@ -551,13 +551,16 @@ classdef FUNC
 %-------------------------------------------------------------------------------------------------
 function I = seg_and_fill(im, net)
 % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
-%
-%this function segments and than check and fills any holes in the 
-%segmentation for the single image given as an input by using the
-%network given as an input.
-%im:        image we want to segment
-%net:       DAGNetwork file tipe containing the trained network to use for
-%           the segmentation
+% FUNCTION DESCRIPTION: 
+%       this function segments and than check and fills any holes in the 
+%       segmentation for the single image given as an input by using the
+%       network given as an input.
+% INPUTS: 
+%           im:        image we want to segment
+%           net:       DAGNetwork file tipe containing the trained network to use for
+%                      the segmentation
+% OUTPUT: 
+%           I:          segmented mask
 
 % MiAi (Microscopy & Artificial Intelligence) Toolbox
 % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
@@ -570,10 +573,13 @@ function I = seg_and_fill(im, net)
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
 % General Public License for more details.
 
+%label map
 cmap = [
     0 0 0  %background
     1 1 1  %Sferoids
 ];
+
+%Image segmentation
 segmented = semanticseg(im, net);
 B = labeloverlay(im,segmented,'Colormap',cmap,'Transparency',0);
 Bi = rgb2gray(B);
