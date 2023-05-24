@@ -33,4 +33,30 @@ This automated method has been incorporated into the already existig AnaSP softw
 
 ## Installation
 
+To clone the git repository, type the following commands from terminal:
+
+```         
+git clone https: https://github.com/MariachiaraStellato/SpheroidSegmentation_With_ResNet101
+cd SpheroidSegmentation_With_ResNet101
+```
+
+To run the functions used it is necessary to have the deep learning toolbox installed on matlab. You can check if you already have it by writing in your MATLAB command line:
+
+```         
+ver('Deep Learning Toolbox')
+```
+If it is not installed, you can instal and/or purcase it at the following link: 
+https://it.mathworks.com/products/deep-learning.html
+
+It is also necessary to install some required packages. They can be found at the following links:
+
+- VGG16: https://it.mathworks.com/matlabcentral/fileexchange/61733-deep-learning-toolbox-model-for-vgg-16-network
+
+- VGG19: https://it.mathworks.com/matlabcentral/fileexchange/61734-deep-learning-toolbox-model-for-vgg-19-network
+- ResNet18: https://it.mathworks.com/matlabcentral/fileexchange/68261-deep-learning-toolbox-model-for-resnet-18-network
+
+- ResNet50: https://it.mathworks.com/matlabcentral/fileexchange/64626-deep-learning-toolbox-model-for-resnet-50-network
+
+
+
 
