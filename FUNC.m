@@ -210,6 +210,29 @@ classdef FUNC
         end
 % ------------------------------------------------------------------------------------------------
         function ISaveImages(FilesNames,Folder,im)
+            % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
+            % FUNCTION DESCRITPION: 
+            %   This function will save the selected image into the
+            %   selected folder with the name given as FilesNames input
+            %
+            % INPUTS:
+            %   FilesNames: string containing the name that will be given
+            %               to the saved image
+            %   Folder:     string containing the name of the folder in
+            %               which the image will be saved. 
+            %   im:         images to be saved
+
+            % MiAi (Microscopy & Artificial Intelligence) Toolbox
+            % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
+            % University of Bologna, Italy. All rights reserved.
+            %
+            % This program is free software; you can redistribute it and/or modify it 
+            % under the terms of the GNU General Public License version 3 (or higher) 
+            % as published by the Free Software Foundation. This program is 
+            % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
+            % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+            % General Public License for more details.
+
             file = char(FilesNames);
             PositionsPoints = strfind(file, '.');
             PositionLastPoint = PositionsPoints(end);
