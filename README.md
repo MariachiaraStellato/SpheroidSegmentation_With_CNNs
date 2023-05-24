@@ -6,6 +6,8 @@ The implemented segmentation networks that are trainable are VGG16, VGG19, ResNe
 
 ## Introduction
 
+The goal of this project is to create an automatic system to perform spheroid segmentation 
+
 ## Repository Contents
 
 ## Installation
