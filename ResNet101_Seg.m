@@ -1,6 +1,30 @@
-function lgraph = ResNet101_Seg(ImageSize)
+function lgraph = ResNet101_Seg(ImageSize,NumClasses)
+% AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
+% FUNCTION DESCRITPION: 
+%   This function will create a segmentation neural network based on the
+%   convolution neural network called ResNet101.
+%
+% INPUTS: 
+%   ImageSize:      [a b] numerical array containing the size of the images 
+%                   that will be used for the training 
+%   NumClasses:     integer that specigy the number of classes for which
+%                   the network will be trained. 
+% OUTPUT: 
+%   lgraph:         lgraph containing the connected layers that form the
+%                   segmentation network
 
-    lgraph = layerGraph();
+% MiAi (Microscopy & Artificial Intelligence) Toolbox
+% Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
+% University of Bologna, Italy. All rights reserved.
+%
+% This program is free software; you can redistribute it and/or modify it 
+% under the terms of the GNU General Public License version 3 (or higher) 
+% as published by the Free Software Foundation. This program is 
+% distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+% General Public License for more details.
+
+lgraph = layerGraph();
 tempLayers = imageInputLayer(ImageSize,"Name","data");
 lgraph = addLayers(lgraph,tempLayers);
 
@@ -100,9 +124,9 @@ lgraph = addLayers(lgraph,tempLayers);
 tempLayers = [
     FUNC.DepthConvBatchRelu(2,[3 3],256,"same",[1 1],"dec_c3","dec_bn3","dec_relu3","dec_cat1",10)
     FUNC.ConvBatchRelu([3 3],256,"same",[1 1],"dec_c4","dec_bn4","dec_relu4",10);
-    convolution2dLayer([1 1],2,"Name","scorer","BiasLearnRateFactor",0,"WeightLearnRateFactor",10)
-    transposedConv2dLayer([8 8],2,"Name","dec_upsample2_1","BiasLearnRateFactor",0,"Cropping",[2 2 2 2],"Stride",[4 4],"WeightLearnRateFactor",0)
-    transposedConv2dLayer([8 8],2,"Name","dec_upsample2_2","BiasLearnRateFactor",0,"Cropping",[2 2 2 2],"Stride",[2 2],"WeightLearnRateFactor",0)];
+    convolution2dLayer([1 1],NumClasses,"Name","scorer","BiasLearnRateFactor",0,"WeightLearnRateFactor",10)
+    transposedConv2dLayer([8 8],NumClasses,"Name","dec_upsample2_1","BiasLearnRateFactor",0,"Cropping",[2 2 2 2],"Stride",[4 4],"WeightLearnRateFactor",0)
+    transposedConv2dLayer([8 8],NumClasses,"Name","dec_upsample2_2","BiasLearnRateFactor",0,"Cropping",[2 2 2 2],"Stride",[2 2],"WeightLearnRateFactor",0)];
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = [
