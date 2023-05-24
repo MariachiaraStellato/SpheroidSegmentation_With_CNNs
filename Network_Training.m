@@ -19,6 +19,8 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
 %                   3 == Vgg16
 %                   4 == Vgg19
 %                   5 == ResNet101
+% OUTPUT: 
+%   net:            DAGNetwork file containing the trained network
 
 % MiAi (Microscopy & Artificial Intelligence) Toolbox
 % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
