@@ -17,17 +17,17 @@ This automated method has been incorporated into the already existig AnaSP softw
 
 - `gitignore` containing file types that are not trakced by git.
 
-- `FUNC` containing the function necessary to the main code.
+- `FUNC.m` containing the function necessary to the main code.
 
-- `Main` example code that explains how to use the project.
+- `Main.m` example code that explains how to use the project.
 
-- `metric_evaluation` containing the function responsible of evaluating the quality of the  performed segmentation.
+- `metric_evaluation.m` containing the function responsible of evaluating the quality of the  performed segmentation.
 
-- `Network_Training` containing the function responsible of training new segmentation neural networks.
+- `Network_Training.m` containing the function responsible of training new segmentation neural networks.
 
-- `ResNet101_Seg` containing the function responsible of generating the segmentation network based on the convolutional neural network ResNet101.
+- `ResNet101_Seg.m` containing the function responsible of generating the segmentation network based on the convolutional neural network ResNet101.
 
-- `segmentation_multiple_images` containing the function responsible of performing the segmentation of spheroid images using the trained neural network.
+- `segmentation_multiple_images.m` containing the function responsible of performing the segmentation of spheroid images using the trained neural network.
 
 
 
