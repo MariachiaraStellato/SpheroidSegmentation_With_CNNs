@@ -362,7 +362,7 @@ classdef FUNC
           end
             %resize the image 
             I = imresize(I,WantedSize);
-            
+
             %save images in the new folder
             FUNC.ISaveImages(inputFileName,TempImDirName,I);
         end
@@ -376,56 +376,63 @@ classdef FUNC
         
         end
 %-------------------------------------------------------------------------------------------------------------------
-function TempImDirName = resize_images(ImagesFolderName, WantedSize)
-% AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com) 
-% INPUT: 
-%       imagesFolderName:  folder path of the images to process (string)
-%       WantedSize: size we want the new images to be ([lenght eight])
-%       
-% OUTPUT:
-%        TempImDirName: new folder path where the resized images
-%        are stored 
-% MiAi (Microscopy & Artificial Intelligence) Toolbox
-% Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
-% University of Bologna, Italy. All rights reserved.
-%
-% This program is free software; you can redistribute it and/or modify it 
-% under the terms of the GNU General Public License version 3 (or higher) 
-% as published by the Free Software Foundation. This program is 
-% distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
-% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
-% General Public License for more details.
-if not(isfolder(ImagesFolderName))
-    error('The folder name was not correctly defined')
-end
-image = imageDatastore(ImagesFolderName, ...
-    'IncludeSubfolders',true, ...
-    'LabelSource','foldernames');
-
-numberOfImages = length(image.Files);
-TempImDirName = [ImagesFolderName, filesep, 'TempMask'];
-
-for k = 1 : numberOfImages
-  % Get the input filename.  It already has the folder prepended so we don't need to worry about that.
-  inputFileName = image.Files{k};
-  fprintf('%s\n', inputFileName);
-  I = imread(inputFileName);
-  if islogical(I)
-      I = uint8(I);
-  end
-    %resize the image 
-  I = imresize(I,WantedSize);
- %salvare l'immagine nel nuovo folder 
- FUNC.ISaveImages(inputFileName,TempImDirName,I);
-end
-done = msgbox('Masks correctly processed!');
-if exist('done', 'var')
-    if ishandle(done)
-       pause(2*eps);
-        delete(done)
-    end
-end
-end
+        function TempImDirName = resize_images(ImagesFolderName, WantedSize)
+            % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com) 
+            % INPUT: 
+            %       imagesFolderName:  string containing the name of the 
+            %                          folder path of the images to process
+            %       WantedSize:        [a b] numerical array containing the
+            %                          size we want the new images to be resized to
+            %       
+            % OUTPUT:
+            %        TempImDirName: string containing the name of the new folder path where the resized images
+            %                       are stored 
+            
+            % MiAi (Microscopy & Artificial Intelligence) Toolbox
+            % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
+            % University of Bologna, Italy. All rights reserved.
+            %
+            % This program is free software; you can redistribute it and/or modify it 
+            % under the terms of the GNU General Public License version 3 (or higher) 
+            % as published by the Free Software Foundation. This program is 
+            % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
+            % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+            % General Public License for more details.
+        
+        %check to see if the folder was correctly defined
+        if not(isfolder(ImagesFolderName))
+            error('The folder name was not correctly defined')
+        end
+        
+        %load images
+        image = imageDatastore(ImagesFolderName, ...
+            'IncludeSubfolders',true, ...
+            'LabelSource','foldernames');
+        
+        numberOfImages = length(image.Files);
+        TempImDirName = [ImagesFolderName, filesep, 'TempMask'];
+        
+        for k = 1 : numberOfImages
+          % Get the file name of the images inside the folder.  
+          inputFileName = image.Files{k};
+          fprintf('%s\n', inputFileName);
+          I = imread(inputFileName);
+          if islogical(I)
+              I = uint8(I);
+          end
+          %resize the image 
+          I = imresize(I,WantedSize);
+          %save the images in the new folder
+          FUNC.ISaveImages(inputFileName,TempImDirName,I);
+        end
+        done = msgbox('Masks correctly processed!');
+        if exist('done', 'var')
+            if ishandle(done)
+               pause(2*eps);
+                delete(done)
+            end
+        end
+        end
 %-----------------------------------------------------------------------------------------------------
 function [dsTrain, dsVal, dsTest] = Dataset_processing(ImagesDir,MasksDir)
 % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
