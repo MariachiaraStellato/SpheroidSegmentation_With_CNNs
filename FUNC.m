@@ -248,6 +248,28 @@ classdef FUNC
         end
 %-------------------------------------------------------------------------------------------------
         function IPlotImagesAndMasks(im,I,FileName)
+            % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
+            % FUNCTION DESCRITPION: 
+            %   This function will plot in the same figure the image and
+            %   the mask given as input. The figure will have as title the
+            %   FileName variable
+            %
+            % INPUTS:
+            %   im:         images to be plotted
+            %   I:          masks to be plotted
+            %   FileName:   string containing the name that will be used as
+            %               the figure title
+            
+            % MiAi (Microscopy & Artificial Intelligence) Toolbox
+            % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
+            % University of Bologna, Italy. All rights reserved.
+            %
+            % This program is free software; you can redistribute it and/or modify it 
+            % under the terms of the GNU General Public License version 3 (or higher) 
+            % as published by the Free Software Foundation. This program is 
+            % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
+            % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+            % General Public License for more details.
             imOut = uint8(im);
             imIn = uint8(I);
             Bar = max(imIn(:)).*uint8([ones(a, 5) zeros(a, 5) ones(a, 5)]);
