@@ -446,10 +446,10 @@ classdef FUNC
         function [dsTrain, dsVal, dsTest] = Dataset_processing(ImagesDir,MasksDir)
             % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
             % DATE: september 2022, 13
-            %
-            % This function divide the image datastore given as input and create the training dataset, validation dataset and testing
-            % that will be used to train a CNN network by assigning 
-            % to every image in the dataset the labels specified in "classes"
+            % FUNCTION DESCRITPION: 
+            %   This function will prepare the images for the network
+            %   training by labelling them and dividing them into a tran, a
+            %   validation and a test dataset.
             % INPUT:
             % imagesDir:        is a string containing the directory of the images
             %                   folders 
@@ -488,6 +488,9 @@ classdef FUNC
             'LabelSource','foldernames'); 
         num1 = numel(image.Files);
         num2 = numel(masks.Files);
+
+        %check if the folder was correctly defined and the images contained
+        %are the correct ones to be used for the training
         if num1~=num2
             error('The image folder and the mask folder must contain the same number of images');
         end
@@ -501,8 +504,8 @@ classdef FUNC
                    delete(datcre)
              end
         end
-        % Labels
-        
+
+        % Labels        
         classes = [
             "Sferoids"
             "Background"
@@ -519,10 +522,10 @@ classdef FUNC
               delete(labcre)
            end
         end
-        % split the set in training,test and validation 
-        
+
+        % split the set in training,test and validation         
         % 80% for training, 10% for test, %10 for validation
-        [imdsTrain,imdsValidation, imdsTest] = splitEachLabel(image,0.8,0.1); %immages 
+        [imdsTrain,imdsValidation, imdsTest] = splitEachLabel(image,0.8,0.1); %images 
         
         [maskTrain,maskValidation, maskTest] = splitEachLabel(masks,0.8,0.1); %masks
         
