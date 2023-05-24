@@ -89,7 +89,7 @@ classdef FUNC
         function Layers = DepthConvBatchRelu(NumInput, FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,DepthName,w)
             % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
             % FUNCTION DESCRITPION: 
-            %   This function will create a convolutional Layer, a Batch
+            %   This function will create a depth concatenation layer, a convolutional Layer, a Batch
             %   Normalization Layer and a ReLU layer with the given inputs as paramenters
             %
             % INPUTS: 
