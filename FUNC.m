@@ -184,6 +184,27 @@ classdef FUNC
 
 %-------------------------------------------------------------------------------------------------
         function Layers = AdditionRelu(AdditionName)
+            % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
+            % FUNCTION DESCRITPION: 
+            %   This function will create an addition layer and a ReLu
+            %   layer
+            %
+            % INPUTS:
+            %   AdditionName:   string containing the name of the addition
+            %                   and reLU layer
+            % OUTPUT: 
+            %   Layers:         array containing the created layers 
+
+            % MiAi (Microscopy & Artificial Intelligence) Toolbox
+            % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
+            % University of Bologna, Italy. All rights reserved.
+            %
+            % This program is free software; you can redistribute it and/or modify it 
+            % under the terms of the GNU General Public License version 3 (or higher) 
+            % as published by the Free Software Foundation. This program is 
+            % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
+            % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+            % General Public License for more details.
                  Layers = [additionLayer(2,"Name",AdditionName)
                               reluLayer("Name",strcat(AdditionName,"_relu"))];
         end
