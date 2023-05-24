@@ -146,9 +146,38 @@ classdef FUNC
                           TempLayer2];
         end
 %-------------------------------------------------------------------------------------------------
-        function tempLayers = ICreateBatch(FilterSize,FilterNumber,BatchName,w)
+        function Layers = ICreateBatch(FilterSize,FilterNumber,BatchName,w)
+            % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
+            % FUNCTION DESCRITPION: 
+            %   This function will create a Layers batch containing three
+            %   batch normalization layers, three convolutional layers and
+            %   two ReLU layers. 
+            %
+            % INPUTS: 
+            %   FilterSize: [a b] numeric array of two integer elements.
+            %               Determines the filter size of the convolutional layer
+            %   FilterNumber:   integer containing the filter number of the
+            %                   first convolutional layer. 
+            %   BatchName:      string containing the name that will be
+            %                   given to every layer in the batch alongside
+            %                   the identification numbers for every
+            %                   particular layer. 
+            %   w:              integer number containing the weight used
+            %                   to initialize the convolutional layers. 
+            % OUTPUT: 
+            %   Layers:         array containing the created batch 
 
-                tempLayers = [FUNC.ConvBatchRelu(FilterSize,FilterNumber,0,[1 1],strcat("res",BatchName,"2a"),strcat("bn",BatchName,"2a"),strcat("res",BatchName,"2a_relu"),w)
+            % MiAi (Microscopy & Artificial Intelligence) Toolbox
+            % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
+            % University of Bologna, Italy. All rights reserved.
+            %
+            % This program is free software; you can redistribute it and/or modify it 
+            % under the terms of the GNU General Public License version 3 (or higher) 
+            % as published by the Free Software Foundation. This program is 
+            % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
+            % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+            % General Public License for more details.
+                 Layers = [FUNC.ConvBatchRelu(FilterSize,FilterNumber,0,[1 1],strcat("res",BatchName,"2a"),strcat("bn",BatchName,"2a"),strcat("res",BatchName,"2a_relu"),w)
                               FUNC.ConvBatchRelu([3 3],FilterNumber,[1 1 1 1],[1 1],strcat("res",BatchName,"2b"),strcat("bn",BatchName,"2b"),strcat("res",BatchName,"2b_relu"),w)
                               FUNC.ConvBatch([1 1],4*FilterNumber,0,[1 1],strcat("res",BatchName,"2c"),strcat("bn",BatchName,"2c"),w)];
         end
