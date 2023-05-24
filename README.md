@@ -13,7 +13,7 @@ This automated method has been incorporated into the already existig AnaSP softw
 ## Repository Contents
 
 
-- 'gitattributes'
+- `gitattributes`
 
 - 'gitignore' containing file types that are not trakced by git.
 
