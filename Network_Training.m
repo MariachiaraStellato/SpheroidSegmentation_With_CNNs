@@ -1,6 +1,35 @@
 function net = Network_Training(ImagesDir, MasksDir, NetworkType)
+% AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
+% FUNCTION DESCRITPION: 
+%   This function will take a selected dataset of images with the associated binary masks
+%   and train it with the chosen neural network.
+%   The implemented networks are VGG16, VGG19, ResNet18, ResNet50 and
+%   ResNet101.
+%   To use this function you must install the deep learning matlab tool and the
+%   pre-trained networks Vgg16, Vgg19, ResNet18, ResNet50
+%
+% INPUTS: 
+%   imagesDir:      a string containing the directory of the images
+%                   folder 
+%   MasksDir:       a string containing the directory of the masks folders on
+%                   which the function will base the labels
+%   NetworkType:    integer number used to select the neural network to be used for the training
+%                   1 == ResNet18
+%                   2 == ResNet50
+%                   3 == Vgg16
+%                   4 == Vgg19
+%                   5 == ResNet101
 
- 
+% MiAi (Microscopy & Artificial Intelligence) Toolbox
+% Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
+% University of Bologna, Italy. All rights reserved.
+%
+% This program is free software; you can redistribute it and/or modify it 
+% under the terms of the GNU General Public License version 3 (or higher) 
+% as published by the Free Software Foundation. This program is 
+% distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+% General Public License for more details.
 
     a = 500; 
     b = 500; 
