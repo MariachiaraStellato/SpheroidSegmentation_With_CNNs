@@ -2,6 +2,40 @@ classdef FUNC
     methods(Static)
 % ------------------------------------------------------------------------------------------------
         function Layers = ConvBatch(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w)
+            % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
+            % FUNCTION DESCRITPION: 
+            %   This function will create a convolutional Layer and a Batch
+            %   Normalization Layer with the given inputs as paramenters
+            %
+            % INPUTS: 
+            %   FilterSize: [a b] numeric array of two integer elements.
+            %               Determines the filter size of the convolutional layer
+            %   FilterNumber: integer containing the filter number of the
+            %                 convolutional layer. 
+            %   Padding:        integer or numeric array containing the padding
+            %                   size of the convolutional layer. 
+            %   stride:         integer containing the stride of the convolutional
+            %                   layer.
+            %   ConvName:       string containing the name that will be given to
+            %                   the convolutional layer. 
+            %   BatchName:      string containing the name that will be given to
+            %                   the Batch Normalization layer. 
+            %   w:              integer number containing the weight used
+            %                   to initialize the convolutional layer. 
+            % OUTPUT: 
+            %   Layers:         array containing a convolutional layer and
+            %                   a batch normalization layer. 
+
+            % MiAi (Microscopy & Artificial Intelligence) Toolbox
+            % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
+            % University of Bologna, Italy. All rights reserved.
+            %
+            % This program is free software; you can redistribute it and/or modify it 
+            % under the terms of the GNU General Public License version 3 (or higher) 
+            % as published by the Free Software Foundation. This program is 
+            % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
+            % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+            % General Public License for more details.
                 Layers = [convolution2dLayer(FilterSize,FilterNumber,"Name",ConvName,"BiasLearnRateFactor",0,"Padding",Padding,"Stride",stride,"WeightLearnRateFactor",w)
                           batchNormalizationLayer("Name",BatchName)
                           ];
