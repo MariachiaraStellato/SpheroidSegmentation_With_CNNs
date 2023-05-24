@@ -31,25 +31,37 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
 % General Public License for more details.
 
+%--------------------------images and masks preprocessing-------------------
+    %images resize dimension
     a = 500; 
     b = 500; 
+
+    %create temporary directory to store the modifyed images. They will be
+    %deleated at the end of the training.
     TempImDirName = FUNC.process_images(ImagesDir,[a b], 1);
     TempMaskDirName = FUNC.resize_images(MasksDir,[a,b]);
+    
+    %Divide the dataset into training and validation subsets
     [dsTrain, dsVal, ~] = FUNC.Dataset_processing(TempImDirName,TempMaskDirName);
+
+    %classes for which the network will be trained
     classes = [
     "Sferoids"
     "Background"
-    ]; %categories i wanto to segment the images into
-
+    ];
+    
+    %size of the images we are training
     I = readimage(dsTrain.UnderlyingDatastores{1,1},1);
-
     [w, h, c] = size(I);
-    imageSize = [w, h, c]; %size of the images we are training 
-
-    numClasses = numel(classes); %number of classes I want to train for the segmentation 
-
+    imageSize = [w, h, c];  
+    
+    %number of classes I want to train for the segmentation
+    numClasses = numel(classes);  
+    
+    %number of images used for the training
     numTrainingImages = numel(dsTrain.UnderlyingDatastores{1,1}.Files);
-
+    
+    %network selection
     if NetworkType == 3 || NetworkType == 4
     NetworkType = NetworkType - 2; 
     network = ['resnet18', 'resnet50'];
@@ -64,8 +76,8 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
     
     pxLayer = pixelClassificationLayer('Name','labels','Classes',tbl.Name,'ClassWeights',classWeights);
     lgraph = replaceLayer(lgraph,"classification",pxLayer);
-    %Change layer to adapt the net to my data
     end  
+
     if NetworkType == 5
         lgraph = ResNet101_Seg(imageSize);
     end
@@ -73,10 +85,10 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
     if NetworkType == 1 || NetworkType == 2
     network = ['vgg16', 'vgg19'];
     network = string(network);
-    lgraph = segnetLayers(imageSize,numClasses,network(NetworkType));
-        
+    lgraph = segnetLayers(imageSize,numClasses,network(NetworkType));    
     end
 
+    %set training options
     batchsize = round(numTrainingImages/10);
     if isdeployed
         op = 'none';
@@ -85,7 +97,7 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
         op = 'training-progress';
         constant = 0; 
     end
-options = trainingOptions('sgdm', ...
+    options = trainingOptions('sgdm', ...
     'LearnRateSchedule','piecewise',...
     'LearnRateDropPeriod',2,...
     'LearnRateDropFactor',0.5,...
@@ -103,26 +115,32 @@ options = trainingOptions('sgdm', ...
     'ValidationFrequency', numTrainingImages,...
     'ValidationPatience', 4);
 
-netprep = msgbox('Network prepared');
-if exist('netprep', 'var')
-    if ishandle(netprep)
-        pause(2*eps);
-        delete(netprep)
+    netprep = msgbox('Network prepared');
+    if exist('netprep', 'var')
+        if ishandle(netprep)
+            pause(2*eps);
+            delete(netprep)
+        end
     end
-end
 
-%% train
+%% training
+
+%this window appear only if the function is used in a deployed app
 if constant == 1
 fig = uifigure;
 fig.Position = [500 500 400 75];
 d = uiprogressdlg(fig, 'Title','Training (it can take hours)...','Indeterminate','on');
 end
 
+%network training
 [net, ~] = trainNetwork(dsTrain,lgraph,options);
+
+%deleting the window that appears if the function is in a deployed app
 if exist('d','var')
 close(d)
 close(fig)
 end
+%remove the temporary directory and the processed images
 rmdir(TempImDirName,'s');
 rmdir(TempMaskDirName,'s');
 
