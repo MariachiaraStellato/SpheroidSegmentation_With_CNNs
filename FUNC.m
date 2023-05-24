@@ -335,9 +335,13 @@ classdef FUNC
             % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
             % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
             % General Public License for more details.
+
+        %check to see if the folder was correctly defined
         if not(isfolder(ImagesFolderName))
             error('The folder name was not correctly defined')
         end
+
+        %load images
         image = imageDatastore(ImagesFolderName, ...
             'IncludeSubfolders',true, ...
             'LabelSource','foldernames');
@@ -345,8 +349,8 @@ classdef FUNC
         numberOfImages = length(image.Files);
         TempImDirName = [ImagesFolderName, filesep, 'TempIm'];
         
+        % Get the file name of the images inside the folder.
         for k = 1 : numberOfImages
-          % Get the input filename.  It already has the folder prepended so we don't need to worry about that.
           
           inputFileName = image.Files{k};
           fprintf('%s\n', inputFileName);
@@ -358,6 +362,7 @@ classdef FUNC
           end
             %resize the image 
             I = imresize(I,WantedSize);
+            
             %save images in the new folder
             FUNC.ISaveImages(inputFileName,TempImDirName,I);
         end
