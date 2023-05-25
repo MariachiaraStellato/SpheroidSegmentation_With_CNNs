@@ -83,7 +83,7 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
 
     % ResNet101 initialization
     if NetworkType == 5
-        lgraph = ResNet101_Seg(imageSize);
+        lgraph = ResNet101_Seg(imageSize,numClasses);
     end
     
     % VGG16 and VGG19 initialization
