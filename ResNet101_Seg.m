@@ -26,7 +26,7 @@ function lgraph = ResNet101_Seg(ImageSize,NumClasses)
 
 %initialize an empty layergraph
 lgraph = layerGraph();
-tempLayers = imageInputLayer(ImageSize,"Name","data");
+tempLayers = imageInputLayer([ImageSize 3],"Name","data");
 lgraph = addLayers(lgraph,tempLayers);
 
 %create the downsizing part of the nerwork
