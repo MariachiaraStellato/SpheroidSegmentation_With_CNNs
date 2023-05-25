@@ -247,7 +247,7 @@ classdef FUNC
             imwrite(im,imgName); 
         end
 %-------------------------------------------------------------------------------------------------
-        function IPlotImagesAndMasks(im,I,FileName)
+        function IPlotImagesAndMasks(size, im,I,FileName)
             % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
             % FUNCTION DESCRITPION: 
             %   This function will plot in the same figure the image and
@@ -272,7 +272,7 @@ classdef FUNC
             % General Public License for more details.
             imOut = uint8(im);
             imIn = uint8(I);
-            Bar = max(imIn(:)).*uint8([ones(a, 5) zeros(a, 5) ones(a, 5)]);
+            Bar = max(imIn(:)).*uint8([ones(size, 5) zeros(size, 5) ones(size, 5)]);
             finalIm = [imIn Bar imOut];
             name = char(FileName);
             figure('Name',[name,' (press ENTER to go ahead).'],'NumberTitle','off'), imshow(finalIm, [], 'Border', 'Tight');
@@ -308,7 +308,7 @@ classdef FUNC
             PositionsPoints = strfind(name, '.');
             PositionLastPoint = PositionsPoints(end);
             InImageType = name(PositionLastPoint:end);
-            file_name = [ImFolder,filesep,specificImageName,InImageType];
+            file_name = append(ImFolder,filesep,specificImageName,InImageType);
         end
 %-------------------------------------------------------------------------------------------------
         function TempImDirName = process_images(ImagesFolderName, WantedSize, c)
