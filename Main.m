@@ -21,6 +21,6 @@ flag_ShowMask = 1;
 segmentation_multiple_images(PathImageFolder,PathImageFolderOut,PathNetworkFolderInp,SpecificImageName,flag_ShowMask);
 
 %% metric evaluation
-TestMaskDir = "\Your_masks_Dir";
-SegmentedMaskDir = "\Your_Segmented_Images_Dir";
-metrics = metric_evaluation(TestMasksDir, SegmentedMaskDir);
+TestMaskDir = "ExampleMasks";
+SegmentedMaskDir = "SegmentedMasks";
+metrics = metric_evaluation(TestMaskDir, SegmentedMaskDir);
