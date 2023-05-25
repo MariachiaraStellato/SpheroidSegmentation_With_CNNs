@@ -12,6 +12,9 @@ This automated method has been incorporated into the already existing AnaSP soft
 
 ## Repository Contents
 
+- `ExampleImages` Folder containing 11 spheroids images in .tif format that are necessary to run the code
+
+- `ExampleMasks` Folder containing 11 manually segmented masks in .tif format that are necessary to run the code
 
 - `gitattributes`
 
