@@ -130,7 +130,7 @@ classdef FUNC
             % General Public License for more details.
                 Layers = [depthConcatenationLayer(NumInput,"Name",DepthName)
                           FUNC.ConvBatchRelu(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,w)
-                          reluLayer("Name",ReluName)];
+                          ];
         end
 %-------------------------------------------------------------------------------------------------
         function Layers = ConvBatchWdil(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w,dil)
@@ -140,7 +140,7 @@ classdef FUNC
         end
 %-------------------------------------------------------------------------------------------------
         function Layers = ConvBatchReluWDil(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,w,dil)
-                TempLayers1 = FUNC.ConvBatchWdill(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w,dil);
+                TempLayers1 = FUNC.ConvBatchWdil(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w,dil);
                 TempLayer2 = reluLayer("Name",ReluName);
                 Layers = [TempLayers1
                           TempLayer2];
@@ -243,7 +243,7 @@ classdef FUNC
             NameAndOrigImageType = InImageName;
             NameWoOrigImageType = NameAndOrigImageType(1:end-(length(InImageType)-1));
             NameWithFinalImageType = [NameWoOrigImageType 'tiff'];
-            imgName = [Folder, NameWithFinalImageType]; 
+            imgName = append(Folder, NameWithFinalImageType); 
             imwrite(im,imgName); 
         end
 %-------------------------------------------------------------------------------------------------
@@ -352,8 +352,8 @@ classdef FUNC
             'LabelSource','foldernames');
         
         numberOfImages = length(image.Files);
-        TempImDirName = [ImagesFolderName, filesep, 'TempIm'];
-        
+        TempImDirName = append(ImagesFolderName, filesep, 'TempIm');
+        mkdir(TempImDirName);
         % Get the file name of the images inside the folder.
         for k = 1 : numberOfImages
           
@@ -419,8 +419,8 @@ classdef FUNC
             'LabelSource','foldernames');
         
         numberOfImages = length(image.Files);
-        TempImDirName = [ImagesFolderName, filesep, 'TempMask'];
-        
+        TempImDirName = append(ImagesFolderName, filesep, 'TempMask');
+        mkdir(TempImDirName);
         for k = 1 : numberOfImages
           % Get the file name of the images inside the folder.  
           inputFileName = image.Files{k};
