@@ -45,7 +45,7 @@ To run the functions used it is necessary to have the deep learning toolbox inst
 ```         
 ver('Deep Learning Toolbox')
 ```
-If it is not installed, you can instal and/or purcase it at the following link: 
+If it is not installed, you can install and/or purcase it at the following link: 
 https://it.mathworks.com/products/deep-learning.html
 
 It is also necessary to install some required packages. They can be found at the following links:
