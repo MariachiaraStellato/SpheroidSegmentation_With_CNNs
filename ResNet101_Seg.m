@@ -41,13 +41,17 @@ lgraph = addLayers(lgraph,tempLayers);
 for i=1:3
     let = ["a","b","c"];
     BatchName = strcat("2",let(i),"_branch");
-    tempLayers = [ FUNC.ICreateBatch([1 1],64,BatchName,1)
-                  FUNC.AdditionRelu(strcat("res2",let(i)))];
+    tempLayers = FUNC.ICreateBatch([1 1],64,BatchName,1);
+    lgraph = addLayers(lgraph,tempLayers);
+    tempLayers = FUNC.AdditionRelu(strcat("res2",let(i)));
     lgraph = addLayers(lgraph,tempLayers);
 end
 
-tempLayers = FUNC.ICreateBatch([2 2],128,"3a_branch",1);
+tempLayers = FUNC.ICreateBatch([1 1],128,"3a_branch",1);
 lgraph = addLayers(lgraph,tempLayers);
+
+layers = convolution2dLayer([1 1],128,"Name","res3a_branch2a","BiasLearnRateFactor",0,"Stride",[2 2]);
+lgraph = replaceLayer(lgraph,"res3a_branch2a",layers);
 
 tempLayers = FUNC.ConvBatch([1 1],512,0,[2 2],"res3a_branch1","bn3a_branch1",1);
 lgraph = addLayers(lgraph,tempLayers);
@@ -60,17 +64,21 @@ lgraph = addLayers(lgraph,tempLayers);
 for i=1:3
     let = ["b1","b2","b3"];
     BatchName = strcat("3",let(i),"_branch");
-    tempLayers = [ FUNC.ICreateBatch([1 1],128,BatchName,1)
-                  FUNC.AdditionRelu(strcat("res3",let(i)))];
+    tempLayers = FUNC.ICreateBatch([1 1],128,BatchName,1);
+    lgraph = addLayers(lgraph,tempLayers);
+    tempLayers = FUNC.AdditionRelu(strcat("res3",let(i)));
     lgraph = addLayers(lgraph,tempLayers);
 
 end
 
-tempLayers = FUNC.ConvBatchRelu([1 1],256,[1 1 1 1],[1 1],"dec_c2","dec_bn2","dec_relu2",10);
+tempLayers = FUNC.ConvBatchRelu([1 1],256,0,[1 1],"dec_c2","dec_bn2","dec_relu2",10);
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = FUNC.ICreateBatch([1 1],256,"4a_branch",1);
 lgraph = addLayers(lgraph,tempLayers);
+
+layers = convolution2dLayer([1 1],256,"Name","res4a_branch2a","BiasLearnRateFactor",0,"Stride",[2 2]);
+lgraph = replaceLayer(lgraph,"res4a_branch2a",layers);
 
 tempLayers = FUNC.ConvBatch([1 1],1024,0,[2 2],"res4a_branch1","bn4a_branch1",1);
 lgraph = addLayers(lgraph,tempLayers);
@@ -82,8 +90,9 @@ lgraph = addLayers(lgraph,tempLayers);
 
 for i=1:22
     BatchName = strcat("4b",string(i),"_branch");
-    tempLayers = [ FUNC.ICreateBatch([1,1],128,BatchName,1)
-                  FUNC.AdditionRelu(strcat("res4b",string(i)))];
+    tempLayers = FUNC.ICreateBatch([1,1],256,BatchName,1);
+    lgraph = addLayers(lgraph,tempLayers);
+    tempLayers = FUNC.AdditionRelu(strcat("res4b",string(i)));
     lgraph = addLayers(lgraph,tempLayers);
 end
 
@@ -92,10 +101,14 @@ end
 for i=1:3
     let = ["a","b","c"];
     BatchName = strcat("5",let(i),"_branch");
-    tempLayers = [ FUNC.ICreateBatch([1 1],512,BatchName,1)
-                  FUNC.AdditionRelu(strcat("res5",let(i)))];
+    tempLayers = FUNC.ICreateBatch([1 1],512,BatchName,1);
+    lgraph = addLayers(lgraph,tempLayers);
+    tempLayers = FUNC.AdditionRelu(strcat("res5",let(i)));
     lgraph = addLayers(lgraph,tempLayers);
 end
+
+layers = convolution2dLayer([1 1],512,"Name","res5a_branch2a","BiasLearnRateFactor",0,"Stride",[2 2]);
+lgraph = replaceLayer(lgraph,"res5a_branch2a",layers);
 
 tempLayers = FUNC.ConvBatch([1 1],2048,0,[2 2],"res5a_branch1","bn5a_branch1",1);
 lgraph = addLayers(lgraph,tempLayers);
@@ -250,7 +263,7 @@ lgraph = connectLayers(lgraph,"res5b_relu","res5c/in2");
 lgraph = connectLayers(lgraph,"bn5c_branch2c","res5c/in1");
 for i=1:4
     lgraph = connectLayers(lgraph,"res5c_relu",strcat("aspp_Conv_",string(i)));
-    lgraph = connectLayers(lgraph,strcat("aspp_Relu_",string(i)),strcat("catAspp/in4",string(i)));
+    lgraph = connectLayers(lgraph,strcat("aspp_Relu_",string(i)),strcat("catAspp/in",string(i)));
 end
 lgraph = connectLayers(lgraph,"dec_upsample1","dec_crop1/in");
 lgraph = connectLayers(lgraph,"dec_crop1","dec_cat1/in2");
