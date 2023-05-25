@@ -3,7 +3,7 @@ classdef tests<matlab.unittest.TestCase
     methods (Test)
         %tests for the process_images function--------------------------------------------------
         function testTempImDirName(testCase)
-            ImagesFolderName = 'my_images_folder';
+            ImagesFolderName = 'ExampleImages';
             WantedSize = [256, 256];
             c = 1;
             TempImDirName = FUNC.process_images(ImagesFolderName, WantedSize, c);
@@ -12,7 +12,7 @@ classdef tests<matlab.unittest.TestCase
         end
 
         function testImageSize(testCase)
-            ImagesFolderName = 'my_images_folder';
+            ImagesFolderName = 'ExampleImages';
             WantedSize = [256, 256];
             c = 1;
             TempImDirName = FUNC.process_images(ImagesFolderName, WantedSize, c);
@@ -41,7 +41,7 @@ classdef tests<matlab.unittest.TestCase
         assert(~exist(TempImDirName, 'dir'), 'Temp folder created despite invalid input folder')
         
         % Test case 2: Input folder contains valid images
-        ImagesFolderName = 'my_images_folder';
+        ImagesFolderName = 'ExampleImages';
         images = imageDatastore(ImagesFolderName, ...
             'IncludeSubfolders',true, ...
             'LabelSource','foldernames');
@@ -75,8 +75,8 @@ classdef tests<matlab.unittest.TestCase
             % Test that the output datastores have the expected sizes
             
             % Generate example data
-            imDir = fullfile(pwd, 'test_images');
-            maskDir = fullfile(pwd, 'test_masks');
+            imDir = fullfile(pwd, 'ExampleImages');
+            maskDir = fullfile(pwd, 'ExampleMasks');
             img = ones(100,100,3);
             mask = ones(100,100);
             for i=1:10
@@ -104,7 +104,7 @@ classdef tests<matlab.unittest.TestCase
             
             % Call the function with an invalid directory
             invalidDir = 'invalid_dir';
-            maskDir = fullfile(pwd, 'test_masks');
+            maskDir = fullfile(pwd, 'ExampleMasks');
             try
                [~, ~, ~] = FUNC.Dataset_processing(invalidDir, maskDir);
             catch ME
@@ -120,7 +120,7 @@ classdef tests<matlab.unittest.TestCase
             % Test that an error is thrown when an invalid masks directory is given
             
             % Call the function with an invalid directory
-            imDir = fullfile(pwd, 'test_images');
+            imDir = fullfile(pwd, 'ExampleImages');
             invalidDir = 'invalid_dir';
             try
                 [~, ~, ~] = FUNC.Dataset_processing(imDir, invalidDir);
