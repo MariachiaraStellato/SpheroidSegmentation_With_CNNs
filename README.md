@@ -57,6 +57,10 @@ It is also necessary to install some required packages. They can be found at the
 
 - ResNet50: https://it.mathworks.com/matlabcentral/fileexchange/64626-deep-learning-toolbox-model-for-resnet-50-network
 
+To test if all the functions are correctly working you can write in the MATLAB command line: 
 
+```         
+results = runtests('tests');
+```
 
 
