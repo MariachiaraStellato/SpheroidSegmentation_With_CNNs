@@ -35,10 +35,10 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
     % General Public License for more details.
 
     %load the DAGNetwork from the .m file
-    load(network, net);
+    load(network, 'net');
 
     %segmentation of the whole folder
-    if isempty(specificImageName)
+    if specificImageName == "none"
         image = imageDatastore(ImFolder, ...
         'IncludeSubfolders',true, ...
         'LabelSource','foldernames');
@@ -80,7 +80,7 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
             %plot the image and mask if the flag is activated
             if flag_showmask == 1
                 try
-                    FUNC.IPlotImagesAndMasks(im,I,FilesNames(i))
+                    FUNC.IPlotImagesAndMasks(a,im,I,FilesNames(i))
                     hFinalFigure = gcf;
                     pause(2*eps);
                     waitforbuttonpress
@@ -88,19 +88,19 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
                     close(hFinalFigure);
                     pause(2*eps);
                 catch err
-                    if exist('BarWaitWindows', 'var')
-                        if ishandle(BarWaitWindows)
-                            pause(2*eps);
-                            delete(BarWaitWindows);
-                            pause(2*eps);
-                        end
-                    end
+                    
                     errordlg(err.message) 
                 end
 
                 
             end
-
+            if exist('BarWaitWindows', 'var')
+                        if ishandle(BarWaitWindows)
+                            pause(2*eps);
+                            delete(BarWaitWindows);
+                            pause(2*eps);
+                        end
+            end
         end
         end
     else
