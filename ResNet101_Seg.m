@@ -30,11 +30,11 @@ tempLayers = imageInputLayer(ImageSize,"Name","data");
 lgraph = addLayers(lgraph,tempLayers);
 
 %create the downsizing part of the nerwork
-tempLayers = [FUNC.ConvBatchRelu([7 7],64,[3 3 3 3],[2 2],"conv1","bn_conv1","conv1_relu",1)
+tempLayers = [FUNC.ConvBatchRelu([7 7],64,[3 3 3 3],[2 2],"conv1","bn_conv1","conv1_relu",1,[1 1])
               maxPooling2dLayer([3 3],"Name","pool1","Padding",[0 1 0 1],"Stride",[2 2])];
 lgraph = addLayers(lgraph,tempLayers);
 
-tempLayers = FUNC.ConvBatch([1 1],256,0,[1 1],"res2a_branch1","bn2a_branch1",1);
+tempLayers = FUNC.ConvBatch([1 1],256,0,[1 1],"res2a_branch1","bn2a_branch1",1,[1 1]);
 lgraph = addLayers(lgraph,tempLayers);
 
 %Second branch
@@ -53,7 +53,7 @@ lgraph = addLayers(lgraph,tempLayers);
 layers = convolution2dLayer([1 1],128,"Name","res3a_branch2a","BiasLearnRateFactor",0,"Stride",[2 2]);
 lgraph = replaceLayer(lgraph,"res3a_branch2a",layers);
 
-tempLayers = FUNC.ConvBatch([1 1],512,0,[2 2],"res3a_branch1","bn3a_branch1",1);
+tempLayers = FUNC.ConvBatch([1 1],512,0,[2 2],"res3a_branch1","bn3a_branch1",1,[1 1]);
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = FUNC.AdditionRelu("res3a");
@@ -71,7 +71,7 @@ for i=1:3
 
 end
 
-tempLayers = FUNC.ConvBatchRelu([1 1],256,0,[1 1],"dec_c2","dec_bn2","dec_relu2",10);
+tempLayers = FUNC.ConvBatchRelu([1 1],256,0,[1 1],"dec_c2","dec_bn2","dec_relu2",10, [1 1]);
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = FUNC.ICreateBatch([1 1],256,"4a_branch",1);
@@ -80,7 +80,7 @@ lgraph = addLayers(lgraph,tempLayers);
 layers = convolution2dLayer([1 1],256,"Name","res4a_branch2a","BiasLearnRateFactor",0,"Stride",[2 2]);
 lgraph = replaceLayer(lgraph,"res4a_branch2a",layers);
 
-tempLayers = FUNC.ConvBatch([1 1],1024,0,[2 2],"res4a_branch1","bn4a_branch1",1);
+tempLayers = FUNC.ConvBatch([1 1],1024,0,[2 2],"res4a_branch1","bn4a_branch1",1, [1 1]);
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = FUNC.AdditionRelu("res4a");
@@ -110,7 +110,7 @@ end
 layers = convolution2dLayer([1 1],512,"Name","res5a_branch2a","BiasLearnRateFactor",0,"Stride",[2 2]);
 lgraph = replaceLayer(lgraph,"res5a_branch2a",layers);
 
-tempLayers = FUNC.ConvBatch([1 1],2048,0,[2 2],"res5a_branch1","bn5a_branch1",1);
+tempLayers = FUNC.ConvBatch([1 1],2048,0,[2 2],"res5a_branch1","bn5a_branch1",1,[1 1]);
 lgraph = addLayers(lgraph,tempLayers);
 
 %initialization of the deconvolution part of the network 
@@ -122,13 +122,13 @@ for i=1:4
         filterSize = [3 3];
         DilatationFactor = [(i-1)*6,(i-1)*6];
     end
-    tempLayers = FUNC.ConvBatchReluWDil(filterSize,256,"same",[1 1],strcat("aspp_Conv_",string(i)),strcat("aspp_BatchNorm_",string(i)),strcat("aspp_Relu_",string(i)),10,DilatationFactor);
+    tempLayers = FUNC.ConvBatchRelu(filterSize,256,"same",[1 1],strcat("aspp_Conv_",string(i)),strcat("aspp_BatchNorm_",string(i)),strcat("aspp_Relu_",string(i)),10,DilatationFactor);
     lgraph = addLayers(lgraph,tempLayers);
 
 end
 
 tempLayers = [
-    FUNC.DepthConvBatchRelu(4,[1 1],256,0,[1 1],"dec_c1","dec_bn1","dec_relu1","catAspp",10)
+    FUNC.DepthConvBatchRelu(4,[1 1],256,0,[1 1],"dec_c1","dec_bn1","dec_relu1","catAspp",10,[1 1])
     transposedConv2dLayer([8 8],256,"Name","dec_upsample1","BiasLearnRateFactor",0,"Cropping",[2 2 2 2],"Stride",[4 4],"WeightLearnRateFactor",0)];
 lgraph = addLayers(lgraph,tempLayers);
 
@@ -136,8 +136,8 @@ tempLayers = crop2dLayer("centercrop","Name","dec_crop1");
 lgraph = addLayers(lgraph,tempLayers);
 
 tempLayers = [
-    FUNC.DepthConvBatchRelu(2,[3 3],256,"same",[1 1],"dec_c3","dec_bn3","dec_relu3","dec_cat1",10)
-    FUNC.ConvBatchRelu([3 3],256,"same",[1 1],"dec_c4","dec_bn4","dec_relu4",10);
+    FUNC.DepthConvBatchRelu(2,[3 3],256,"same",[1 1],"dec_c3","dec_bn3","dec_relu3","dec_cat1",10,[1 1])
+    FUNC.ConvBatchRelu([3 3],256,"same",[1 1],"dec_c4","dec_bn4","dec_relu4",10, [1 1]);
     convolution2dLayer([1 1],NumClasses,"Name","scorer","BiasLearnRateFactor",0,"WeightLearnRateFactor",10)
     transposedConv2dLayer([8 8],NumClasses,"Name","dec_upsample2_1","BiasLearnRateFactor",0,"Cropping",[2 2 2 2],"Stride",[4 4],"WeightLearnRateFactor",0)
     transposedConv2dLayer([8 8],NumClasses,"Name","dec_upsample2_2","BiasLearnRateFactor",0,"Cropping",[2 2 2 2],"Stride",[2 2],"WeightLearnRateFactor",0)];
