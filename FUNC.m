@@ -1,7 +1,7 @@
 classdef FUNC
     methods(Static)
 % ------------------------------------------------------------------------------------------------
-        function Layers = ConvBatch(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w)
+        function Layers = ConvBatch(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w,dil)
             % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
             % FUNCTION DESCRITPION: 
             %   This function will create a convolutional Layer and a Batch
@@ -36,14 +36,14 @@ classdef FUNC
             % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
             % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
             % General Public License for more details.
-                Layers = [convolution2dLayer(FilterSize,FilterNumber,"Name",ConvName,"BiasLearnRateFactor",0,"Padding",Padding,"Stride",stride,"WeightLearnRateFactor",w)
+                Layers = [convolution2dLayer(FilterSize,FilterNumber,"Name",ConvName,"BiasLearnRateFactor",0,"Padding",Padding,"Stride",stride,"WeightLearnRateFactor",w,"DilationFactor",dil)
                           batchNormalizationLayer("Name",BatchName)
                           ];
         end
         
 % ------------------------------------------------------------------------------------------------
 
-        function Layers = ConvBatchRelu(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,w)
+        function Layers = ConvBatchRelu(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,w,dil)
             % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
             % FUNCTION DESCRITPION: 
             %   This function will create a convolutional Layer, a Batch
@@ -80,13 +80,13 @@ classdef FUNC
             % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
             % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
             % General Public License for more details.
-                TempLayers1 = FUNC.ConvBatch(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w);
+                TempLayers1 = FUNC.ConvBatchWdil(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w,dil);
                 TempLayer2 = reluLayer("Name",ReluName);
                 Layers = [TempLayers1
                           TempLayer2];
         end
 % ------------------------------------------------------------------------------------------------
-        function Layers = DepthConvBatchRelu(NumInput, FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,DepthName,w)
+        function Layers = DepthConvBatchRelu(NumInput, FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,DepthName,w,dil)
             % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
             % FUNCTION DESCRITPION: 
             %   This function will create a depth concatenation layer, a convolutional Layer, a Batch
@@ -129,22 +129,10 @@ classdef FUNC
             % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
             % General Public License for more details.
                 Layers = [depthConcatenationLayer(NumInput,"Name",DepthName)
-                          FUNC.ConvBatchRelu(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,w)
+                          FUNC.ConvBatchRelu(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,w,dil)
                           ];
         end
-%-------------------------------------------------------------------------------------------------
-        function Layers = ConvBatchWdil(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w,dil)
-                Layers = [convolution2dLayer(FilterSize,FilterNumber,"Name",ConvName,"BiasLearnRateFactor",0,"Padding",Padding,"Stride",stride,"WeightLearnRateFactor",w,"DilationFactor",dil)
-                          batchNormalizationLayer("Name",BatchName)
-                          ];
-        end
-%-------------------------------------------------------------------------------------------------
-        function Layers = ConvBatchReluWDil(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,w,dil)
-                TempLayers1 = FUNC.ConvBatchWdil(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w,dil);
-                TempLayer2 = reluLayer("Name",ReluName);
-                Layers = [TempLayers1
-                          TempLayer2];
-        end
+
 %-------------------------------------------------------------------------------------------------
         function Layers = ICreateBatch(FilterSize,FilterNumber,BatchName,w)
             % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
