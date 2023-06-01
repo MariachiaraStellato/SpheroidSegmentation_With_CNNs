@@ -67,7 +67,51 @@ results = runtests('tests');
 ```
 
 ## How to run
+An example on how to use all the functions provided by this project is contained in the main.m file. 
+This project is composed by three main parts: 
+- Training
+- Segmentation
+- Validation
+### Training
+We can take a look at the code example for training images inside the main.m file: 
 
+```
+possible_net = ["VGG-16", "VGG-19", "ResNet-18","ResNet-50","ResNet101"];
+ImagesDir = "ExampleImages";
+MasksDir = "ExampleMasks";
+PathTrainedNet = "TrainedNetworks"; %The directory where the trained network will be saved 
+NetworkType = 5; %This correspond to the ResNet101 network
+Choosen_Net = possible_net(NetworkType);
+net = Network_Training(ImagesDir, MasksDir, NetworkType);
+T = datestr(now,'dd-mm-yy-HH-MM-SS');       
+netname = [char(Choosen_Net),'_',T]; 
+netdir = fullfile(PathTrainedNet,netname);
+save(netdir,'net');
+msgbox('TRAINING: THE END.', 'Message');
+
+```
+
+### Segmentation
+We can take a look at the code example that can be used to segment the spheroid images inside the main.m file: 
+
+```
+PathImageFolder = "ExampleImages";
+PathImageFolderOut = "SegmentedMasks";
+PathNetworkFolderInp = "TrainedNetworks\segRes18Net.mat";
+SpecificImageName ='none';
+flag_ShowMask = 1;
+segmentation_multiple_images(PathImageFolder,PathImageFolderOut,PathNetworkFolderInp,SpecificImageName,flag_ShowMask);
+
+```
+### Validation
+We can take a look at the code example for validating the segmentation obtained by one or more trained networks inside the main.m file: 
+
+```
+TestMaskDir = "ExampleMasks";
+SegmentedMaskDir = "SegmentedMasks";
+metrics = metric_evaluation(TestMaskDir, SegmentedMaskDir);
+
+```
 ## Results
 
 
