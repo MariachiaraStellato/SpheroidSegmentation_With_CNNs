@@ -90,6 +90,14 @@ save(netdir,'net');
 msgbox('TRAINING: THE END.', 'Message');
 
 ```
+You must choose the path of the folder containing the images (ImagesDir) and the masks (MasksDir) you intend to use for the training. Then you can choose the forlder where you need your trained network to be saved, writing the path as the "PathTrainedNet" variable. 
+Finally you have to choose the right index for the network you want to train: 
+- '1' : VGG-16
+- '2' : VGG-19
+- '3' : ResNet-18
+- '4' : ResNet-50
+- '5' : ResNet-101
+Once all the necessary variables are correctly defined, the code is ready to be run. The training can take from few minutes to few hours to complete, but you wll be able to follow the progression of the training by looking at the Training Progress plot that will appear during the training. 
 
 ### Segmentation
 We can take a look at the code example that can be used to segment the spheroid images inside the main.m file: 
