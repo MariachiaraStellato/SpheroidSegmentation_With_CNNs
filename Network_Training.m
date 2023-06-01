@@ -67,8 +67,8 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
     % ResNet18 and ResNet50 initialization
     if NetworkType == 3 || NetworkType == 4
     NetworkType = NetworkType - 2; 
-    network = ['resnet18', 'resnet50'];
-    network = string(network);
+    network = ["resnet18", "resnet50"];
+    %network = string(network);
     
     lgraph = deeplabv3plusLayers(imageSize, numClasses, network(NetworkType)); 
     
@@ -79,20 +79,19 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
     
     pxLayer = pixelClassificationLayer('Name','labels','Classes',tbl.Name,'ClassWeights',classWeights);
     lgraph = replaceLayer(lgraph,"classification",pxLayer);
-    end  
+      
 
     % ResNet101 initialization
-    if NetworkType == 5
+    elseif NetworkType == 5         
         lgraph = ResNet101_Seg(imageSize,numClasses);
-    end
-    
+    else
     % VGG16 and VGG19 initialization
-    if NetworkType == 1 || NetworkType == 2
-    network = ['vgg16', 'vgg19'];
-    network = string(network);
-    lgraph = segnetLayers(imageSize,numClasses,network(NetworkType));    
+        if NetworkType == 1 || NetworkType == 2
+        network = ["vgg16", "vgg19"];
+        %network = string(network);
+        lgraph = segnetLayers(imageSize,numClasses,network(NetworkType));    
+        end
     end
-
 %------------------------set training options------------------------------
     batchsize = round(numTrainingImages/10);
     if isdeployed
