@@ -37,11 +37,12 @@ classdef tests<matlab.unittest.TestCase
         ImagesFolderName = 'non_existing_folder';
         WantedSize = [256, 256];
         assert(~exist(ImagesFolderName, 'dir'), 'Test folder already exists')
+        DirName = append(ImagesFolderName, filesep, 'TempMask');
         try
         TempImDirName = FUNC.resize_images(ImagesFolderName, WantedSize);
         catch
         end
-        assert(~exist(TempImDirName, 'dir'), 'Temp folder created despite invalid input folder')
+        assert(~exist(DirName, 'dir'), 'Temp folder created despite invalid input folder')
         
         % Test case 2: Input folder contains valid images
         ImagesFolderName = 'ExampleImages';
