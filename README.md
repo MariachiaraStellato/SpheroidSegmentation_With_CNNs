@@ -1,4 +1,4 @@
-# SpheroidSegmentation_With_ResNet101
+# SpheroidSegmentation_With_CNNs
 
 This repository contains functions implemented in MATLAB for training various segmentation neural networks, performing spheroid segmentation using the trained neural networks and, evaluating the quality of the segmentation performed. 
 This code is included in the AnaSP software, which is free to download at https://sourceforge.net/projects/anasp/.
