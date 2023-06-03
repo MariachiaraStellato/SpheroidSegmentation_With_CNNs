@@ -153,3 +153,5 @@ The masks obtained with the 4 trained networks were compared with the segmentati
 Among the many metrics, the normalized confusion matrices, mean accuracy (MA) and interection over union (IoU) of the dataset were used to quantitatively confront the trained networks.
 
 <img src="Images/table_of_result.png" width="480">
+
+From the table above we can say that the best performing pre-trained network is the one based on ResNet-18. 
