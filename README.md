@@ -152,4 +152,4 @@ The masks obtained with the 4 trained networks were compared with the segmentati
 
 Among the many metrics, the normalized confusion matrices, mean accuracy (MA) and interection over union (IoU) of the dataset were used to quantitatively confront the trained networks.
 
-![alt text](Images/table_of_result.png)
+![alt text](Images/table_of_result.png = 100x100)
