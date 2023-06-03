@@ -99,6 +99,8 @@ Finally you have to choose the right index for the network you want to train:
 - '5' : ResNet-101
 Once all the necessary variables are correctly defined, the code is ready to be run. The training can take from few minutes to few hours to complete, but you wll be able to follow the progression of the training by looking at the Training Progress plot that will appear during the training. 
 
+![alt text](Images/TrainingPlot.png)
+
 ### Segmentation
 We can take a look at the code example that can be used to segment the spheroid images inside the main.m file: 
 
