@@ -1,6 +1,6 @@
 # SpheroidSegmentation_With_ResNet101
 
-<p align="justify"> This repository contains functions implemented in MATLAB for training various segmentation neural networks, performing spheroid segmentation using the trained neural networks and, evaluating the quality of the segmentation performed. 
+This repository contains functions implemented in MATLAB for training various segmentation neural networks, performing spheroid segmentation using the trained neural networks and, evaluating the quality of the segmentation performed. 
 This code is included in the AnaSP software, which is free to download at https://sourceforge.net/projects/anasp/.
 The implemented segmentation networks that are trainable are VGG16, VGG19, ResNet18, ResNet50, and ResNet101. 
 
@@ -72,6 +72,7 @@ This project is composed by three main parts:
 - Training
 - Segmentation
 - Validation
+
 ### Training
 We can take a look at the code example for training images inside the main.m file: 
 
@@ -102,6 +103,7 @@ Once all the necessary variables are correctly defined, the code is ready to be 
 ![alt text](Images/TrainingPlot.png)
 
 After the training, the obtained DAGNetwork variable will be saved into the "PathTrainedNet" with a unique file name defined by the type of network choosen and the date and time of the training. 
+
 ### Segmentation
 We can take a look at the code example that can be used to segment the spheroid images inside the main.m file: 
 
@@ -116,6 +118,11 @@ segmentation_multiple_images(PathImageFolder,PathImageFolderOut,PathNetworkFolde
 ```
 The `segmentation_multiple_images` function will take the folder containing the images you want to segment, `PathImageFolder`, the folder in which the segmented shperoids will be saved, `PathIMageFolderOut`, the path where the trained network you want to use is contained, `PathNetworkFolderInp`, and perform the segmentation. 
 Warning: The saved binary images will have the exact same name of the input images, so it is crucial to save them in a different folder than the one where the original image are to avoid overwriting. 
+
+If the `SpecificImageName` is defined as 'none' the whole folder will be segmented. You can define it as the name of a specific image inside the `PathImageFolder` in order to segment only that specific image. 
+If the `flag_ShowMask` is defined as the integer number 1 than every mask will be plotted aligned with the original image as shown in the following picture. Else the segmentation won't show during the progression of the code. 
+
+
 ### Validation
 We can take a look at the code example for validating the segmentation obtained by one or more trained networks inside the main.m file: 
 
@@ -125,7 +132,7 @@ SegmentedMaskDir = "SegmentedMasks";
 metrics = metric_evaluation(TestMaskDir, SegmentedMaskDir);
 
 ```
-## Results </p>
+## Results 
 
 
 
