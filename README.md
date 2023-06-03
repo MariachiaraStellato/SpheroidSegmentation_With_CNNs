@@ -58,6 +58,7 @@ It is also necessary to install some required packages. They can be found at the
 - VGG16: https://it.mathworks.com/matlabcentral/fileexchange/61733-deep-learning-toolbox-model-for-vgg-16-network
 
 - VGG19: https://it.mathworks.com/matlabcentral/fileexchange/61734-deep-learning-toolbox-model-for-vgg-19-network
+
 - ResNet18: https://it.mathworks.com/matlabcentral/fileexchange/68261-deep-learning-toolbox-model-for-resnet-18-network
 
 - ResNet50: https://it.mathworks.com/matlabcentral/fileexchange/64626-deep-learning-toolbox-model-for-resnet-50-network
@@ -100,6 +101,7 @@ Finally you have to choose the right index for the network you want to train:
 - '3' : ResNet-18
 - '4' : ResNet-50
 - '5' : ResNet-101
+
 Once all the necessary variables are correctly defined, the code is ready to be run. The training can take from few minutes to few hours to complete, but you wll be able to follow the progression of the training by looking at the Training Progress plot that will appear during the training. 
 
 ![alt text](Images/TrainingPlot.png)
