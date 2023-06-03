@@ -8,8 +8,8 @@ The implemented segmentation networks that are trainable are VGG16, VGG19, ResNe
 
 Today, more and more biological laboratories use 3D cell cultures and tissues grown in vitro as a 3D model of in vivo tumors and metastases. In the last decades, it has been extensively established that multicellular spheroids represent an efficient model to validate the effects of drugs and treatments for human care applications. However, a lack of methods for quantitative analysis limits the use of spheroids as models for routine experiments. Several methods have been proposed in the literature to perform high-throughput experiments employing spheroids by automatically computing different morphological parameters, such as diameter, volume, and sphericity. Nevertheless, these systems are typically grounded in expensive automated technologies that make the suggested solutions affordable only for a limited subset of laboratories that frequently perform high-content screening analyses. 
 The aim of this project is to implement an automatic way to segment brightfield spheroid images acquired with a standard widefield microscope based on convolutional neural networks.
-This automated method has been incorporated into the already existing AnaSP software, which is an open-source software suitable for automatically estimating several morphological parameters of spheroids. Its modular architecture and graphical user interface make it attractive for researchers who do not work in areas of computer vision and suitable for both high-content screenings and occasional spheroid-based experiments.
-
+This automated method has been incorporated into the already existing AnaSP software, which is an open-source software suitable for automatically estimating several morphological parameters of spheroids. Its modular architecture and graphical user interface make it attractive for researchers who do not work in areas of computer vision and suitable for both high-content screenings and occasional spheroid-based experiments. 
+  
 ## Repository Contents
 
 - `ExampleImages` Folder containing 11 spheroids images in .tif format that are necessary to run the code.
@@ -67,8 +67,73 @@ results = runtests('tests');
 ```
 
 ## How to run
+An example on how to use all the functions provided by this project is contained in the main.m file. 
+This project is composed by three main parts: 
+- Training
+- Segmentation
+- Validation
 
-## Results
+### Training
+We can take a look at the code example for training images inside the main.m file: 
+
+```
+possible_net = ["VGG-16", "VGG-19", "ResNet-18","ResNet-50","ResNet101"];
+ImagesDir = "ExampleImages";
+MasksDir = "ExampleMasks";
+PathTrainedNet = "TrainedNetworks"; %The directory where the trained network will be saved 
+NetworkType = 5; %This correspond to the ResNet101 network
+Choosen_Net = possible_net(NetworkType);
+net = Network_Training(ImagesDir, MasksDir, NetworkType);
+T = datestr(now,'dd-mm-yy-HH-MM-SS');       
+netname = [char(Choosen_Net),'_',T]; 
+netdir = fullfile(PathTrainedNet,netname);
+save(netdir,'net');
+msgbox('TRAINING: THE END.', 'Message');
+
+```
+You must choose the path of the folder containing the images (ImagesDir) and the masks (MasksDir) you intend to use for the training. Then you can choose the forlder where you need your trained network to be saved, writing the path as the "PathTrainedNet" variable. 
+Finally you have to choose the right index for the network you want to train: 
+- '1' : VGG-16
+- '2' : VGG-19
+- '3' : ResNet-18
+- '4' : ResNet-50
+- '5' : ResNet-101
+Once all the necessary variables are correctly defined, the code is ready to be run. The training can take from few minutes to few hours to complete, but you wll be able to follow the progression of the training by looking at the Training Progress plot that will appear during the training. 
+
+![alt text](Images/TrainingPlot.png)
+
+After the training, the obtained DAGNetwork variable will be saved into the "PathTrainedNet" with a unique file name defined by the type of network choosen and the date and time of the training. 
+
+### Segmentation
+We can take a look at the code example that can be used to segment the spheroid images inside the main.m file: 
+
+```
+PathImageFolder = "ExampleImages";
+PathImageFolderOut = "SegmentedMasks";
+PathNetworkFolderInp = "TrainedNetworks\segRes18Net.mat";
+SpecificImageName ='none';
+flag_ShowMask = 1;
+segmentation_multiple_images(PathImageFolder,PathImageFolderOut,PathNetworkFolderInp,SpecificImageName,flag_ShowMask);
+
+```
+The `segmentation_multiple_images` function will take the folder containing the images you want to segment, `PathImageFolder`, the folder in which the segmented shperoids will be saved, `PathIMageFolderOut`, the path where the trained network you want to use is contained, `PathNetworkFolderInp`, and perform the segmentation. 
+Warning: The saved binary images will have the exact same name of the input images, so it is crucial to save them in a different folder than the one where the original image are to avoid overwriting. 
+
+If the `SpecificImageName` is defined as 'none' the whole folder will be segmented. You can define it as the name of a specific image inside the `PathImageFolder` in order to segment only that specific image. 
+If the `flag_ShowMask` is defined as the integer number 1 than every mask will be plotted aligned with the original image as shown in the following picture. Else the segmentation won't show during the progression of the code. 
+
+![alt text](Images/seg_plot.png)
+
+### Validation
+We can take a look at the code example for validating the segmentation obtained by one or more trained networks inside the main.m file: 
+
+```
+TestMaskDir = "ExampleMasks";
+SegmentedMaskDir = "SegmentedMasks";
+metrics = metric_evaluation(TestMaskDir, SegmentedMaskDir);
+
+```
+## Results 
 
 
 
