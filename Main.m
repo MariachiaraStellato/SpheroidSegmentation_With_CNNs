@@ -13,12 +13,12 @@ save(netdir,'net');
 msgbox('TRAINING: THE END.', 'Message');
 
 %% segmentation
-PathImageFolder = "ExampleImages";
+PathImageFolderIn = "ExampleImages";
 PathImageFolderOut = "SegmentedMasks";
 PathNetworkFolderInp = "TrainedNetworks\segRes18Net.mat";
 SpecificImageName ='none';
 flag_ShowMask = 1;
-segmentation_multiple_images(PathImageFolder,PathImageFolderOut,PathNetworkFolderInp,SpecificImageName,flag_ShowMask);
+segmentation_multiple_images(PathImageFolderIn,PathImageFolderOut,PathNetworkFolderInp,SpecificImageName,flag_ShowMask);
 
 %% metric evaluation
 TestMaskDir = "ExampleMasks";
