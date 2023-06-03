@@ -155,9 +155,9 @@ classdef tests<matlab.unittest.TestCase
             if ~exist(Folder, 'dir')
                 mkdir(Folder);
             end
-            FilesNames = 'testFolder/testImage.png';
+            FilesNames = 'testFolder\testImage.png';
             FUNC.ISaveImages(FilesNames, Folder, im);
-            savedImage = imread('testFolder/testImage.tiff');
+            savedImage = imread('testFolder\testImage.tiff');
             rmdir(Folder,'s');
             testCase.verifyEqual(im, savedImage, 'The saved image is not equal to the original image.');
             
