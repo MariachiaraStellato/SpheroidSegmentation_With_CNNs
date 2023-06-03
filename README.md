@@ -137,6 +137,9 @@ SegmentedMaskDir = "SegmentedMasks";
 metrics = metric_evaluation(TestMaskDir, SegmentedMaskDir);
 
 ```
+The `metric_evaluation` function will take as inputs the folder containing the manually segmented masks, considered as ground truth, (`TestMaskDir`) and the folder containing the masks segmented using the neural network you want to evaluate (`SegmentedMaksDir`) and calculate various metrics to assess the network quality. 
+The variable `metrics`, that is a SemanticSegmentationMetrics structure, will contain the confusion matrix, the normalized confusion matrix, the dataset metrics, class metrics and images metrics. 
+In particular the dataset metrics, class metrics, and image metrics contain the global accuracy, mean accuracy, mean and weighted intersection over union, and mean BF score. All these measures have the purpose of evaluating the quality of the segmentation with respect to the ground truth. 
 ## Results 
 
 
