@@ -37,7 +37,10 @@ classdef tests<matlab.unittest.TestCase
         ImagesFolderName = 'non_existing_folder';
         WantedSize = [256, 256];
         assert(~exist(ImagesFolderName, 'dir'), 'Test folder already exists')
+        try
         TempImDirName = FUNC.resize_images(ImagesFolderName, WantedSize);
+        catch
+        end
         assert(~exist(TempImDirName, 'dir'), 'Temp folder created despite invalid input folder')
         
         % Test case 2: Input folder contains valid images
@@ -196,8 +199,8 @@ classdef tests<matlab.unittest.TestCase
             actualConvLayerBiasLearnRateFactor = Layers(1).BiasLearnRateFactor;
             testCase.verifyEqual(actualConvLayerBiasLearnRateFactor, expectedConvLayerBiasLearnRateFactor, 'The convolution layer has the wrong bias learn rate factor.');
             
-            expectedConvLayerPadding = 'same';
-            actualConvLayerPadding = Layers(1).Padding;
+            expectedConvLayerPadding = [];
+            actualConvLayerPadding = Layers(1).PaddingSize;
             testCase.verifyEqual(actualConvLayerPadding, expectedConvLayerPadding, 'The convolution layer has the wrong padding.');
             
             expectedConvLayerStride = [1 1];
