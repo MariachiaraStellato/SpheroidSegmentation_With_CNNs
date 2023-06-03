@@ -16,6 +16,8 @@ This automated method has been incorporated into the already existing AnaSP soft
 
 - `ExampleMasks` Folder containing 11 manually segmented masks in .tif format that are necessary to run the code.
 
+- `Images` Folder containing the images used in this README file.
+
 - `gitattributes`
 
 - `gitignore` containis file types that are not tracked by git.
@@ -91,7 +93,7 @@ save(netdir,'net');
 msgbox('TRAINING: THE END.', 'Message');
 
 ```
-You must choose the path of the folder containing the images (ImagesDir) and the masks (MasksDir) you intend to use for the training. Then you can choose the forlder where you need your trained network to be saved, writing the path as the "PathTrainedNet" variable. 
+You must choose the path of the folder containing the images (`ImagesDir`) and the masks (`MasksDir`) you intend to use for the training. Then you can choose the forlder where you need your trained network to be saved, writing the path as the `PathTrainedNet` variable. 
 Finally you have to choose the right index for the network you want to train: 
 - '1' : VGG-16
 - '2' : VGG-19
@@ -102,7 +104,7 @@ Once all the necessary variables are correctly defined, the code is ready to be 
 
 ![alt text](Images/TrainingPlot.png)
 
-After the training, the obtained DAGNetwork variable will be saved into the "PathTrainedNet" with a unique file name defined by the type of network choosen and the date and time of the training. 
+After the training, the obtained DAGNetwork variable will be saved into the `PathTrainedNet` with a unique file name defined by the type of network choosen and the date and time of the training. 
 
 ### Segmentation
 We can take a look at the code example that can be used to segment the spheroid images inside the main.m file: 
