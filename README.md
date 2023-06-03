@@ -142,7 +142,11 @@ metrics = metric_evaluation(TestMaskDir, SegmentedMaskDir);
 The `metric_evaluation` function will take as inputs the folder containing the manually segmented masks, considered as ground truth, (`TestMaskDir`) and the folder containing the masks segmented using the neural network you want to evaluate (`SegmentedMaksDir`) and calculate various metrics to assess the network quality. 
 The variable `metrics`, that is a SemanticSegmentationMetrics structure, will contain the confusion matrix, the normalized confusion matrix, the dataset metrics, class metrics and images metrics. 
 In particular the dataset metrics, class metrics, and image metrics contain the global accuracy, mean accuracy, mean and weighted intersection over union, and mean BF score. All these measures have the purpose of evaluating the quality of the segmentation with respect to the ground truth. 
+
 ## Results 
+In the `TrainedNetworks` folder are presented some already trained networks that are ready to se to perform spheroid segmentation. These were trained over a set of approximately 10,000 2048x2048 RGB spheroid images and relative masks. The dataset was divided into 3 subsets: (a) the training set (80% of the total images); (b) the validation set (10% of the total images); and (c) the test set (10% of the total images). To reduce computational efforts, all the input images were rescaled to 8-bit gray-level 500x500 pixels, and the masks were internally binary labeled into 2 categories: background and foreground (i.e., the spheroid). Due to the dimension of the dataset, it was not uploaded in this repository, so this training cannot be reproduced. However, the example images and masks provide for a small batch of images that the user can download to test this results. 
+
+The masks obtained with the 4 trained networks were compared with the segmentations obtained using AnaSP 1.0. In the following picture a small sample of the confronted segmentation is presented. 
 
 
 
