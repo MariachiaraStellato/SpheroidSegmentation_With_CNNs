@@ -122,6 +122,7 @@ Warning: The saved binary images will have the exact same name of the input imag
 If the `SpecificImageName` is defined as 'none' the whole folder will be segmented. You can define it as the name of a specific image inside the `PathImageFolder` in order to segment only that specific image. 
 If the `flag_ShowMask` is defined as the integer number 1 than every mask will be plotted aligned with the original image as shown in the following picture. Else the segmentation won't show during the progression of the code. 
 
+![alt text](Images/seg_plot.png)
 
 ### Validation
 We can take a look at the code example for validating the segmentation obtained by one or more trained networks inside the main.m file: 
