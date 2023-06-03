@@ -101,6 +101,7 @@ Once all the necessary variables are correctly defined, the code is ready to be 
 
 ![alt text](Images/TrainingPlot.png)
 
+After the training, the obtained DAGNetwork variable will be saved into the "PathTrainedNet" with a unique file name defined by the type of network choosen and the date and time of the training. 
 ### Segmentation
 We can take a look at the code example that can be used to segment the spheroid images inside the main.m file: 
 
@@ -113,6 +114,8 @@ flag_ShowMask = 1;
 segmentation_multiple_images(PathImageFolder,PathImageFolderOut,PathNetworkFolderInp,SpecificImageName,flag_ShowMask);
 
 ```
+The `segmentation_multiple_images` function will take the folder containing the images you want to segment, `PathImageFolder`, the folder in which the segmented shperoids will be saved, `PathIMageFolderOut`, the path where the trained network you want to use is contained, `PathNetworkFolderInp`, and perform the segmentation. 
+Warning: The saved binary images will have the exact same name of the input images, so it is crucial to save them in a different folder than the one where the original image are to avoid overwriting. 
 ### Validation
 We can take a look at the code example for validating the segmentation obtained by one or more trained networks inside the main.m file: 
 
