@@ -124,6 +124,8 @@ If the `flag_ShowMask` is defined as the integer number 1 than every mask will b
 
 ![alt text](Images/seg_plot.png)
 
+To continue with the segmentation you have to clic "Enter" on the plot. It will be automatically closed and the next image will be segmented. 
+
 ### Validation
 We can take a look at the code example for validating the segmentation obtained by one or more trained networks inside the main.m file: 
 
