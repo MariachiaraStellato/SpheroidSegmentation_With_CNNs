@@ -75,8 +75,16 @@ classdef tests<matlab.unittest.TestCase
             % Test that the output datastores have the expected sizes
             
             % Generate example data
-            imDir = fullfile(pwd, 'ExampleImages');
-            maskDir = fullfile(pwd, 'ExampleMasks');
+            TestImages = 'testImages';
+            if ~exist(TestImages, 'dir')
+                mkdir(TestImages);
+            end
+            TestMasks = 'testMasks';
+            if ~exist(TestMasks, 'dir')
+                mkdir(TestMasks);
+            end
+            imDir = fullfile(pwd, TestImages);
+            maskDir = fullfile(pwd, TestMasks);
             img = ones(100,100,3);
             mask = ones(100,100);
             for i=1:10
@@ -91,12 +99,14 @@ classdef tests<matlab.unittest.TestCase
             expectedSizeTrain = 8;
             expectedSizeVal = 1;
             expectedSizeTest = 1;
-            actualSizeTrain = numel(dsTrain.Files);
-            actualSizeVal = numel(dsVal.Files);
-            actualSizeTest = numel(dsTest.Files);
+            actualSizeTrain = numel(dsTrain.UnderlyingDatastores{1,1}.Files);
+            actualSizeVal = numel(dsVal.UnderlyingDatastores{1,1}.Files);
+            actualSizeTest = numel(dsTest.UnderlyingDatastores{1,1}.Files);
             testCase.verifyEqual(actualSizeTrain, expectedSizeTrain, 'Output datastores have unexpected size');
             testCase.verifyEqual(actualSizeVal, expectedSizeVal, 'Output datastores have unexpected size');
             testCase.verifyEqual(actualSizeTest, expectedSizeTest, 'Output datastores have unexpected size');
+            rmdir(TestImages, 's');
+            rmdir(TestMasks, 's');
         end
         
         function testInvalidInputFolder(testCase)
@@ -136,16 +146,17 @@ classdef tests<matlab.unittest.TestCase
         %tests for the ISaveImages function-------------------------------
 
         function TestISaveImagesCorrectly(testCase)
-            im = imread('exampleImage.png');
+            im = imread('https://media.gettyimages.com/id/1367506926/it/foto/a-beautiful-smooth-haired-red-cat-lies-on-the-sofa-and-in-a-relaxed-close-up-pose.jpg?s=612x612&w=0&k=20&c=v-t1SNH35LLOo6YcXNcEQ2WCbDwPu_cCuwEY6cS7O88=');
             Folder = 'testFolder';
             if ~exist(Folder, 'dir')
                 mkdir(Folder);
             end
             FilesNames = 'testFolder/testImage.png';
-            ISaveImages(FilesNames, Folder, im);
+            FUNC.ISaveImages(FilesNames, Folder, im);
             savedImage = imread('testFolder/testImage.tiff');
             rmdir(Folder,'s');
             testCase.verifyEqual(im, savedImage, 'The saved image is not equal to the original image.');
+            
         end
         
         function testLayersSize(testCase)
@@ -158,7 +169,7 @@ classdef tests<matlab.unittest.TestCase
             BatchName = 'batchnorm1';
             w = 1;
             
-            Layers = ConvBatch(FilterSize, FilterNumber, Padding, Stride, ConvName, BatchName, w);
+            Layers = FUNC.ConvBatch(FilterSize, FilterNumber, Padding, Stride, ConvName, BatchName, w,[1 1]);
             
             expectedNumLayers = 2;
             actualNumLayers = numel(Layers);
@@ -175,7 +186,7 @@ classdef tests<matlab.unittest.TestCase
             BatchName = 'batchnorm1';
             w = 1;
             
-            Layers = ConvBatch(FilterSize, FilterNumber, Padding, Stride, ConvName, BatchName, w);
+            Layers = FUNC.ConvBatch(FilterSize, FilterNumber, Padding, Stride, ConvName, BatchName, w, [1 1]);
             
             expectedConvLayerName = 'conv1';
             actualConvLayerName = Layers(1).Name;
@@ -208,7 +219,7 @@ classdef tests<matlab.unittest.TestCase
             BatchName = 'batchnorm1';
             w = 1;
             
-            Layers = ConvBatch(FilterSize, FilterNumber, Padding, Stride, ConvName, BatchName, w);
+            Layers = FUNC.ConvBatch(FilterSize, FilterNumber, Padding, Stride, ConvName, BatchName, w, [1 1]);
             
             expectedBatchNormLayerName = 'batchnorm1';
             actualBatchNormLayerName = Layers(2).Name;
