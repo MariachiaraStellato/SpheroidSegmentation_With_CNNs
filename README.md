@@ -148,7 +148,7 @@ In the `TrainedNetworks` folder are presented some already trained networks that
 
 The masks obtained with the 4 trained networks were compared with the segmentations obtained using AnaSP 1.0. In the following picture a small sample of the confronted segmentation is presented. 
 
-![alt text](Images/Figure_Networks.png)
+<img src="Images/Figure_Networks.png" width="480">
 
 Among the many metrics, the normalized confusion matrices, mean accuracy (MA) and interection over union (IoU) of the dataset were used to quantitatively confront the trained networks.
 
