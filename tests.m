@@ -8,10 +8,13 @@ classdef tests<matlab.unittest.TestCase
         % the name of the directory created that contains the resized and
         % processed images 
         % 
-        % GIVEN: a csv file output from the FIonA treatment planning system
-        % WHEN: I apply "readDVHs" function with default values (renamed.structures = NA)
-        % THEN: the function returns a list with two objects: a dataframe "DVHs" with DVHs values
-        % and a dataframe "Volumes [cc]" with structures' volumes
+        % GIVEN: the name of the folder containing the images we want to
+        % resize, the choosen size and the index corresponding to the
+        % number of colour channels 
+        % WHEN: I apply "process_images" function with default values
+        % THEN: the function returns a string containing the name of the
+        % newly created folder inside the original folder containing the
+        % resized images
         % ---------------------------------------------------------------------------------------------
             ImagesFolderName = 'ExampleImages';
             WantedSize = [256, 256];
@@ -49,7 +52,7 @@ classdef tests<matlab.unittest.TestCase
         assert(~exist(ImagesFolderName, 'dir'), 'Test folder already exists')
         DirName = append(ImagesFolderName, filesep, 'TempMask');
         try
-        TempImDirName = FUNC.resize_images(ImagesFolderName, WantedSize);
+        [~] = FUNC.resize_images(ImagesFolderName, WantedSize);
         catch
         end
         assert(~exist(DirName, 'dir'), 'Temp folder created despite invalid input folder')
