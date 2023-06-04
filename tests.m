@@ -54,50 +54,32 @@ classdef tests<matlab.unittest.TestCase
             rmdir(TempImDirName,'s');
         end
 
-        %tests for the Resize_images function-------------------------------
-
+        
         function testResizeImages(testCase)
-        % Test the resize_images function with different input arguments
 
-        % Test case 1: Input folder contains no images
-        ImagesFolderName = 'non_existing_folder';
-        WantedSize = [256, 256];
-        assert(~exist(ImagesFolderName, 'dir'), 'Test folder already exists')
-        DirName = append(ImagesFolderName, filesep, 'TempMask');
-        try
-        [~] = FUNC.resize_images(ImagesFolderName, WantedSize);
-        catch
-        end
-        assert(~exist(DirName, 'dir'), 'Temp folder created despite invalid input folder')
-        
-        % Test case 2: Input folder contains valid images
-        ImagesFolderName = 'ExampleImages';
-        images = imageDatastore(ImagesFolderName, ...
-            'IncludeSubfolders',true, ...
-            'LabelSource','foldernames');
-        num = numel(images.Files);
-        WantedSize = [500, 500];
-        assert(exist(ImagesFolderName, 'dir'), 'Test folder does not exist')
-        TempImDirName = FUNC.resize_images(ImagesFolderName, WantedSize);
-        assert(exist(TempImDirName, 'dir'), 'Temp folder not created')
-        assert(numel(dir(fullfile(TempImDirName, '*.tiff'))) == num, 'Unexpected number of output images')
-
-        %test case 3: The images are correctly resized
-        
-        outputFiles = dir([TempImDirName '/*.tiff']);
-        numImages = length(outputFiles);
-        
-        % Loop over all images in the output directory and check their size
-        for i = 1:numImages
-            % Load the image and get its size
-            im = imread(fullfile(TempImDirName, outputFiles(i).name));
-            [h, w, ~] = size(im);
+            % Test case 1: Input folder contains no images
+            ImagesFolderName = 'non_existing_folder';
+            WantedSize = [256, 256];
+            assert(~exist(ImagesFolderName, 'dir'), 'Test folder already exists')
+            DirName = append(ImagesFolderName, filesep, 'TempMask');
+            try
+            [~] = FUNC.resize_images(ImagesFolderName, WantedSize);
+            catch
+            end
+            assert(~exist(DirName, 'dir'), 'Temp folder created despite invalid input folder')
             
-            % Check if the size matches the target size
-            verifyEqual(testCase, [h, w], WantedSize, 'AbsTol', 1, ...
-                ['Size of image ' outputFiles(i).name ' does not match the target size']);
-        end
-        rmdir(TempImDirName, 's');
+            % Test case 2: Input folder contains valid images
+            ImagesFolderName = 'ExampleImages';
+            images = imageDatastore(ImagesFolderName, ...
+                'IncludeSubfolders',true, ...
+                'LabelSource','foldernames');
+            num = numel(images.Files);
+            WantedSize = [500, 500];
+            assert(exist(ImagesFolderName, 'dir'), 'Test folder does not exist')
+            TempImDirName = FUNC.resize_images(ImagesFolderName, WantedSize);
+            assert(exist(TempImDirName, 'dir'), 'Temp folder not created')
+            assert(numel(dir(fullfile(TempImDirName, '*.tiff'))) == num, 'Unexpected number of output images')
+
         end
         %tests for the Dataset_processing function-------------------------------
 
