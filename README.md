@@ -41,8 +41,8 @@ This automated method has been incorporated into the already existing AnaSP soft
 To clone the git repository, type the following commands from the terminal:
 
 ```         
-git clone https: https://github.com/MariachiaraStellato/SpheroidSegmentation_With_ResNet101
-cd SpheroidSegmentation_With_ResNet101
+git clone https: https://github.com/MariachiaraStellato/SpheroidSegmentation_With_CNNs
+cd SpheroidSegmentation_With_CNNs
 ```
 
 To run the functions used, it is necessary to have the deep learning toolbox installed on MATLAB. You can check if you already have it by writing in your MATLAB command line:
