@@ -3,19 +3,19 @@ classdef tests<matlab.unittest.TestCase
     methods (Test)
         %tests for the process_images function--------------------------------------------------
         function testTempImDirName(testCase)
-        % ---------------------------------------------------------------------------------------------
-        % This test asserts that the function "process_images" with default values returns correct output:
-        % the name of the directory created that contains the resized and
-        % processed images 
-        % 
-        % GIVEN: the name of the folder containing the images we want to
-        % resize, the choosen size and the index corresponding to the
-        % number of colour channels 
-        % WHEN: I apply "process_images" function with default values
-        % THEN: the function returns a string containing the name of the
-        % newly created folder inside the original folder containing the
-        % resized images
-        % ---------------------------------------------------------------------------------------------
+            % ---------------------------------------------------------------------------------------------
+            % This test asserts that the function "process_images" with default values returns correct output:
+            % the name of the directory created that contains the resized and
+            % processed images 
+            % 
+            % GIVEN: the name of the folder containing the images we want to
+            % resize, the choosen size and the index corresponding to the
+            % number of colour channels 
+            % WHEN: I apply "process_images" function with default values
+            % THEN: the function returns a string containing the name of the
+            % newly created folder inside the original folder containing the
+            % resized images
+            % ---------------------------------------------------------------------------------------------
             ImagesFolderName = 'ExampleImages';
             WantedSize = [256, 256];
             c = 1;
@@ -25,6 +25,19 @@ classdef tests<matlab.unittest.TestCase
         end
 
         function testImageSize(testCase)
+            % ---------------------------------------------------------------------------------------------
+            % This test asserts that the function "process_images" with
+            % default values produces modified images with the right size
+            % given as input
+            % 
+            % GIVEN: the name of the folder containing the images we want to
+            % resize, the choosen size and the index corresponding to the
+            % number of colour channels 
+            % WHEN: I apply "process_images" function with default values
+            % THEN: the function returns a string containing the name of the
+            % newly created folder inside the original folder containing the
+            % resized images
+            % ---------------------------------------------------------------------------------------------
             ImagesFolderName = 'ExampleImages';
             WantedSize = [256, 256];
             c = 1;
