@@ -41,7 +41,7 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
     %create temporary directory to store the modifyed images. They will be
     %deleated at the end of the training.
     TempImDirName = FUNC.process_images(ImagesDir,[a b], 1);
-    TempMaskDirName = FUNC.resize_images(MasksDir,[a,b]);
+    TempMaskDirName = FUNC.process_images(MasksDir,[a,b],1);
     
     %Divide the dataset into training and validation subsets
     [dsTrain, dsVal, ~] = FUNC.Dataset_processing(TempImDirName,TempMaskDirName);
