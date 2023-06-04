@@ -313,7 +313,10 @@ classdef FUNC
             %                           the size we want the images to be resized to
             %       c:                  integer number.
             %                           c == 1      output images with 3 color channels. 
-            %                           else        output image with 1 colour channel. 
+            %                           c == 2      output image with 1 colour channel. 
+            %                           else        output has the same
+            %                                       number of colour channels as the
+            %                                       input
             % OUTPUT:
             %        TempImDirName: string containing the created folder path where the 
             %                       resized and modified images are stored 
@@ -348,10 +351,15 @@ classdef FUNC
           inputFileName = image.Files{k};
           fprintf('%s\n', inputFileName);
           I = imread(inputFileName);
-          I = im2gray(I); 
+          if islogical(I)
+              I = uint8(I);
+          end
           if c == 1
+            I = im2gray(I);
             I = cat(3, I, I, I);
             pause(0.1);
+          elseif c == 2
+            I = im2gray(I);
           end
             %resize the image 
             I = imresize(I,WantedSize);
