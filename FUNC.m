@@ -80,7 +80,7 @@ classdef FUNC
             % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
             % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
             % General Public License for more details.
-                TempLayers1 = FUNC.ConvBatchWdil(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w,dil);
+                TempLayers1 = FUNC.ConvBatch(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w,dil);
                 TempLayer2 = reluLayer("Name",ReluName);
                 Layers = [TempLayers1
                           TempLayer2];
