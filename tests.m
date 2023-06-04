@@ -3,6 +3,16 @@ classdef tests<matlab.unittest.TestCase
     methods (Test)
         %tests for the process_images function--------------------------------------------------
         function testTempImDirName(testCase)
+        % ---------------------------------------------------------------------------------------------
+        % This test asserts that the function "process_images" with default values returns correct output:
+        % the name of the directory created that contains the resized and
+        % processed images 
+        % 
+        % GIVEN: a csv file output from the FIonA treatment planning system
+        % WHEN: I apply "readDVHs" function with default values (renamed.structures = NA)
+        % THEN: the function returns a list with two objects: a dataframe "DVHs" with DVHs values
+        % and a dataframe "Volumes [cc]" with structures' volumes
+        % ---------------------------------------------------------------------------------------------
             ImagesFolderName = 'ExampleImages';
             WantedSize = [256, 256];
             c = 1;
