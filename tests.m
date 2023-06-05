@@ -54,37 +54,20 @@ classdef tests<matlab.unittest.TestCase
             rmdir(TempImDirName,'s');
         end
 
-        
-        function testResizeImages(testCase)
-
-            % Test case 1: Input folder contains no images
-            ImagesFolderName = 'non_existing_folder';
-            WantedSize = [256, 256];
-            assert(~exist(ImagesFolderName, 'dir'), 'Test folder already exists')
-            DirName = append(ImagesFolderName, filesep, 'TempMask');
-            try
-            [~] = FUNC.resize_images(ImagesFolderName, WantedSize);
-            catch
-            end
-            assert(~exist(DirName, 'dir'), 'Temp folder created despite invalid input folder')
-            
-            % Test case 2: Input folder contains valid images
-            ImagesFolderName = 'ExampleImages';
-            images = imageDatastore(ImagesFolderName, ...
-                'IncludeSubfolders',true, ...
-                'LabelSource','foldernames');
-            num = numel(images.Files);
-            WantedSize = [500, 500];
-            assert(exist(ImagesFolderName, 'dir'), 'Test folder does not exist')
-            TempImDirName = FUNC.resize_images(ImagesFolderName, WantedSize);
-            assert(exist(TempImDirName, 'dir'), 'Temp folder not created')
-            assert(numel(dir(fullfile(TempImDirName, '*.tiff'))) == num, 'Unexpected number of output images')
-
-        end
-        %tests for the Dataset_processing function-------------------------------
-
         function testOutputDatastoresSize(testCase)
-            % Test that the output datastores have the expected sizes
+            % ---------------------------------------------------------------------------------------------
+            % This test asserts that the function "Dataset_processing" with
+            % default values produces as output three combined datastores
+            % with the right size. 
+            % 
+            % GIVEN: the name of the folder containing the images we want to
+            % resize and the one containing the respective masks
+            % WHEN: I apply "process_images" function with default values
+            % THEN: the function returns three combined datasores called
+            % respectively dsTrain, dsVal and dsTest that are ready to use
+            % to train a deep learning network
+            % ---------------------------------------------------------------------------------------------
+            
             
             % Generate example data
             TestImages = 'testImages';
