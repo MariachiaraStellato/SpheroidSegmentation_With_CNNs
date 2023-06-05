@@ -257,6 +257,31 @@ classdef tests<matlab.unittest.TestCase
             testCase.verifyEqual(actualConvLayerWeightLearnRateFactor, expectedConvLayerWeightLearnRateFactor, 'The convolution layer has the wrong weight learn rate factor.');
         end
 
+        function testSegmentedMaskSize(testCase)
+            % ---------------------------------------------------------------------------------------------
+            % This test asserts that the function "seg_and_fill" with
+            % default values correctly inizialize the parameters of the
+            % convolutional layer
+            % 
+            % GIVEN: the image and the network you want to use for the
+            % segmentation
+            % WHEN: I apply "seg_and_fill" function with default values
+            % THEN: the function gives as output the segmented image
+            % ---------------------------------------------------------------------------------------------
+            ImFolder = "ExampleImages";
+            image = imageDatastore(ImFolder, ...
+                    'IncludeSubfolders',true, ...
+                    'LabelSource','foldernames');
+            FilesNames = image.Files;
+            im = readimage(FilesNames,1);
+            net = load('trained_network.mat');
+            
+            I = FUNC.seg_and_fill(im, net);
+            
+            expectedSize = size(im);
+            actualSize = size(I);
+            testCase.verifyEqual(actualSize, expectedSize, 'The size of the segmented mask is incorrect.');
+        end
 
     end
 end
