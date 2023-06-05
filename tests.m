@@ -272,8 +272,8 @@ classdef tests<matlab.unittest.TestCase
             image = imageDatastore(ImFolder, ...
                     'IncludeSubfolders',true, ...
                     'LabelSource','foldernames');
-            FilesNames = image.Files;
-            im = readimage(FilesNames,1);
+            
+            im = readimage(image,1);
             net = load('trained_network.mat');
             
             I = FUNC.seg_and_fill(im, net);
