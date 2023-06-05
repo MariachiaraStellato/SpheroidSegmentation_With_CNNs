@@ -105,7 +105,18 @@ classdef tests<matlab.unittest.TestCase
         end
         
         function testInvalidInputFolder(testCase)
-            % Test that an error is thrown when an invalid images directory is given
+            % ---------------------------------------------------------------------------------------------
+            % This test asserts that the function "Dataset_processing" with
+            % default values produces an error if the folder given as input
+            % does not exist. 
+            % 
+            % GIVEN: the name of the folder containing the images we want to
+            % resize and the one containing the respective masks
+            % WHEN: I apply "process_images" function with default values
+            % THEN: the function returns three combined datasores called
+            % respectively dsTrain, dsVal and dsTest that are ready to use
+            % to train a deep learning network
+            % ---------------------------------------------------------------------------------------------
             
             % Call the function with an invalid directory
             invalidDir = 'invalid_dir';
@@ -122,7 +133,18 @@ classdef tests<matlab.unittest.TestCase
         end
         
         function testInvalidMaskFolder(testCase)
-            % Test that an error is thrown when an invalid masks directory is given
+            % ---------------------------------------------------------------------------------------------
+            % This test asserts that the function "Dataset_processing" with
+            % default values produces an error if the folder given as input
+            % does not exist. 
+            % 
+            % GIVEN: the name of the folder containing the images we want to
+            % resize and the one containing the respective masks
+            % WHEN: I apply "process_images" function with default values
+            % THEN: the function returns three combined datasores called
+            % respectively dsTrain, dsVal and dsTest that are ready to use
+            % to train a deep learning network
+            % ---------------------------------------------------------------------------------------------
             
             % Call the function with an invalid directory
             imDir = fullfile(pwd, 'ExampleImages');
@@ -141,6 +163,19 @@ classdef tests<matlab.unittest.TestCase
         %tests for the ISaveImages function-------------------------------
 
         function TestISaveImagesCorrectly(testCase)
+
+            % ---------------------------------------------------------------------------------------------
+            % This test asserts that the function "ISaveImages" with
+            % default values saves the correct image with the expected name
+            % 
+            % GIVEN: the name you want the saved image to have,
+            % the name of the folder where we want to save the images and
+            % the image to be saved
+            % WHEN: I apply "ISaveImages" function with default values
+            % THEN: the function save the image in the correct folder with
+            % the correct name
+            % ---------------------------------------------------------------------------------------------
+
             im = imread('https://media.gettyimages.com/id/1367506926/it/foto/a-beautiful-smooth-haired-red-cat-lies-on-the-sofa-and-in-a-relaxed-close-up-pose.jpg?s=612x612&w=0&k=20&c=v-t1SNH35LLOo6YcXNcEQ2WCbDwPu_cCuwEY6cS7O88=');
             Folder = 'testFolder';
             if ~exist(Folder, 'dir')
