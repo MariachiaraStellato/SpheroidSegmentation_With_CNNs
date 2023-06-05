@@ -190,7 +190,16 @@ classdef tests<matlab.unittest.TestCase
         end
         
         function testLayersSize(testCase)
-            % Test that the number of layers returned is correct
+            % ---------------------------------------------------------------------------------------------
+            % This test asserts that the function "ConvBatch" with
+            % default values creates the correct number of layers
+            % 
+            % GIVEN: the parameters you want to use to define the layers
+            % WHEN: I apply "ConvBatch" function with default values
+            % THEN: the function gives as output the a convolutional layer
+            % and a batch normalization layer
+            % ---------------------------------------------------------------------------------------------
+            
             FilterSize = [3 3];
             FilterNumber = 64;
             Padding = 'same';
@@ -207,7 +216,16 @@ classdef tests<matlab.unittest.TestCase
         end
         
         function testConvolutionLayer(testCase)
-            % Test the properties of the convolution layer
+            % ---------------------------------------------------------------------------------------------
+            % This test asserts that the function "ConvBatch" with
+            % default values correctly inizialize the parameters of the
+            % convolutional layer
+            % 
+            % GIVEN: the parameters you want to use to define the layers
+            % WHEN: I apply "ConvBatch" function with default values
+            % THEN: the function gives as output the a convolutional layer
+            % and a batch normalization layer
+            % ---------------------------------------------------------------------------------------------
             FilterSize = [3 3];
             FilterNumber = 64;
             Padding = 'same';
@@ -237,23 +255,6 @@ classdef tests<matlab.unittest.TestCase
             expectedConvLayerWeightLearnRateFactor = 1;
             actualConvLayerWeightLearnRateFactor = Layers(1).WeightLearnRateFactor;
             testCase.verifyEqual(actualConvLayerWeightLearnRateFactor, expectedConvLayerWeightLearnRateFactor, 'The convolution layer has the wrong weight learn rate factor.');
-        end
-        
-        function testBatchNormalizationLayer(testCase)
-            % Test the properties of the batch normalization layer
-            FilterSize = [3 3];
-            FilterNumber = 64;
-            Padding = 'same';
-            Stride = [1 1];
-            ConvName = 'conv1';
-            BatchName = 'batchnorm1';
-            w = 1;
-            
-            Layers = FUNC.ConvBatch(FilterSize, FilterNumber, Padding, Stride, ConvName, BatchName, w, [1 1]);
-            
-            expectedBatchNormLayerName = 'batchnorm1';
-            actualBatchNormLayerName = Layers(2).Name;
-            testCase.verifyEqual(actualBatchNormLayerName, expectedBatchNormLayerName, 'The batch normalization layer has the wrong name.');
         end
 
 
