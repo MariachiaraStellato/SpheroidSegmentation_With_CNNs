@@ -82,11 +82,15 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
                 try
                     FUNC.IPlotImagesAndMasks(a,im,I,FilesNames(i))
                     hFinalFigure = gcf;
+                    try
                     pause(2*eps);
                     waitforbuttonpress
                     pause(2*eps);
+                    
                     close(hFinalFigure);
                     pause(2*eps);
+                    catch
+                    end
                 catch err
                     
                     errordlg(err.message) 
