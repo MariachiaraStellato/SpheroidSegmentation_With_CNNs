@@ -154,4 +154,6 @@ Among the many metrics, the normalized confusion matrices, mean accuracy (MA) an
 
 <img src="Images/table_of_result.png" width="480">
 
-From the table above we can say that the best performing pre-trained network is the one based on ResNet-18. 
+The normalized confusion matrix is presented in this table by giving on the first four rows the values contained in each matrix cell: the true positive (TP), true negative (TN), false positiva (FP) and false negative (FN). We want TP and TN to be as high as possible, because they represent those pixel that have been assigned to the same class in both the segmentation done by using the trained networks and the manually segmented images (ground truth). On the other end we want the FP and FN to be as low as possible because these categories represent the pixel that have been misclassified by our segmentation.  
+
+From the table above we can say that VGG16 and ResNet-18 were the most reliable networks. Going more in depth with the analysis of the results, we can observe that in specific cases, such as spheroids with a necrotic core, dishomogeneity in the background and border touching spheroids, the trained networks tend to perform worse. 
