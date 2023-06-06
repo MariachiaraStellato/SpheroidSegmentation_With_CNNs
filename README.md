@@ -12,32 +12,6 @@ Today, more and more biological laboratories use 3D cell cultures and tissues gr
 The aim of this project is to implement an automatic way to segment brightfield spheroid images acquired with a standard widefield microscope based on convolutional neural networks.
 This automated method has been incorporated into the already existing AnaSP software, which is an open-source software suitable for automatically estimating several morphological parameters of spheroids. Its modular architecture and graphical user interface make it attractive for researchers who do not work in areas of computer vision and suitable for both high-content screenings and occasional spheroid-based experiments. 
   
-## Repository Contents
-
-- `ExampleImages` Folder containing 11 spheroids images in .tif format that are necessary to run the code.
-
-- `ExampleMasks` Folder containing 11 manually segmented masks in .tif format that are necessary to run the code.
-
-- `Images` Folder containing the images used in this README file.
-
-- `gitattributes`
-
-- `gitignore` containis file types that are not tracked by git.
-
-- `FUNC.m` contains the function necessary for the main code.
-
-- `Main.m` example of code that explains how to use the project.
-
-- `metric_evaluation.m` contains the function responsible for evaluating the quality of the segmentation performed.
-
-- `Network_Training.m` contains the function responsible fror training new segmentation neural networks.
-
-- `ResNet101_Seg.m` contains the function responsible for generating the segmentation network based on the convolutional neural network ResNet101.
-
-- `segmentation_multiple_images.m` contains the function responsible for performing the segmentation of spheroid images using the trained neural network.
-
-
-
 ## Installation
 
 To clone the git repository, type the following commands from the terminal:
@@ -166,3 +140,27 @@ From this in depth qualitative analysis we can say that the best performing netw
 
 All the images used in this paragraph and a more in depth analysis can be found in the related article: F. Piccinini, A. Peirsman, M. Stellato, J. Pyun, M. M. 
 Tumedei, M. Tazzari, O. De Wever, A. Tesei, G. MAartinelli and G. Castellani: “DEEP LEARNING-BASED TOOL FOR MORPHOTYPIC ANALYSIS OF 3D MULTICELLULAR SPHEROIDS.” Journal of Mechanics in Medicine and Biology, DOI: https://doi.org/10.1142/S0219519423400341.
+
+## Repository Contents
+
+- `ExampleImages` Folder containing 11 spheroids images in .tif format that are necessary to run the code.
+
+- `ExampleMasks` Folder containing 11 manually segmented masks in .tif format that are necessary to run the code.
+
+- `Images` Folder containing the images used in this README file.
+
+- `gitattributes`
+
+- `gitignore` containis file types that are not tracked by git.
+
+- `FUNC.m` contains the function necessary for the main code.
+
+- `Main.m` example of code that explains how to use the project.
+
+- `metric_evaluation.m` contains the function responsible for evaluating the quality of the segmentation performed.
+
+- `Network_Training.m` contains the function responsible fror training new segmentation neural networks.
+
+- `ResNet101_Seg.m` contains the function responsible for generating the segmentation network based on the convolutional neural network ResNet101.
+
+- `segmentation_multiple_images.m` contains the function responsible for performing the segmentation of spheroid images using the trained neural network.
