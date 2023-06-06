@@ -3,6 +3,7 @@
 This repository contains functions implemented in MATLAB for training various segmentation neural networks, performing spheroid segmentation using the trained neural networks and, evaluating the quality of the segmentation performed. 
 This code is included in the AnaSP software, which is free to download at https://sourceforge.net/projects/anasp/. 
 More about the first version of this tool, released for the first time in 2015, can be found in the article: F. Piccinini, “AnaSP: a software suite for automatic image analysis of multicellular spheroids.” Computer Methods and Programs in Biomedicine, 119(1):43-52, 2015. DOI: 10.1016/j.cmpb.2015.02.006.
+
 The implemented segmentation networks that are trainable are VGG16, VGG19, ResNet18, ResNet50, and ResNet101. 
 
 ## Introduction
