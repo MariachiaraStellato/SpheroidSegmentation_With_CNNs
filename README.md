@@ -62,7 +62,11 @@ MasksDir = "ExampleMasks";
 PathTrainedNet = "TrainedNetworks"; %The directory where the trained network will be saved 
 NetworkType = 5; %This correspond to the ResNet101 network
 Choosen_Net = possible_net(NetworkType);
+
+$function used in this code example below
 net = Network_Training(ImagesDir, MasksDir, NetworkType);
+
+
 T = datestr(now,'dd-mm-yy-HH-MM-SS');       
 netname = [char(Choosen_Net),'_',T]; 
 netdir = fullfile(PathTrainedNet,netname);
@@ -87,15 +91,17 @@ After the training, the obtained DAGNetwork variable will be saved into the `Pat
 ### Segmentation
 We can take a look at the code example that can be used to segment the spheroid images inside the main.m file: 
 
-```
+```MATLAB
 PathImageFolder = "ExampleImages";
 PathImageFolderOut = "SegmentedMasks";
 PathNetworkFolderInp = "TrainedNetworks\segRes18Net.mat";
 SpecificImageName ='none';
 flag_ShowMask = 1;
+
+$function used in this code example below
 segmentation_multiple_images(PathImageFolder,PathImageFolderOut,PathNetworkFolderInp,SpecificImageName,flag_ShowMask);
 
-```
+```MATLAB
 The `segmentation_multiple_images` function will take the folder containing the images you want to segment, `PathImageFolder`, the folder in which the segmented shperoids will be saved, `PathIMageFolderOut`, the path where the trained network you want to use is contained, `PathNetworkFolderInp`, and perform the segmentation. 
 Warning: The saved binary images will have the exact same name of the input images, so it is crucial to save them in a different folder than the one where the original image are to avoid overwriting. 
 
@@ -109,9 +115,11 @@ To continue with the segmentation you have to clic "Enter" on the plot. It will 
 ### Validation
 We can take a look at the code example for validating the segmentation obtained by one or more trained networks inside the main.m file: 
 
-```
+```MATLAB
 TestMaskDir = "ExampleMasks";
 SegmentedMaskDir = "SegmentedMasks";
+
+$function used in this code example below
 metrics = metric_evaluation(TestMaskDir, SegmentedMaskDir);
 
 ```
