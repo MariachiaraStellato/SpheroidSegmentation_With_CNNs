@@ -321,5 +321,39 @@ classdef tests<matlab.unittest.TestCase
 
             rmdir(PathImageFolderOut, 's');
         end
+
+        function testMetricsFields(testCase)
+            % ---------------------------------------------------------------------------------------------
+            % This test asserts that the function "metric_evaluation" with
+            % default values gives as output the correct structure
+            % containing the correct fields
+            % 
+            % GIVEN: the image folder, the folder were the masks will be saved, 
+            % and the network you want to use for the segmentation
+            % WHEN: I apply "segmentation_multiple_images" function with default values
+            % THEN: the function gives as output the segmented image
+            % ---------------------------------------------------------------------------------------------
+            % Test that the metrics structure contains the expected fields
+            TestImagesDir = 'ExampleImages';
+            TestMasksDir = 'ExampleMasks';
+            SegmentedMaskDir = "testFolder";
+            
+            if ~exist(SegmentedMaskDir, 'dir')
+                mkdir(SegmentedMaskDir);
+            end
+            PathNetworkFolderInp = "TrainedNetworks\segRes18Net.mat";
+            SpecificImageName ='none';
+            flag_ShowMask = 0;
+            segmentation_multiple_images(TestImagesDir,SegmentedMaskDir,PathNetworkFolderInp,SpecificImageName,flag_ShowMask);
+            
+            metrics = metric_evaluation(TestMasksDir, SegmentedMaskDir);
+            cl = class(metrics);
+
+            rmdir(SegmentedMaskDir, 's');
+            
+            
+            testCase.assertTrue(isequal(cl,'semanticSegmentationMetrics'));
+        end
+
     end
 end
