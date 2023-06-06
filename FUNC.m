@@ -548,7 +548,43 @@ classdef FUNC
         end
 %-------------------------------------------------------------------------------------------------
         function lgraph = Define_network(NetworkType,imageSize,numClasses,tbl_Name,classWeights)
-        
+            % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
+            % DATE: september 2022, 13
+            % FUNCTION DESCRITPION: 
+            %   This function will create the lgraph for the segmentation network corresponding to the
+            %   deep learning network choosen as input.
+            %
+            % INPUT:
+            %   NetworkType:    integer number used to select the neural network to be used for the training
+            %                   1 == ResNet18
+            %                   2 == ResNet50
+            %                   3 == Vgg16
+            %                   4 == Vgg19
+            %                   5 == ResNet101 
+            %   imagedSize:         [a b] numerical array containing
+            %                       the image size the user need to
+            %                       initialize the network
+            %   NumClasses:     integer number defining the number of
+            %                   classes that the network will be able to identify
+            %   tbl_Name:       array containing character strings with the
+            %                   classes names
+            %   ClassWeights:   Double type containing the weights relative
+            %                   to the pixelclassificationLayer
+            % OUTPUT:
+            %   lgraph:         layer graph containing the initialized
+            %                   network ready to be trained. 
+            %   
+            % MiAi (Microscopy & Artificial Intelligence) Toolbox
+            % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
+            % University of Bologna, Italy. All rights reserved.
+            %
+            % This program is free software; you can redistribute it and/or modify it 
+            % under the terms of the GNU General Public License version 3 (or higher) 
+            % as published by the Free Software Foundation. This program is 
+            % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
+            % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+            % General Public License for more details.
+
             % ResNet18 and ResNet50 initialization
             if NetworkType == 3 || NetworkType == 4
             NetworkType = NetworkType - 2; 
