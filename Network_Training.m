@@ -62,36 +62,14 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
     
     %number of images used for the training
     numTrainingImages = numel(dsTrain.UnderlyingDatastores{1,1}.Files);
-    
-%-----------------------network selection----------------------------------
-    % ResNet18 and ResNet50 initialization
-    if NetworkType == 3 || NetworkType == 4
-    NetworkType = NetworkType - 2; 
-    network = ["resnet18", "resnet50"];
-    %network = string(network);
-    
-    lgraph = deeplabv3plusLayers(imageSize, numClasses, network(NetworkType)); 
-    
+
     tbl = countEachLabel(dsTrain.UnderlyingDatastores{1,2});
     imageFreq = tbl.PixelCount ./ tbl.ImagePixelCount;
     imageFreq(isnan(imageFreq)) = min(imageFreq) * 0.00001;
     classWeights = median(imageFreq) ./ imageFreq;
     
-    pxLayer = pixelClassificationLayer('Name','labels','Classes',tbl.Name,'ClassWeights',classWeights);
-    lgraph = replaceLayer(lgraph,"classification",pxLayer);
-      
-
-    % ResNet101 initialization
-    elseif NetworkType == 5         
-        lgraph = ResNet101_Seg(imageSize,numClasses);
-    else
-    % VGG16 and VGG19 initialization
-        if NetworkType == 1 || NetworkType == 2
-        network = ["vgg16", "vgg19"];
-        %network = string(network);
-        lgraph = segnetLayers(imageSize,numClasses,network(NetworkType));    
-        end
-    end
+%-----------------------network selection----------------------------------
+    lgraph = FUNC.Define_network(NetworkType,imageSize,numClasses,tbl.Name,classWeights);
 %------------------------set training options------------------------------
     batchsize = round(numTrainingImages/10);
     if isdeployed
