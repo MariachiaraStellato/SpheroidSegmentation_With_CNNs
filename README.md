@@ -148,7 +148,7 @@ In particular the dataset metrics, class metrics, and image metrics contain the 
 ## Results 
 In the `TrainedNetworks` folder are presented some already trained networks that are ready to se to perform spheroid segmentation. These were trained over a set of approximately 10,000 2048x2048 RGB spheroid images and relative masks. The dataset was divided into 3 subsets: (a) the training set (80% of the total images); (b) the validation set (10% of the total images); and (c) the test set (10% of the total images). To reduce computational efforts, all the input images were rescaled to 8-bit gray-level 500x500 pixels, and the masks were internally binary labeled into 2 categories: background and foreground (i.e., the spheroid). Due to the dimension of the dataset, it was not uploaded in this repository, so this training cannot be reproduced. However, the example images and masks provide for a small batch of images that the user can download to test this results. 
 
-The masks obtained with the 4 trained networks were compared with the segmentations obtained using AnaSP 1.0. In the following picture a small sample of the confronted segmentation is presented. 
+The masks obtained with the 4 trained networks were compared with the segmentations obtained using AnaSP 1.0. In the following picture a small sample of the confronted segmentation is presented. The segmentation network created starting from the ResNet-101 architecture has not been included in this comparison due to being developed later on. 
 
 <img src="Images/Figure_Networks.png" width="480">
 
