@@ -202,15 +202,13 @@ classdef tests<matlab.unittest.TestCase
             
             FilterSize = [3 3];
             FilterNumber = 64;
-            Padding = 'same';
-            Stride = [1 1];
-            ConvName = 'conv1';
+           
             BatchName = 'batchnorm1';
             w = 1;
             
-            Layers = FUNC.ConvBatch(FilterSize, FilterNumber, Padding, Stride, ConvName, BatchName, w,[1 1]);
+            Layers = FUNC.ICreateBatch(FilterSize, FilterNumber, BatchName, w);
             
-            expectedNumLayers = 2;
+            expectedNumLayers = 8;
             actualNumLayers = numel(Layers);
             testCase.verifyEqual(actualNumLayers, expectedNumLayers, 'The number of layers returned is incorrect.');
         end
