@@ -547,8 +547,31 @@ classdef FUNC
         I = I*255;
         end
 %-------------------------------------------------------------------------------------------------
-function Define_network()
-    
-end
+        function lgraph = Define_network(NetworkType,imageSize,numClasses,tbl_Name,classWeights)
+        
+            % ResNet18 and ResNet50 initialization
+            if NetworkType == 3 || NetworkType == 4
+            NetworkType = NetworkType - 2; 
+            network = ["resnet18", "resnet50"];
+            %network = string(network);
+            
+            lgraph = deeplabv3plusLayers(imageSize, numClasses, network(NetworkType)); 
+            
+            pxLayer = pixelClassificationLayer('Name','labels','Classes',tbl_Name,'ClassWeights',classWeights);
+            lgraph = replaceLayer(lgraph,"classification",pxLayer);
+              
+        
+            % ResNet101 initialization
+            elseif NetworkType == 5         
+                lgraph = ResNet101_Seg(imageSize,numClasses);
+            else
+            % VGG16 and VGG19 initialization
+                if NetworkType == 1 || NetworkType == 2
+                network = ["vgg16", "vgg19"];
+                %network = string(network);
+                lgraph = segnetLayers(imageSize,numClasses,network(NetworkType));    
+                end
+            end
+        end
     end
 end
