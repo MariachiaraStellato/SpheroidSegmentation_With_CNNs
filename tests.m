@@ -257,11 +257,11 @@ classdef tests<matlab.unittest.TestCase
             testCase.verifyEqual(actualConvLayerWeightLearnRateFactor, expectedConvLayerWeightLearnRateFactor, 'The convolution layer has the wrong weight learn rate factor.');
         end
 
-        function testSegmentedMaskSize(testCase)
+        function testSegmentedMaskPixelValues(testCase)
             % ---------------------------------------------------------------------------------------------
             % This test asserts that the function "seg_and_fill" with
-            % default values correctly inizialize the parameters of the
-            % convolutional layer
+            % default values the output image has pixel with values that
+            % are either 0 or 255. 
             % 
             % GIVEN: the image and the network you want to use for the
             % segmentation
@@ -274,14 +274,52 @@ classdef tests<matlab.unittest.TestCase
                     'LabelSource','foldernames');
             
             im = readimage(image,1);
-            net = load('trained_network.mat');
+            load('TrainedNetworks\segRes18Net.mat','net');
             
             I = FUNC.seg_and_fill(im, net);
             
-            expectedSize = size(im);
-            actualSize = size(I);
-            testCase.verifyEqual(actualSize, expectedSize, 'The size of the segmented mask is incorrect.');
+            testCase.verifyTrue(all(ismember(I(:), [0, 255])), 'The values of the segmented mask are incorrect.');
         end
 
+        function testSegmentedMaskSize(testCase)
+
+            % ---------------------------------------------------------------------------------------------
+            % This test asserts that the function "segmentation_multiple_images" with
+            % default values the output images have the same size of the
+            % input images
+            % 
+            % GIVEN: the image folder, the folder were the masks will be saved, 
+            % and the network you want to use for the segmentation
+            % WHEN: I apply "segmentation_multiple_images" function with default values
+            % THEN: the function gives as output the segmented image
+            % ---------------------------------------------------------------------------------------------
+            
+            PathImageFolderIn = "ExampleImages";
+            PathImageFolderOut = "testFolder";
+            
+            if ~exist(PathImageFolderOut, 'dir')
+                mkdir(PathImageFolderOut);
+            end
+            PathNetworkFolderInp = "TrainedNetworks\segRes18Net.mat";
+            SpecificImageName ='none';
+            flag_ShowMask = 0;
+            segmentation_multiple_images(PathImageFolderIn,PathImageFolderOut,PathNetworkFolderInp,SpecificImageName,flag_ShowMask);
+            
+            image = imageDatastore(PathImageFolderIn, ...
+                    'IncludeSubfolders',true, ...
+                    'LabelSource','foldernames');
+            mask = imageDatastore(PathImageFolderOut, ...
+                    'IncludeSubfolders',true, ...
+                    'LabelSource','foldernames');
+            
+            im = readimage(image,1);
+            I = readimage(mask,1);
+            expectedSize = size(im);
+            expectedSize = [expectedSize(1) expectedSize(2)];
+            actualSize = size(I);
+            testCase.verifyEqual(actualSize, expectedSize, 'The size of the segmented mask is incorrect.');
+
+            rmdir(PathImageFolderOut, 's');
+        end
     end
 end
