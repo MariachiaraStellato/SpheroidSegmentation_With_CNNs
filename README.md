@@ -101,7 +101,8 @@ flag_ShowMask = 1;
 $function used in this code example below
 segmentation_multiple_images(PathImageFolder,PathImageFolderOut,PathNetworkFolderInp,SpecificImageName,flag_ShowMask);
 
-```MATLAB
+```
+
 The `segmentation_multiple_images` function will take the folder containing the images you want to segment, `PathImageFolder`, the folder in which the segmented shperoids will be saved, `PathIMageFolderOut`, the path where the trained network you want to use is contained, `PathNetworkFolderInp`, and perform the segmentation. 
 Warning: The saved binary images will have the exact same name of the input images, so it is crucial to save them in a different folder than the one where the original image are to avoid overwriting. 
 
