@@ -55,7 +55,7 @@ This project is composed by three main parts:
 ### Training
 We can take a look at the code example for training images inside the main.m file: 
 
-```
+```ruby
 possible_net = ["VGG-16", "VGG-19", "ResNet-18","ResNet-50","ResNet101"];
 ImagesDir = "ExampleImages";
 MasksDir = "ExampleMasks";
