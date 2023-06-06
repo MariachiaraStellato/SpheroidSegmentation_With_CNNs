@@ -16,7 +16,7 @@ msgbox('TRAINING: THE END.', 'Message');
 PathImageFolderIn = "ExampleImages";
 PathImageFolderOut = "SegmentedMasks";
 PathNetworkFolderInp = "TrainedNetworks\segRes18Net.mat";
-SpecificImageName ='none';
+SpecificImageName = char.empty;
 flag_ShowMask = 1;
 segmentation_multiple_images(PathImageFolderIn,PathImageFolderOut,PathNetworkFolderInp,SpecificImageName,flag_ShowMask);
 
