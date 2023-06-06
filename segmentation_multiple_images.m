@@ -38,7 +38,7 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
     load(network, 'net');
 
     %segmentation of the whole folder
-    if specificImageName == "none"
+    if isempty(specificImageName)
         image = imageDatastore(ImFolder, ...
         'IncludeSubfolders',true, ...
         'LabelSource','foldernames');
