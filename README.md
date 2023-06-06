@@ -157,3 +157,10 @@ Among the many metrics, the normalized confusion matrices, mean accuracy (MA) an
 The normalized confusion matrix is presented in this table by giving on the first four rows the values contained in each matrix cell: the true positive (TP), true negative (TN), false positiva (FP) and false negative (FN). We want TP and TN to be as high as possible, because they represent those pixel that have been assigned to the same class in both the segmentation done by using the trained networks and the manually segmented images (ground truth). On the other end we want the FP and FN to be as low as possible because these categories represent the pixel that have been misclassified by our segmentation.  
 
 From the table above we can say that VGG16 and ResNet-18 were the most reliable networks. Going more in depth with the analysis of the results, we can observe that in specific cases, such as spheroids with a necrotic core, dishomogeneity in the background and border touching spheroids, the trained networks tend to perform worse. 
+
+<img src="Images/Figure_Problems.png" width="480">
+
+From this in depth qualitative analysis we can say that the best performing network is ResNet-18, due to the fact that it is the least affected by the specific problematic cases observed. 
+
+All the images used in this paragraph and a more in depth analysis can be found in the related article: F. Piccinini, A. Peirsman, M. Stellato, J. Pyun, M. M. 
+Tumedei, M. Tazzari, O. De Wever, A. Tesei, G. MAartinelli and G. Castellani: “DEEP LEARNING-BASED TOOL FOR MORPHOTYPIC ANALYSIS OF 3D MULTICELLULAR SPHEROIDS.” Journal of Mechanics in Medicine and Biology, DOI: https://doi.org/10.1142/S0219519423400341.
