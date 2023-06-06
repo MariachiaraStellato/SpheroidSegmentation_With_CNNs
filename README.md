@@ -12,32 +12,6 @@ Today, more and more biological laboratories use 3D cell cultures and tissues gr
 The aim of this project is to implement an automatic way to segment brightfield spheroid images acquired with a standard widefield microscope based on convolutional neural networks.
 This automated method has been incorporated into the already existing AnaSP software, which is an open-source software suitable for automatically estimating several morphological parameters of spheroids. Its modular architecture and graphical user interface make it attractive for researchers who do not work in areas of computer vision and suitable for both high-content screenings and occasional spheroid-based experiments. 
   
-## Repository Contents
-
-- `ExampleImages` Folder containing 11 spheroids images in .tif format that are necessary to run the code.
-
-- `ExampleMasks` Folder containing 11 manually segmented masks in .tif format that are necessary to run the code.
-
-- `Images` Folder containing the images used in this README file.
-
-- `gitattributes`
-
-- `gitignore` containis file types that are not tracked by git.
-
-- `FUNC.m` contains the function necessary for the main code.
-
-- `Main.m` example of code that explains how to use the project.
-
-- `metric_evaluation.m` contains the function responsible for evaluating the quality of the segmentation performed.
-
-- `Network_Training.m` contains the function responsible fror training new segmentation neural networks.
-
-- `ResNet101_Seg.m` contains the function responsible for generating the segmentation network based on the convolutional neural network ResNet101.
-
-- `segmentation_multiple_images.m` contains the function responsible for performing the segmentation of spheroid images using the trained neural network.
-
-
-
 ## Installation
 
 To clone the git repository, type the following commands from the terminal:
@@ -81,14 +55,18 @@ This project is composed by three main parts:
 ### Training
 We can take a look at the code example for training images inside the main.m file: 
 
-```
+```MATLAB
 possible_net = ["VGG-16", "VGG-19", "ResNet-18","ResNet-50","ResNet101"];
 ImagesDir = "ExampleImages";
 MasksDir = "ExampleMasks";
 PathTrainedNet = "TrainedNetworks"; %The directory where the trained network will be saved 
 NetworkType = 5; %This correspond to the ResNet101 network
 Choosen_Net = possible_net(NetworkType);
+
+$function used in this code example below
 net = Network_Training(ImagesDir, MasksDir, NetworkType);
+
+
 T = datestr(now,'dd-mm-yy-HH-MM-SS');       
 netname = [char(Choosen_Net),'_',T]; 
 netdir = fullfile(PathTrainedNet,netname);
@@ -113,15 +91,18 @@ After the training, the obtained DAGNetwork variable will be saved into the `Pat
 ### Segmentation
 We can take a look at the code example that can be used to segment the spheroid images inside the main.m file: 
 
-```
+```MATLAB
 PathImageFolder = "ExampleImages";
 PathImageFolderOut = "SegmentedMasks";
 PathNetworkFolderInp = "TrainedNetworks\segRes18Net.mat";
 SpecificImageName ='none';
 flag_ShowMask = 1;
+
+$function used in this code example below
 segmentation_multiple_images(PathImageFolder,PathImageFolderOut,PathNetworkFolderInp,SpecificImageName,flag_ShowMask);
 
 ```
+
 The `segmentation_multiple_images` function will take the folder containing the images you want to segment, `PathImageFolder`, the folder in which the segmented shperoids will be saved, `PathIMageFolderOut`, the path where the trained network you want to use is contained, `PathNetworkFolderInp`, and perform the segmentation. 
 Warning: The saved binary images will have the exact same name of the input images, so it is crucial to save them in a different folder than the one where the original image are to avoid overwriting. 
 
@@ -135,9 +116,11 @@ To continue with the segmentation you have to clic "Enter" on the plot. It will 
 ### Validation
 We can take a look at the code example for validating the segmentation obtained by one or more trained networks inside the main.m file: 
 
-```
+```MATLAB
 TestMaskDir = "ExampleMasks";
 SegmentedMaskDir = "SegmentedMasks";
+
+$function used in this code example below
 metrics = metric_evaluation(TestMaskDir, SegmentedMaskDir);
 
 ```
@@ -166,3 +149,27 @@ From this in depth qualitative analysis we can say that the best performing netw
 
 All the images used in this paragraph and a more in depth analysis can be found in the related article: F. Piccinini, A. Peirsman, M. Stellato, J. Pyun, M. M. 
 Tumedei, M. Tazzari, O. De Wever, A. Tesei, G. MAartinelli and G. Castellani: “DEEP LEARNING-BASED TOOL FOR MORPHOTYPIC ANALYSIS OF 3D MULTICELLULAR SPHEROIDS.” Journal of Mechanics in Medicine and Biology, DOI: https://doi.org/10.1142/S0219519423400341.
+
+## Repository Contents
+
+- `ExampleImages` Folder containing 11 spheroids images in .tif format that are necessary to run the code.
+
+- `ExampleMasks` Folder containing 11 manually segmented masks in .tif format that are necessary to run the code.
+
+- `Images` Folder containing the images used in this README file.
+
+- `gitattributes`
+
+- `gitignore` containis file types that are not tracked by git.
+
+- `FUNC.m` contains the function necessary for the main code.
+
+- `Main.m` example of code that explains how to use the project.
+
+- `metric_evaluation.m` contains the function responsible for evaluating the quality of the segmentation performed.
+
+- `Network_Training.m` contains the function responsible fror training new segmentation neural networks.
+
+- `ResNet101_Seg.m` contains the function responsible for generating the segmentation network based on the convolutional neural network ResNet101.
+
+- `segmentation_multiple_images.m` contains the function responsible for performing the segmentation of spheroid images using the trained neural network.
