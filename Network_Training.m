@@ -41,7 +41,7 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
     %create temporary directory to store the modifyed images. They will be
     %deleated at the end of the training.
     TempImDirName = FUNC.process_images(ImagesDir,[a b], 1);
-    TempMaskDirName = FUNC.process_images(MasksDir,[a,b],1);
+    TempMaskDirName = FUNC.process_images(MasksDir,[a,b],3);
     
     %Divide the dataset into training and validation subsets
     [dsTrain, dsVal, ~] = FUNC.Dataset_processing(TempImDirName,TempMaskDirName);
@@ -67,9 +67,11 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
     imageFreq = tbl.PixelCount ./ tbl.ImagePixelCount;
     imageFreq(isnan(imageFreq)) = min(imageFreq) * 0.00001;
     classWeights = median(imageFreq) ./ imageFreq;
-    
+
 %-----------------------network selection----------------------------------
+
     lgraph = FUNC.Define_network(NetworkType,imageSize,numClasses,tbl.Name,classWeights);
+    
 %------------------------set training options------------------------------
     batchsize = round(numTrainingImages/10);
     if isdeployed
