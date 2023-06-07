@@ -390,7 +390,7 @@ classdef tests<matlab.unittest.TestCase
             % Test resizing an image with one color channel
             
             % Set up
-            inputFileName = 'image_with_one_channel.jpg';
+            inputFileName = 'ImagesForTesting\gatto.jpg';
             WantedSize = [512, 512];
             c = 2;
             
@@ -398,8 +398,9 @@ classdef tests<matlab.unittest.TestCase
             I = process_single_image(WantedSize, inputFileName, c);
             
             % Check the output
-            expectedSize = [512, 512];
-            testCase.assertSize(I, expectedSize);
+            
+            testCase.assertSize(I, WantedSize);
+            
         end
 
     end
