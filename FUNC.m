@@ -367,13 +367,7 @@ classdef FUNC
             %save images in the new folder
             FUNC.ISaveImages(inputFileName,TempImDirName,I);
         end
-        done = msgbox('Images correctly processed!');
-        if exist('done', 'var')
-            if ishandle(done)
-                pause(2*eps);
-                delete(done)
-            end
-        end
+        FUNC.PopUp_Create('Images correctly processed!')
         
         end
 %-------------------------------------------------------------------------------------------------------------------
@@ -432,13 +426,8 @@ classdef FUNC
         if num1<10
             error('The folder must contain at least 10 images to perform the training.');
         end
-        datcre = msgbox('Datastore created');
-        if exist('datcre', 'var')
-             if ishandle(datcre)
-                   pause(2*eps);
-                   delete(datcre)
-             end
-        end
+
+        FUNC.PopUp_Create('Datastore created');
 
         % Labels        
         classes = [
@@ -449,14 +438,7 @@ classdef FUNC
         labelIDs = {255; 
                     0}; %graylevel to refer to the labels 
         
-        
-        labcre = msgbox('Label created');
-        if exist('labcre', 'var')
-           if ishandle(labcre)
-               pause(2*eps);
-              delete(labcre)
-           end
-        end
+        FUNC.PopUp_Create('Label created');
 
         % split the set in training,test and validation         
         % 80% for training, 10% for test, %10 for validation
@@ -475,13 +457,8 @@ classdef FUNC
         dsTrain = combine(imdsTrain, pxdsTrain);
         dsTest = combine(imdsTest,pxdsTest);
         
-        datdiv = msgbox('Datastore divided');
-        if exist('datdiv', 'var')
-            if ishandle(datdiv)
-                pause(2*eps);
-                delete(datdiv)
-            end
-        end
+        FUNC.PopUp_Create('Datastore divided');
+        
         end
 %-------------------------------------------------------------------------------------------------
         function I = seg_and_fill(im, net)
