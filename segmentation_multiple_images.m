@@ -39,76 +39,76 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
 
     if isempty(specificImageName)
         image = imageDatastore(ImFolder, ...
-        'IncludeSubfolders',true, ...
-        'LabelSource','foldernames');
+            'IncludeSubfolders',true, ...
+            'LabelSource','foldernames');
         FilesNames = image.Files;
         %check that there are images in the file
         if isempty(FilesNames)
-        error('In the selected ImageFolder there are not images.');
+            error('In the selected ImageFolder there are not images.');
         end
     else
-            FilesNames = FUNC.IGetFileName(ImFolder,specificImageName);
+        FilesNames = FUNC.IGetFileName(ImFolder,specificImageName);
     end
 
-num = numel(FilesNames);
+    num = numel(FilesNames);
 
-for i=1:num
-            BarWaitWindows = msgbox(['Please wait... ' ,'Folder analysed: ', ImFolder, ', Completed: ', num2str(round(100*(i/num))), '%.']);
-            pause(2*eps);
-            I = imread(char(FilesNames(i)));
-            [a,b,c] = size(I);
-            I = imresize(I,[500,500]); 
-            if c~=1 && c~=3
-                ImInpN = I(:,:,1);
-                I= ImInpN;
-                clear ImInpN
-            end
-            if size(I,3) == 3
-                I = rgb2gray(I);
-            end
-            
-            %check that the images are spheroids with a white background
-            test = [I(1,1), I(500,500), I(1,500), I(500,1)];
-            if test(1) < 200 && test(2) < 200 && test(3) < 200 && test(4) < 200 
-                errordlg('The images must have white background and dark spheroid to be correctly segmented');
-                break; 
-            end
+    for i=1:num
+        BarWaitWindows = msgbox(['Please wait... ' ,'Folder analysed: ', ImFolder, ', Completed: ', num2str(round(100*(i/num))), '%.']);
+        pause(2*eps);
+        I = imread(char(FilesNames(i)));
+        [a,b,c] = size(I);
+        I = imresize(I,[500,500]);
+        if c~=1 && c~=3
+            ImInpN = I(:,:,1);
+            I= ImInpN;
+            clear ImInpN
+        end
+        if size(I,3) == 3
+            I = rgb2gray(I);
+        end
 
-            %segmentation 
-            im = FUNC.seg_and_fill(I,net);   
-            I = imresize(I,[a b]);
-            im = imresize(im,[a,b]);
+        %check that the images are spheroids with a white background
+        test = [I(1,1), I(500,500), I(1,500), I(500,1)];
+        if test(1) < 200 && test(2) < 200 && test(3) < 200 && test(4) < 200
+            errordlg('The images must have white background and dark spheroid to be correctly segmented');
+            break;
+        end
 
-            %save the segmented masks
-            FUNC.ISaveImages(FilesNames(i),SegFolder,im);
+        %segmentation
+        im = FUNC.seg_and_fill(I,net);
+        I = imresize(I,[a b]);
+        im = imresize(im,[a,b]);
 
-            %plot the image and mask if the flag is activated
-            if flag_showmask == 1
+        %save the segmented masks
+        FUNC.ISaveImages(FilesNames(i),SegFolder,im);
+
+        %plot the image and mask if the flag is activated
+        if flag_showmask == 1
+            try
+                FUNC.IPlotImagesAndMasks(a,im,I,FilesNames(i))
+                hFinalFigure = gcf;
                 try
-                    FUNC.IPlotImagesAndMasks(a,im,I,FilesNames(i))
-                    hFinalFigure = gcf;
-                    try
                     pause(2*eps);
                     waitforbuttonpress
                     pause(2*eps);
-                    
+
                     close(hFinalFigure);
                     pause(2*eps);
-                    catch
-                    end
-                catch err
-                    
-                    errordlg(err.message) 
+                catch
                 end
+            catch err
 
-                
+                errordlg(err.message)
             end
-            if exist('BarWaitWindows', 'var')
-                        if ishandle(BarWaitWindows)
-                            pause(2*eps);
-                            delete(BarWaitWindows);
-                            pause(2*eps);
-                        end
+
+
+        end
+        if exist('BarWaitWindows', 'var')
+            if ishandle(BarWaitWindows)
+                pause(2*eps);
+                delete(BarWaitWindows);
+                pause(2*eps);
             end
- end
+        end
+    end
 end
