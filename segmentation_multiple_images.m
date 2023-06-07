@@ -37,7 +37,6 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
     %load the DAGNetwork from the .m file
     load(network, 'net');
 
-    %segmentation of the whole folder
     if isempty(specificImageName)
         image = imageDatastore(ImFolder, ...
         'IncludeSubfolders',true, ...
@@ -46,12 +45,17 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
         %check that there are images in the file
         if isempty(FilesNames)
         error('In the selected ImageFolder there are not images.');
-        else
-        num = numel(FilesNames);
-        for i=1:num
+        end
+    else
+            FilesNames = FUNC.IGetFileName(ImFolder,specificImageName);
+    end
+
+num = numel(FilesNames);
+
+for i=1:num
             BarWaitWindows = msgbox(['Please wait... ' ,'Folder analysed: ', ImFolder, ', Completed: ', num2str(round(100*(i/num))), '%.']);
             pause(2*eps);
-            I = readimage(image,i);
+            I = imread(char(FilesNames(i)));
             [a,b,c] = size(I);
             I = imresize(I,[500,500]); 
             if c~=1 && c~=3
@@ -62,6 +66,7 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
             if size(I,3) == 3
                 I = rgb2gray(I);
             end
+            
             %check that the images are spheroids with a white background
             test = [I(1,1), I(500,500), I(1,500), I(500,1)];
             if test(1) < 200 && test(2) < 200 && test(3) < 200 && test(4) < 200 
@@ -105,49 +110,5 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
                             pause(2*eps);
                         end
             end
-        end
-        end
-    else
-    
-    %segment the specific image if the specific image name is defined
-    file_name = FUNC.IGetFileName(ImFolder,specificImageName);
-    im = imread(file_name);
-    [a,b,c] = size(im);
-    im = imresize(im,[500,500]);
-    if c~=1 && c~=3
-        ImInpN = im(:,:,1);
-        im= ImInpN;
-        clear ImInpN
-    end
-    if size(im,3) == 3
-        im = rgb2gray(im);
-    end
-    %test that the image is correct 
-        test = [im(1,1), im(500,500), im(1,500), im(500,1)];
-    if test(1) < 200 && test(2) < 200 && test(3) < 200 && test(4) < 200 
-       
-        errordlg('The images must have white background and dark spheroid to be correctly segmented');
-                    
-    end
-    %segmentation
-    I = seg_and_fill(im,net);
-    I = imresize(I,[a b]);
-    im = imresize(im,[a,b]);
-
-    %save the mask
-    imgName = [SegFolder, filesep , specificImageName, '.tiff'];
-    imwrite(I,imgName); 
-
-    %plot the image and mask if the flag is activated
-    if flag_showmask == 1
-        try 
-            FUNC.IPlotImagesAndMasks(I,im,file_name)
-            hFinalFigure = gcf;
-            waitforbuttonpress;
-            close(hFinalFigure);
-            
-        catch
-        end
-    end
-    end
+ end
 end
