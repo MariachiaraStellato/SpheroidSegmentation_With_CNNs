@@ -613,6 +613,26 @@ classdef FUNC
 
 %-------------------------------------------------------------------------------------------------
         function PopUp_Create(message)
+            % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
+            % DATE: september 2022, 13
+            % FUNCTION DESCRITPION: 
+            %   This function will create a pop up message displaying the
+            %   message provided as input. The pop up window will be
+            %   automatically deleted after a second.
+            %
+            % INPUT:
+            %   message:    string vector, string matrix or cell array
+            %               containing the message to be displayed
+            % MiAi (Microscopy & Artificial Intelligence) Toolbox
+            % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
+            % University of Bologna, Italy. All rights reserved.
+            %
+            % This program is free software; you can redistribute it and/or modify it 
+            % under the terms of the GNU General Public License version 3 (or higher) 
+            % as published by the Free Software Foundation. This program is 
+            % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
+            % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+            % General Public License for more details.
             datdiv = msgbox(message);
             if exist('datdiv', 'var')
                 if ishandle(datdiv)
