@@ -394,7 +394,7 @@ classdef tests<matlab.unittest.TestCase
             c = 2;
             
             % Call the function
-            I = process_single_image(WantedSize, inputFileName, c);
+            I = FUNC.process_single_image(WantedSize, inputFileName, c);
             
             % Check the output
             
@@ -424,7 +424,7 @@ classdef tests<matlab.unittest.TestCase
             classWeights = [1, 2];
             
             % Call the function
-            lgraph = Define_network(NetworkType, imageSize, numClasses, tbl_Name, classWeights);
+            lgraph = FUNC.Define_network(NetworkType, imageSize, numClasses, tbl_Name, classWeights);
             
             % Check the output
             testCase.assertInstanceOf(lgraph, 'nnet.cnn.LayerGraph');
