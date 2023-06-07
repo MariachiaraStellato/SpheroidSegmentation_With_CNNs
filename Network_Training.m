@@ -98,14 +98,8 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
     'Plots',op,...
     'ValidationFrequency', numTrainingImages,...
     'ValidationPatience', 4);
-
-    netprep = msgbox('Network prepared');
-    if exist('netprep', 'var')
-        if ishandle(netprep)
-            pause(2*eps);
-            delete(netprep)
-        end
-    end
+    
+    FUNC.PopUp_Create('Network prepared');
 
 %---------------------------training---------------------------------------
 
