@@ -321,7 +321,7 @@ classdef FUNC
             %                                       input
             % OUTPUT:
             %        I:                 processed image
-            
+
             % MiAi (Microscopy & Artificial Intelligence) Toolbox
             % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
             % University of Bologna, Italy. All rights reserved.
@@ -399,23 +399,11 @@ classdef FUNC
         mkdir(TempImDirName);
         % Get the file name of the images inside the folder.
         for k = 1 : numberOfImages
-          
-          inputFileName = image.Files{k};
-          fprintf('%s\n', inputFileName);
-          I = imread(inputFileName);
-          if islogical(I)
-              I = uint8(I);
-          end
-          if c == 1
-            I = im2gray(I);
-            I = cat(3, I, I, I);
-            pause(0.1);
-          elseif c == 2
-            I = im2gray(I);
-          end
-            %resize the image 
-            I = imresize(I,WantedSize);
-
+            
+            %process every image
+            inputFileName = image.Files{k};
+            FUNC.process_single_image(WantedSize,inputFileName,c);
+            
             %save images in the new folder
             FUNC.ISaveImages(inputFileName,TempImDirName,I);
         end
