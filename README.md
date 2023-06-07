@@ -158,6 +158,8 @@ Tumedei, M. Tazzari, O. De Wever, A. Tesei, G. MAartinelli and G. Castellani: â€
 
 - `Images` Folder containing the images used in this README file.
 
+- `ImagesForTesting` Folder containing the images used in the `tests.m` function to test the repository.
+
 - `gitattributes`
 
 - `gitignore` containis file types that are not tracked by git.
