@@ -378,8 +378,7 @@ classdef tests<matlab.unittest.TestCase
         function testResizeImageWithOneChannel(testCase)
         % ---------------------------------------------------------------------------------------------
         % This test asserts that the function "process_single_image" with
-        % default values gives as output the correct structure
-        % containing the correct fields
+        % default values gives as output the image correctly processed
         % 
         % GIVEN: the name of the image to resize, the new size and the
         % parameter for the colour channels
@@ -403,5 +402,25 @@ classdef tests<matlab.unittest.TestCase
             
         end
 
+        %-------------------------------------------------------------------------------------------------
+
+        function testNetworkInitialization(testCase)
+            % Test initialization of the network using ResNet18
+            
+            % Set up
+            NetworkType = 1;
+            imageSize = [224, 224, 3];
+            numClasses = 2;
+            tbl_Name = [3.3, 4.2];
+            classWeights = [1, 2];
+            
+            % Call the function
+            lgraph = Define_network(NetworkType, imageSize, numClasses, tbl_Name, classWeights);
+            
+            % Check the output
+            testCase.assertInstanceOf(lgraph, 'nnet.cnn.LayerGraph');
+        end
+
+         %-------------------------------------------------------------------------------------------------
     end
 end
