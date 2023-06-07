@@ -338,7 +338,7 @@ classdef tests<matlab.unittest.TestCase
         end
         
         %-------------------------------------------------------------------------------------------------
-        
+
         function testMetricsFields(testCase)
         % ---------------------------------------------------------------------------------------------
         % This test asserts that the function "metric_evaluation" with
@@ -371,6 +371,35 @@ classdef tests<matlab.unittest.TestCase
     
     
             testCase.assertTrue(isequal(cl,'semanticSegmentationMetrics'));
+        end
+
+        %-------------------------------------------------------------------------------------------------
+
+        function testResizeImageWithOneChannel(testCase)
+        % ---------------------------------------------------------------------------------------------
+        % This test asserts that the function "process_single_image" with
+        % default values gives as output the correct structure
+        % containing the correct fields
+        % 
+        % GIVEN: the name of the image to resize, the new size and the
+        % parameter for the colour channels
+        % WHEN: I apply "process_single_image" function with default values
+        % THEN: the function gives as output the resized image
+        % ---------------------------------------------------------------------------------------------
+
+            % Test resizing an image with one color channel
+            
+            % Set up
+            inputFileName = 'image_with_one_channel.jpg';
+            WantedSize = [512, 512];
+            c = 2;
+            
+            % Call the function
+            I = process_single_image(WantedSize, inputFileName, c);
+            
+            % Check the output
+            expectedSize = [512, 512];
+            testCase.assertSize(I, expectedSize);
         end
 
     end
