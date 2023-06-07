@@ -299,6 +299,25 @@ classdef FUNC
             file_name = append(ImFolder,filesep,specificImageName,InImageType);
         end
 %-------------------------------------------------------------------------------------------------
+function I = process_single_image(WantedSize,inputFileName,c)
+
+          fprintf('%s\n', inputFileName);
+          I = imread(inputFileName);
+          if islogical(I)
+              I = uint8(I);
+          end
+          if c == 1
+            I = im2gray(I);
+            I = cat(3, I, I, I);
+            pause(0.1);
+          elseif c == 2
+            I = im2gray(I);
+          end
+            %resize the image 
+            I = imresize(I,WantedSize);
+
+        end        
+%-------------------------------------------------------------------------------------------------
         function TempImDirName = process_images(ImagesFolderName, WantedSize, c)
             % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
             % FUNCTION DESCRITPION: 
