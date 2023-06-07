@@ -185,7 +185,7 @@ classdef tests<matlab.unittest.TestCase
         % the correct name
         % ---------------------------------------------------------------------------------------------
 
-            im = imread('https://media.gettyimages.com/id/1367506926/it/foto/a-beautiful-smooth-haired-red-cat-lies-on-the-sofa-and-in-a-relaxed-close-up-pose.jpg?s=612x612&w=0&k=20&c=v-t1SNH35LLOo6YcXNcEQ2WCbDwPu_cCuwEY6cS7O88=');
+            im = imread('ImagesForTesting\gatto.jpg');
             Folder = 'testFolder';
             if ~exist(Folder, 'dir')
                 mkdir(Folder);
