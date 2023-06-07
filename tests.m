@@ -316,7 +316,7 @@ classdef tests<matlab.unittest.TestCase
                 mkdir(PathImageFolderOut);
             end
             PathNetworkFolderInp = "TrainedNetworks\segRes18Net.mat";
-            SpecificImageName ='none';
+            SpecificImageName = char.empty;
             flag_ShowMask = 0;
             segmentation_multiple_images(PathImageFolderIn,PathImageFolderOut,PathNetworkFolderInp,SpecificImageName,flag_ShowMask);
     
@@ -360,7 +360,7 @@ classdef tests<matlab.unittest.TestCase
                 mkdir(SegmentedMaskDir);
             end
             PathNetworkFolderInp = "TrainedNetworks\segRes18Net.mat";
-            SpecificImageName ='none';
+            SpecificImageName = char.empty;
             flag_ShowMask = 0;
             segmentation_multiple_images(TestImagesDir,SegmentedMaskDir,PathNetworkFolderInp,SpecificImageName,flag_ShowMask);
     
