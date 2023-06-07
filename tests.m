@@ -405,6 +405,15 @@ classdef tests<matlab.unittest.TestCase
         %-------------------------------------------------------------------------------------------------
 
         function testNetworkInitialization(testCase)
+        % ---------------------------------------------------------------------------------------------
+        % This test asserts that the function "Define_network" with
+        % default values gives as output a layer graph variable 
+        % 
+        % GIVEN: the network type and the initialization parameters
+        % WHEN: I apply "Define_network" function with default values
+        % THEN: the function gives as output the correct layer graph
+        % ---------------------------------------------------------------------------------------------
+
             % Test initialization of the network using ResNet18
             
             % Set up
