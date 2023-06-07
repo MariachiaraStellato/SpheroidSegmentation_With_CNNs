@@ -113,7 +113,7 @@ lgraph = replaceLayer(lgraph,"res5a_branch2a",layers);
 tempLayers = FUNC.ConvBatch([1 1],2048,0,[2 2],"res5a_branch1","bn5a_branch1",1,[1 1]);
 lgraph = addLayers(lgraph,tempLayers);
 
-%initialization of the deconvolution part of the network 
+%initialization of the deconvolution part of the network
 for i=1:4
     if i == 1
         filterSize = [1 1];
