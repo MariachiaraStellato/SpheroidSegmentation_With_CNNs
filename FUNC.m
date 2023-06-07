@@ -612,8 +612,14 @@ classdef FUNC
 
 
 %-------------------------------------------------------------------------------------------------
-        function PopUp_Create()
-        
+        function PopUp_Create(message)
+            datdiv = msgbox(message);
+            if exist('datdiv', 'var')
+                if ishandle(datdiv)
+                    pause(2*eps);
+                    delete(datdiv)
+                end
+            end
         end
 %-------------------------------------------------------------------------------------------------
 
