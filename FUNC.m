@@ -409,7 +409,7 @@ classdef FUNC
     
                 %process every image
                 inputFileName = image.Files{k};
-                FUNC.process_single_image(WantedSize,inputFileName,c);
+                I = FUNC.process_single_image(WantedSize,inputFileName,c);
     
                 %save images in the new folder
                 FUNC.ISaveImages(inputFileName,TempImDirName,I);
