@@ -616,7 +616,7 @@ classdef FUNC
             datdiv = msgbox(message);
             if exist('datdiv', 'var')
                 if ishandle(datdiv)
-                    pause(2*eps);
+                    pause(1);
                     delete(datdiv)
                 end
             end
