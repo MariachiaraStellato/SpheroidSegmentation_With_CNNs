@@ -299,20 +299,53 @@ classdef FUNC
             file_name = append(ImFolder,filesep,specificImageName,InImageType);
         end
 %-------------------------------------------------------------------------------------------------
-function I = process_single_image(WantedSize,inputFileName,c)
+        function I = process_single_image(WantedSize,inputFileName,c)
 
-          fprintf('%s\n', inputFileName);
-          I = imread(inputFileName);
-          if islogical(I)
+            % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
+            % FUNCTION DESCRITPION: 
+            %   This function will get the images with inputFileName name
+            %   and resize it to the wanted size with the right number of
+            %   channel colours
+            %
+            % INPUT: 
+            %       inputFileName:      string containing the name of
+            %                           the image to processed
+            %       WantedSize:         [a b] numerical array containing
+            %                           the size we want the image to be
+            %                           resized to.
+            %       c:                  integer number.
+            %                           c == 1      output images with 3 color channels. 
+            %                           c == 2      output image with 1 colour channel. 
+            %                           else        output has the same
+            %                                       number of colour channels as the
+            %                                       input
+            % OUTPUT:
+            %        I:                 processed image
+            
+            % MiAi (Microscopy & Artificial Intelligence) Toolbox
+            % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,   
+            % University of Bologna, Italy. All rights reserved.
+            %
+            % This program is free software; you can redistribute it and/or modify it 
+            % under the terms of the GNU General Public License version 3 (or higher) 
+            % as published by the Free Software Foundation. This program is 
+            % distributed WITHOUT ANY WARRANTY; without even the implied warranty of 
+            % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+            % General Public License for more details.
+
+
+            fprintf('%s\n', inputFileName);
+            I = imread(inputFileName);
+            if islogical(I)
               I = uint8(I);
-          end
-          if c == 1
+            end
+            if c == 1
             I = im2gray(I);
             I = cat(3, I, I, I);
             pause(0.1);
-          elseif c == 2
+            elseif c == 2
             I = im2gray(I);
-          end
+            end
             %resize the image 
             I = imresize(I,WantedSize);
 
