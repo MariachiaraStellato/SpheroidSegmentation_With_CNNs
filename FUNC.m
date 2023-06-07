@@ -45,46 +45,48 @@ classdef FUNC
         % ------------------------------------------------------------------------------------------------
 
         function Layers = ConvBatchRelu(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,w,dil)
-            % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
-            % FUNCTION DESCRITPION:
-            %   This function will create a convolutional Layer, a Batch
-            %   Normalization Layer and a ReLU layer with the given inputs as paramenters
-            %
-            % INPUTS:
-            %   FilterSize: [a b] numeric array of two integer elements.
-            %               Determines the filter size of the convolutional layer
-            %   FilterNumber: integer containing the filter number of the
-            %                 convolutional layer.
-            %   Padding:        integer or numeric array containing the padding
-            %                   size of the convolutional layer.
-            %   stride:         integer containing the stride of the convolutional
-            %                   layer.
-            %   ConvName:       string containing the name that will be given to
-            %                   the convolutional layer.
-            %   BatchName:      string containing the name that will be given to
-            %                   the Batch Normalization layer.
-            %   ReluName:      string containing the name that will be given to
-            %                   the ReLU layer.
-            %   w:              integer number containing the weight used
-            %                   to initialize the convolutional layer.
-            % OUTPUT:
-            %   Layers:         array containing a convolutional layer,
-            %                   a batch normalization and a ReLu layer.
+        % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
+        % FUNCTION DESCRITPION:
+        %   This function will create a convolutional Layer, a Batch
+        %   Normalization Layer and a ReLU layer with the given inputs as paramenters
+        %
+        % INPUTS:
+        %   FilterSize: [a b] numeric array of two integer elements.
+        %               Determines the filter size of the convolutional layer
+        %   FilterNumber: integer containing the filter number of the
+        %                 convolutional layer.
+        %   Padding:        integer or numeric array containing the padding
+        %                   size of the convolutional layer.
+        %   stride:         integer containing the stride of the convolutional
+        %                   layer.
+        %   ConvName:       string containing the name that will be given to
+        %                   the convolutional layer.
+        %   BatchName:      string containing the name that will be given to
+        %                   the Batch Normalization layer.
+        %   ReluName:      string containing the name that will be given to
+        %                   the ReLU layer.
+        %   w:              integer number containing the weight used
+        %                   to initialize the convolutional layer.
+        % OUTPUT:
+        %   Layers:         array containing a convolutional layer,
+        %                   a batch normalization and a ReLu layer.
 
-            % MiAi (Microscopy & Artificial Intelligence) Toolbox
-            % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,
-            % University of Bologna, Italy. All rights reserved.
-            %
-            % This program is free software; you can redistribute it and/or modify it
-            % under the terms of the GNU General Public License version 3 (or higher)
-            % as published by the Free Software Foundation. This program is
-            % distributed WITHOUT ANY WARRANTY; without even the implied warranty of
-            % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-            % General Public License for more details.
+        % MiAi (Microscopy & Artificial Intelligence) Toolbox
+        % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,
+        % University of Bologna, Italy. All rights reserved.
+        %
+        % This program is free software; you can redistribute it and/or modify it
+        % under the terms of the GNU General Public License version 3 (or higher)
+        % as published by the Free Software Foundation. This program is
+        % distributed WITHOUT ANY WARRANTY; without even the implied warranty of
+        % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+        % General Public License for more details.
             TempLayers1 = FUNC.ConvBatch(FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,w,dil);
             TempLayer2 = reluLayer("Name",ReluName);
-            Layers = [TempLayers1
-                TempLayer2];
+            Layers = [
+                        TempLayers1
+                        TempLayer2
+                     ];
         end
         % ------------------------------------------------------------------------------------------------
         function Layers = DepthConvBatchRelu(NumInput, FilterSize,FilterNumber,Padding,stride,ConvName,BatchName,ReluName,DepthName,w,dil)
