@@ -35,9 +35,9 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
 
 %--------------------------images and masks preprocessing-------------------
     %images resize dimension
-    a = 500; 
-    b = 500; 
-
+    a = 500;
+    b = 500;
+    
     %create temporary directory to store the modifyed images. They will be
     %deleated at the end of the training.
     TempImDirName = FUNC.process_images(ImagesDir,[a b], 1);
@@ -45,82 +45,82 @@ function net = Network_Training(ImagesDir, MasksDir, NetworkType)
     
     %Divide the dataset into training and validation subsets
     [dsTrain, dsVal, ~] = FUNC.Dataset_processing(TempImDirName,TempMaskDirName);
-
+    
     %classes for which the network will be trained
     classes = [
-    "Sferoids"
-    "Background"
-    ];
+        "Sferoids"
+        "Background"
+        ];
     
     %size of the images we are training
     I = readimage(dsTrain.UnderlyingDatastores{1,1},1);
     [w, h, c] = size(I);
-    imageSize = [w, h, c];  
+    imageSize = [w, h, c];
     
     %number of classes I want to train for the segmentation
-    numClasses = numel(classes);  
+    numClasses = numel(classes);
     
     %number of images used for the training
     numTrainingImages = numel(dsTrain.UnderlyingDatastores{1,1}.Files);
-
+    
     tbl = countEachLabel(dsTrain.UnderlyingDatastores{1,2});
     imageFreq = tbl.PixelCount ./ tbl.ImagePixelCount;
     imageFreq(isnan(imageFreq)) = min(imageFreq) * 0.00001;
     classWeights = median(imageFreq) ./ imageFreq;
-
-%-----------------------network selection----------------------------------
-
+    
+    %-----------------------network selection----------------------------------
+    
     lgraph = FUNC.Define_network(NetworkType,imageSize,numClasses,tbl.Name,classWeights);
     
-%------------------------set training options------------------------------
+    %------------------------set training options------------------------------
     batchsize = round(numTrainingImages/10);
     if isdeployed
         op = 'none';
-        constant = 1; 
+        constant = 1;
     else
         op = 'training-progress';
-        constant = 0; 
+        constant = 0;
     end
     options = trainingOptions('sgdm', ...
-    'LearnRateSchedule','piecewise',...
-    'LearnRateDropPeriod',2,...
-    'LearnRateDropFactor',0.5,...
-    'Momentum',0.9, ...
-    'InitialLearnRate',0.04, ...
-    'L2Regularization',0.001, ...
-    'ValidationData',dsVal,...
-    'MaxEpochs',7, ...  
-    'MiniBatchSize',batchsize, ...
-    'Shuffle','every-epoch', ...
-    'CheckpointPath', tempdir, ...
-    'VerboseFrequency',2,...
-    'ExecutionEnvironment','cpu',...
-    'Plots',op,...
-    'ValidationFrequency', numTrainingImages,...
-    'ValidationPatience', 4);
+        'LearnRateSchedule','piecewise',...
+        'LearnRateDropPeriod',2,...
+        'LearnRateDropFactor',0.5,...
+        'Momentum',0.9, ...
+        'InitialLearnRate',0.04, ...
+        'L2Regularization',0.001, ...
+        'ValidationData',dsVal,...
+        'MaxEpochs',7, ...
+        'MiniBatchSize',batchsize, ...
+        'Shuffle','every-epoch', ...
+        'CheckpointPath', tempdir, ...
+        'VerboseFrequency',2,...
+        'ExecutionEnvironment','cpu',...
+        'Plots',op,...
+        'ValidationFrequency', numTrainingImages,...
+        'ValidationPatience', 4);
     
     FUNC.PopUp_Create('Network prepared');
-
-%---------------------------training---------------------------------------
-
-%this window appear only if the function is used in a deployed app
-if constant == 1
-fig = uifigure;
-fig.Position = [500 500 400 75];
-d = uiprogressdlg(fig, 'Title','Training (it can take hours)...','Indeterminate','on');
-end
-
-%network training
-[net, ~] = trainNetwork(dsTrain,lgraph,options);
-
-%deleting the window that appears if the function is in a deployed app
-if exist('d','var')
-close(d)
-close(fig)
-end
-%remove the temporary directory and the processed images
-rmdir(TempImDirName,'s');
-rmdir(TempMaskDirName,'s');
+    
+    %---------------------------training---------------------------------------
+    
+    %this window appear only if the function is used in a deployed app
+    if constant == 1
+        fig = uifigure;
+        fig.Position = [500 500 400 75];
+        d = uiprogressdlg(fig, 'Title','Training (it can take hours)...','Indeterminate','on');
+    end
+    
+    %network training
+    [net, ~] = trainNetwork(dsTrain,lgraph,options);
+    
+    %deleting the window that appears if the function is in a deployed app
+    if exist('d','var')
+        close(d)
+        close(fig)
+    end
+    %remove the temporary directory and the processed images
+    rmdir(TempImDirName,'s');
+    rmdir(TempMaskDirName,'s');
 
 
 end
