@@ -713,7 +713,7 @@ classdef FUNC
             im = FUNC.seg_and_fill(I,net);
 
             im = imresize(im,[a,b]);
-    
+            im = uint8(im);
         end
         %-------------------------------------------------------------------------------------------------
     end
