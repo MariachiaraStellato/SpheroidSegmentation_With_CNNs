@@ -433,24 +433,30 @@ classdef tests<matlab.unittest.TestCase
          %-------------------------------------------------------------------------------------------------
 
          function testRGBImageSegmentation(testCase)
+         % ---------------------------------------------------------------------------------------------
+         % This test asserts that the function "segmentation_single_image" with
+         % default values gives as output the correctly segmented image
+         % GIVEN: the image to be segmented and the trained network
+         % WHEN: I apply "segmentation_single_image" function with default values
+         % THEN: the function gives as output the segmented image
+         % ---------------------------------------------------------------------------------------------
+         % Test segmentation of an RGB image
 
-            % Test segmentation of an RGB image
-            
-            % Set up
-            I = imread('ExampleImages\P2_08_A06_04x_001.tif');
-            ref = imread('ExampleMasks\P2_08_A06_04x_001.tiff');
-            load('TrainedNetworks\segRes18Net.mat','net');
-            
-            I = rgb2gray(I);
+             % Set up
+             I = imread('ExampleImages\P2_08_A06_04x_001.tif');
+             ref = imread('ExampleMasks\P2_08_A06_04x_001.tiff');
+             load('TrainedNetworks\segRes18Net.mat','net');
 
-            % Call the function
-            im = FUNC.segmentation_single_image(I, net);
-            c = ssim(im,ref);
+             I = rgb2gray(I);
 
-            % Check the output
-            testCase.assertInstanceOf(im, 'uint8');
-            testCase.assertEqual(size(im), size(I));
-            testCase.assertGreaterThanOrEqual(c,0.9);
+             % Call the function
+             im = FUNC.segmentation_single_image(I, net);
+             c = ssim(im,ref);
+
+             % Check the output
+             testCase.assertInstanceOf(im, 'uint8');
+             testCase.assertEqual(size(im), size(I));
+             testCase.assertGreaterThanOrEqual(c,0.9);
         end
     end
 end
