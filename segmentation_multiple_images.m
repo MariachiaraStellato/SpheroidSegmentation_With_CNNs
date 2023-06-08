@@ -56,6 +56,14 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
         BarWaitWindows = msgbox(['Please wait... ' ,'Folder analysed: ', ImFolder, ', Completed: ', num2str(round(100*(i/num))), '%.']);
         pause(2*eps);
         I = imread(char(FilesNames(i)));
+
+        %check that the images are spheroids with a white background
+        test = [I(1,1), I(500,500), I(1,500), I(500,1)];
+        if test(1) < 200 && test(2) < 200 && test(3) < 200 && test(4) < 200
+            errordlg('The images must have white background and dark spheroid to be correctly segmented');
+            break;
+        end
+        
         [a,b,c] = size(I);
         I = imresize(I,[500,500]);
         if c~=1 && c~=3
@@ -67,12 +75,7 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
             I = rgb2gray(I);
         end
 
-        %check that the images are spheroids with a white background
-        test = [I(1,1), I(500,500), I(1,500), I(500,1)];
-        if test(1) < 200 && test(2) < 200 && test(3) < 200 && test(4) < 200
-            errordlg('The images must have white background and dark spheroid to be correctly segmented');
-            break;
-        end
+        
 
         %segmentation
         im = FUNC.seg_and_fill(I,net);
