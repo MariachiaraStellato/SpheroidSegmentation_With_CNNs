@@ -56,6 +56,9 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
         BarWaitWindows = msgbox(['Please wait... ' ,'Folder analysed: ', ImFolder, ', Completed: ', num2str(round(100*(i/num))), '%.']);
         pause(2*eps);
         I = imread(char(FilesNames(i)));
+        if size(I,3) == 3
+                I = rgb2gray(I);
+        end
         [a,~,~] = size(I);
         %check that the images are spheroids with a white background
         test = [I(1,1), I(500,500), I(1,500), I(500,1)];
