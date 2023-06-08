@@ -431,5 +431,26 @@ classdef tests<matlab.unittest.TestCase
         end
 
          %-------------------------------------------------------------------------------------------------
+
+         function testRGBImageSegmentation(testCase)
+
+            % Test segmentation of an RGB image
+            
+            % Set up
+            I = imread('ExampleImages\P2_08_A06_04x_001.tif');
+            ref = imread('ExampleMasks\P2_08_A06_04x_001.tiff');
+            load('TrainedNetworks\segRes18Net.mat','net');
+            
+            I = rgb2gray(I);
+
+            % Call the function
+            im = FUNC.segmentation_single_image(I, net);
+            c = ssim(im,ref);
+
+            % Check the output
+            testCase.assertInstanceOf(im, 'uint8');
+            testCase.assertEqual(size(im), size(I));
+            testCase.assertGreaterThanOrEqual(c,0.9);
+        end
     end
 end
