@@ -679,7 +679,7 @@ classdef FUNC
         %                      the segmentation
         % OUTPUT:
         %   im:   segmented image
-        
+
         % MiAi (Microscopy & Artificial Intelligence) Toolbox
         % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,
         % University of Bologna, Italy. All rights reserved.
@@ -715,5 +715,6 @@ classdef FUNC
             im = imresize(im,[a,b]);
     
         end
+        %-------------------------------------------------------------------------------------------------
     end
 end
