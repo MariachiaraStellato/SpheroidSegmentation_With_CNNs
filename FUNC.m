@@ -667,5 +667,53 @@ classdef FUNC
         end
         %-------------------------------------------------------------------------------------------------
 
+        function im = segmentation_single_image(I,net)
+        % AUTHOR: Mariachiara Stellato (E-mail: mariachiarastellato@gmail.com)
+        % DATE: september 2022, 13
+        % FUNCTION DESCRITPION:
+        %   This function will segment the image given as input by using the network net.
+        %
+        % INPUT:
+        %   I:    image to be segmented
+        %   net:  DAGNetwork file tipe containing the trained network to use for
+        %                      the segmentation
+        % OUTPUT:
+        %   im:   segmented image
+        
+        % MiAi (Microscopy & Artificial Intelligence) Toolbox
+        % Copyright © 2022 Mariachiara Stellato, Filippo Piccinini,
+        % University of Bologna, Italy. All rights reserved.
+        %
+        % This program is free software; you can redistribute it and/or modify it
+        % under the terms of the GNU General Public License version 3 (or higher)
+        % as published by the Free Software Foundation. This program is
+        % distributed WITHOUT ANY WARRANTY; without even the implied warranty of
+        % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+        % General Public License for more details.
+    
+            [a,b,c] = size(I);
+            I = imresize(I,[500,500]);
+            if c~=1 && c~=3
+                ImInpN = I(:,:,1);
+                I= ImInpN;
+                clear ImInpN
+            end
+            if size(I,3) == 3
+                I = rgb2gray(I);
+            end
+
+            %check that the images are spheroids with a white background
+            test = [I(1,1), I(500,500), I(1,500), I(500,1)];
+            if test(1) < 200 && test(2) < 200 && test(3) < 200 && test(4) < 200
+                errordlg('The images must have white background and dark spheroid to be correctly segmented');
+
+            end
+
+            %segmentation
+            im = FUNC.seg_and_fill(I,net);
+
+            im = imresize(im,[a,b]);
+    
+        end
     end
 end
