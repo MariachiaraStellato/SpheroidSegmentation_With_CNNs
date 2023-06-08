@@ -64,23 +64,7 @@ function segmentation_multiple_images(ImFolder, SegFolder, network, specificImag
             break;
         end
         
-        [a,b,c] = size(I);
-        I = imresize(I,[500,500]);
-        if c~=1 && c~=3
-            ImInpN = I(:,:,1);
-            I= ImInpN;
-            clear ImInpN
-        end
-        if size(I,3) == 3
-            I = rgb2gray(I);
-        end
-
-        
-
-        %segmentation
-        im = FUNC.seg_and_fill(I,net);
-        I = imresize(I,[a b]);
-        im = imresize(im,[a,b]);
+        im = FUNC.segmentation_single_image(I,net);
 
         %save the segmented masks
         FUNC.ISaveImages(FilesNames(i),SegFolder,im);
